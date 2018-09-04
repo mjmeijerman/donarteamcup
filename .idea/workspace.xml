@@ -2,39 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="221375e8-7e4c-4103-9c31-f15aa3c39b7e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/mark.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/donarteamcup.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/symfony2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/ansible-galaxy.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/deploy/deploy.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/deploy/group_vars/webserver-production/main.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/deploy/group_vars/webserver-production/secure.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/deploy/group_vars/webserver-test/main.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/deploy/group_vars/webserver-test/secure.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/deploy/group_vars/webserver/main.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/deploy/group_vars/webserver/secure.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/deploy/tasks/finalize_hooks.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/deploy/tasks/main.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/deploy/templates/parameters.yml.j2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/hosts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/roles_galaxy/f500.project_deploy/COPYING" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/roles_galaxy/f500.project_deploy/COPYING.LESSER" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/roles_galaxy/f500.project_deploy/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/roles_galaxy/f500.project_deploy/defaults/main.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/roles_galaxy/f500.project_deploy/meta/.galaxy_install_info" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/roles_galaxy/f500.project_deploy/meta/main.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ansible/roles_galaxy/f500.project_deploy/tasks/main.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/deploy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ssh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/config_dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/config_dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/parameters.yml.dist" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/parameters.yml.dist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/app_dev.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/app_dev.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ansible/hosts" beforeDir="false" afterPath="$PROJECT_DIR$/ansible/hosts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -107,11 +75,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app_dev.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app_dev.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/app_dev.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
-              <caret line="12" column="37" lean-forward="true" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+              <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hosts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ansible/hosts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -121,17 +98,16 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file leaf-file-name="deploy.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ansible/deploy/deploy.yml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>app</find>
+      <find>haagsedonarcup</find>
     </findStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/ansible</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -140,7 +116,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/ssh" />
-        <option value="$PROJECT_DIR$/ansible/hosts" />
         <option value="$PROJECT_DIR$/ansible/deploy/group_vars/webserver/secure.yml" />
         <option value="$PROJECT_DIR$/ansible/deploy/group_vars/webserver-test/secure.yml" />
         <option value="$PROJECT_DIR$/ansible/deploy/group_vars/webserver-production/secure.yml" />
@@ -153,6 +128,7 @@
         <option value="$PROJECT_DIR$/app/config/config.yml" />
         <option value="$PROJECT_DIR$/app/config/config_dev.yml" />
         <option value="$PROJECT_DIR$/web/app_dev.php" />
+        <option value="$PROJECT_DIR$/ansible/hosts" />
       </list>
     </option>
   </component>
@@ -338,27 +314,28 @@
       <option name="presentableId" value="Default" />
       <updated>1536085415828</updated>
       <workItem from="1536085417263" duration="223000" />
-      <workItem from="1536085648244" duration="1696000" />
+      <workItem from="1536085648244" duration="1985000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1708000" />
+    <option name="totallyTimeSpent" value="1997000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2532189" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2532189" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -367,7 +344,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -403,13 +379,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ansible/ansible-galaxy.yml">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ansible/hosts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="49" selection-start-line="8" selection-start-column="49" selection-end-line="8" selection-end-column="49" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ansible/deploy/group_vars/webserver/secure.yml">
       <provider selected="true" editor-type-id="text-editor">
@@ -517,7 +486,14 @@
     <entry file="file://$PROJECT_DIR$/web/app_dev.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
-          <caret line="12" column="37" lean-forward="true" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+          <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ansible/hosts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
         </state>
       </provider>
     </entry>

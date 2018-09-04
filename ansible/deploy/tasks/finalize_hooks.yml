@@ -1,0 +1,59 @@
+- name: make sure that all web writable folders exist
+  file: path="{{ item.name }}" state=directory recurse=yes
+  with_items: "{{ web_writable_folders }}"
+
+- name: Set deploy_user ACL privileges on directories
+  acl: name={{ item.name }} entity={{ deploy_user }} etype=user permissions=rwx state=present
+  with_items: "{{ web_writable_folders }}"
+
+- name: Set deploy_user default ACL privileges on directories
+  acl: name={{ item.name }} entity={{ deploy_user }} etype=user permissions=rwx default=yes state=present
+  with_items: "{{ web_writable_folders }}"
+
+- name: Set web_user ACL privileges on directories
+  acl: name={{ item.name }} entity={{ nginx_user }} etype=user permissions=rwx state=present
+  with_items: "{{ web_writable_folders }}"
+
+- name: Set web_user default ACL privileges on directories
+  acl: name={{ item.name }} entity={{ nginx_user }} etype=user permissions=rwx default=yes state=present
+  with_items: "{{ web_writable_folders }}"
+
+- name: Make var/cache writable
+  command: setfacl -R -m u:"www-data":rwX -m u:"{{ deploy_user }}":rwX var/cache
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"
+
+- name: Make var/cache writable
+  command: setfacl -dR -m u:"www-data":rwX -m u:"{{ deploy_user }}":rwX var/cache
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"
+
+- name: Make var/logs writable
+  command: setfacl -R -m u:"www-data":rwX -m u:"{{ deploy_user }}":rwX var/logs
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"
+
+- name: Make var/logs writable
+  command: setfacl -dR -m u:"www-data":rwX -m u:"{{ deploy_user }}":rwX var/logs
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"
+
+- name: Make var/sessions writable
+  command: setfacl -R -m u:"www-data":rwX -m u:"{{ deploy_user }}":rwX var/sessions
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"
+
+- name: Make var/sessions writable
+  command: setfacl -dR -m u:"www-data":rwX -m u:"{{ deploy_user }}":rwX var/sessions
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"
+
+- name: Make web/uploads writable
+  command: setfacl -R -m u:"www-data":rwX -m u:"{{ deploy_user }}":rwX web/uploads
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"
+
+- name: Make web/uploads writable
+  command: setfacl -dR -m u:"www-data":rwX -m u:"{{ deploy_user }}":rwX web/uploads
+  args:
+    chdir: "{{ deploy_helper.new_release_path }}"

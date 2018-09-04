@@ -1,0 +1,12 @@
+---
+
+- name: Deploy
+  hosts: all
+  become: false
+  remote_user: "{{ deploy_user }}"
+
+  roles:
+    - f500.project_deploy
+
+  tasks:
+    - include_tasks: tasks/main.yml

@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Deploy script
+
+# get latest tag
+latestTag="$(git describe --abbrev=0)";
+
+# functions
+
+function askEnvironment {
+    echo "Deploy environment: (test/production)"
+
+    ok=0;
+    while [ "$ok" = "0" ] ; do
+        read userinput
+
+        if [ "$userinput" = "test" ] || [ "$userinput" = "production" ]
+        then
+          ok=1;
+        else
+          echo "Invalid environment"
+        fi
+    done
+
+    environment="$userinput"
+}
+
+function askTag {
+    echo "Deploy tag: [$latestTag]"
+
+    ok=0;
+    while [ "$ok" = "0" ] ; do
+        read userinput
+
+        tagExists=$(git show-ref | grep -c "$userinput")
+
+        if [ "$userinput" = "" ]
+        then
+            ok=1;
+            tag="$latestTag"
+        elif [ "$tagExists" = "0" ]
+        then
+            echo "Invalid tag"
+            echo "$tagExists"
+        else
+            ok=1;
+            tag="$userinput"
+        fi
+    done
+}
+
+# gathering information
+askEnvironment
+askTag
+
+limit="webserver-$environment"
+
+echo -e "Limit: $limit"
+
+#complete
+echo -e "Deploy to \e[32m\e[1m\e[4m$environment\e[0m environment with tag \e[32m\e[1m\e[4m$tag\e[0m:"
+ansible-playbook ansible/deploy/deploy.yml --extra-vars "project_version=$tag" --limit=$limit --ask-vault-pass

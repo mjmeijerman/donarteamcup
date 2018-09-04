@@ -1,0 +1,9 @@
+[webserver:children]
+webserver-production
+webserver-test
+
+[webserver-production]
+haagsedonarcup-production ansible_ssh_host=donarteamcup.nl
+
+[webserver-test]
+haagsedonarcup-test ansible_ssh_host=donarteamcup.nl

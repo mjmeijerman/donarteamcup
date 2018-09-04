@@ -1,0 +1,38 @@
+deploy_user: mark
+nginx_user:  www-data
+
+project_deploy_hook_on_finalize: "tasks/finalize_hooks.yml"
+
+project_finalize: true
+project_keep_releases: 3
+
+project_command_for_composer_install: >
+  composer install
+  --no-ansi
+  --no-dev
+  --no-interaction
+  --no-progress
+  --optimize-autoloader
+project_has_composer: yes
+
+project_deploy_strategy: "git"
+project_git_repo: "git@github.com:mjmeijerman/donarteamcup.git"
+
+database_host: ~ #secure.yml
+database_port: ~ #secure.yml
+database_name: ~ #secure.yml
+database_user: ~ #secure.yml
+database_password: ~ #secure.yml
+
+project_templates:
+  - { name: parameters.yml, src: "templates/parameters.yml.j2", dest: "app/config/parameters.yml" }
+
+project_shared_children:
+  - { path: "var/sessions", src: "sessions" }
+  - { path: "web/uploads", src: "uploads" }
+
+web_writable_folders:
+  - { name: "{{ deploy_helper.shared_path }}/uploads", recursive: false }
+
+project_environment:
+  SYMFONY_ENV: "prod"

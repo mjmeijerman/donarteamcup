@@ -1,0 +1,6 @@
+---
+
+# This task generates a warning because we don't use "become". The management user has only 1 right on sudo and that's
+# the shell command you see here below. For now the warning does not hurt and its works.
+- name: Restart php-fpm
+  shell: sudo /usr/sbin/service php7.2-fpm restart

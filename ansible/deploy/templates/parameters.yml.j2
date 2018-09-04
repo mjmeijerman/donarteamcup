@@ -1,0 +1,19 @@
+parameters:
+    database_host: "{{ database_host }}"
+    database_port: null
+    database_name: "{{ database_name }}"
+    database_user: "{{ database_user }}"
+    database_password: "{{ database_password }}"
+
+    mailer_transport: "{{ mailer_transport }}"
+    mailer_host: "{{ mailer_host }}"
+    mailer_user: "{{ mailer_user }}"
+    mailer_password: "{{ mailer_password }}"
+    mailer_port: {{ mailer_port }}
+    mailer_encryption: "{{ mailer_encryption }}"
+    mailer_auth_mode: "{{ mailer_auth_mode }}"
+    mailer_delivery_address: {{ mailer_delivery_address | to_json }}
+
+    secret: "{{ secret }}"
+    standaard_wachtwoord: "{{ standaard_wachtwoord }}"
+    update_scores_string: "{{ update_scores_string }}"

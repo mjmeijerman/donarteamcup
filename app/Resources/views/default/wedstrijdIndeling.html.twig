@@ -1,0 +1,47 @@
+{% extends 'default/base.html.twig' %}
+
+{% block body %}
+    <h1>Wedstrijdindeling</h1>
+    {% if tijdSchema%}
+        <h4 id="contact">» Tijdschema</h4>
+        <p>
+            Het tijdschema kan
+            <a href="/uploads/tijdSchema/tijdSchema.pdf" target="_blank">
+                hier</a> worden ingezien.
+        </p>
+    {% endif %}
+    {% for dag in dagen %}
+        <h4 id="contact">» {{ dag.wedstrijddag }}</h4>
+        <table class="wedstrijdindeling">
+            <tr>
+                <th class="first_row"></th>
+                {% for baan in banen[dag.wedstrijddag] %}
+                    <th>Baan {{ baan.baan }}</th>
+                {% endfor %}
+            </tr>
+            {% for wedstrijdronde in wedstrijdrondes[dag.wedstrijddag] %}
+                <tr>
+                    <th>Wedstrijd {{ wedstrijdronde.wedstrijdronde }}</th>
+                    {% for baan in banen[dag.wedstrijddag] %}
+                        <td class="niv"><a href="{{ path('wedstrijdindelingPdf', { 'wedstrijddag': dag.wedstrijddag,
+                                'wedstrijdronde': wedstrijdronde.wedstrijdronde, 'baan': baan.baan }) }}" target="_blank">
+                            {% for catNiv in categorieNiveau[dag.wedstrijddag][wedstrijdronde.wedstrijdronde][baan
+                            .baan] %}
+                                » {{ catNiv.categorie }} {{ catNiv.niveau }} «<br />
+                            {% endfor %}
+							</a>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+	{% if juryIndeling %}
+        <h4 id="contact">» Juryindeling</h4>
+        <p>
+            De juryindeling kan
+            <a href="/uploads/juryIndeling/juryIndeling.pdf" target="_blank">
+                hier</a> worden ingezien.
+        </p>
+    {% endif %}
+{% endblock %}

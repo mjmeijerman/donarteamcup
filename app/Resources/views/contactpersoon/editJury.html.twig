@@ -1,0 +1,91 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/inschrijf_check.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+    <div id="inschrijven_controle">
+        <h1><a href="{{ path('getContactpersoonIndexPage') }}">
+                <img src="{{ asset('images/back_arrow.png') }}"></a>
+            Jurylid toevoegen</h1>
+        Via deze pagina kun je een jurylid wijzigen of een opmerking toevoegen.
+
+        <h4>&#187; Gegevens</h4>
+
+        <form method="post" action="" name="turnsters">
+            <table class="aanpas_tabel">
+                <tr>
+                    <td>
+                        Voornaam jurylid:
+                    </td>
+                    <td>
+                        <input type="text" class="{{ classNames.voornaam }}" placeholder="Voornaam" value="{{ jury
+                        .voornaam }}" name="voornaam"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Achternaam jurylid:
+                    </td>
+                    <td>
+                        <input type="text" class="{{ classNames.achternaam }}" placeholder="Achternaam" value="{{ jury
+                        .achternaam }}" name="achternaam"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Email jurylid:
+                    </td>
+                    <td>
+                        <input type="email" class="{{ classNames.email }}" placeholder="jury@jury.nl" value="{{ jury
+                        .email }}" name="email"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Brevet:
+                    </td>
+                    <td>
+                        <select class="{{ classNames.brevet }}" name="brevet">
+                            <option value="" selected>Brevet</option>
+                            <option value="TD1" {% if jury.brevet == "TD1" %}selected{% endif %}>TD1</option>
+                            <option value="TD2" {% if jury.brevet == "TD2" %}selected{% endif %}>TD2</option>
+                            <option value="TD3" {% if jury.brevet == "TD3" %}selected{% endif %}>TD3</option>
+                            <option value="TD4" {% if jury.brevet == "TD4" %}selected{% endif %}>TD4</option>
+                            <option value="TD5" {% if jury.brevet == "TD5" %}selected{% endif %}>TD5</option>
+                        </select> <!-- vergeet de spatie niet -->
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Beschikbare dag
+                    </td>
+                    <td>
+                        <select class="{{ classNames.dag }}" name="dag">
+                            <option value="" selected>Beschikbare dag</option>
+                            <option value="Za" {% if jury.dag == "Za" %}selected{% endif %}>Zaterdag</option>
+                            <option value="Zo" {% if jury.dag == "Zo" %}selected{% endif %}>Zondag</option>
+                            <option value="zazo" {% if jury.dag == "ZaZo" %}selected{% endif %}>Zaterdag en Zondag</option>
+                        </select> <!-- vergeet de spatie niet -->
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Opmerking:
+                    </td>
+                    <td>
+                        <input type="text" class="{{ classNames.opmerking }}" placeholder="Opmerking"
+                               value="{{ jury.opmerking }}" name="opmerking"/>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <center>
+                <a href="#" id="reserveer_button" onclick="post_turnsters()">Gegevens opslaan</a>
+            </center>
+            <input type="hidden" name="csrfToken" value="{{ csrfToken }}"/>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'default/index.html.twig' %}
+
+{% block body %}
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <p>
+            <a href="{{ path('getContent', { 'page': app.request.get('page') }) }}">Annuleer wijzigingen</a>
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_errors(form.content) }}
+            {{ form_widget(form.content) }}
+            {{ form_widget(form.Verstuur) }}
+            {{ form_end(form) }}
+        </p>
+    {% endif %}
+    {{ parent() }}
+{% endblock %}

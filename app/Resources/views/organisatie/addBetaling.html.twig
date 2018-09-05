@@ -1,0 +1,53 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1>
+    <a href="{{ path('betalingInzien', { 'page': app.request.get('page'), 'userId': app.request.get('userId') }) }}">
+            <img src="{{ asset('images/back_arrow.png') }}"></a>
+            Betaling toevoegen
+    </h1>
+
+	<form method="post" action="">
+	<table class="overzicht_factuur">
+		<tr>
+			<th>
+				Vereniging
+			</th>
+			<td>
+				{{ contactpersoon.vereniging }}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Factuurnummer
+			</th>
+			<td>
+				{{ factuurNr}}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Datum
+			</th>
+			<td>
+				<input type="date" name="datum" value="" class="datum" />
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Bedrag
+			</th>
+			<td>
+				<input type="text" name="bedrag" value="" class="text" />
+			</td>
+		</tr>
+		<tr align="center">
+			<td colspan="2">
+				<input type="submit" value="Opslaan" />
+			</td>
+		</tr>
+	</table>
+        <input type="hidden" name="csrfToken" value="{{ csrfToken }}" />
+    </form>
+
+{% endblock %}

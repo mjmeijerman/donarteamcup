@@ -1,0 +1,22 @@
+{% extends 'default/base.html.twig' %}
+
+{% block body %}
+    <h1>Sponsor verwijderen</h1>
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        Weet u zeker dat u <span style="color:red; font-weight: bold;">"{{ content.naam }}"</span> wilt verwijderen?
+        <table>
+            <tr>
+                <td>
+                    <form method="post" action="">
+                        <input name="bevestig" type="submit" value="Bevestig">
+                    </form>
+                </td>
+                <td>
+                    <a href="{{ path('getContent', { 'page': 'Sponsors' }) }}">
+                        <input type="button" value="Annuleren">
+                    </a>
+                </td>
+            </tr>
+        </table>
+    {% endif %}
+{% endblock %}

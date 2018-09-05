@@ -1,0 +1,28 @@
+{% extends 'admin/adminIndex.html.twig' %}
+
+{% block body %}
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <h1>Jury Gebruiker toevoegen/wijzigen</h1>
+        <a href="{{ path('getAdminIndexPage') }}">Annuleer</a>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <table>
+            <tr>
+                <td colspan="2">{{ form_errors(form.username) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.username) }}</td>
+                <td>{{ form_widget(form.username) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ form_errors(form.password) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.password) }}</td>
+                <td>{{ form_widget(form.password) }}</td>
+            </tr>
+        </table>
+        {{ form_widget(form.Verstuur) }}
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

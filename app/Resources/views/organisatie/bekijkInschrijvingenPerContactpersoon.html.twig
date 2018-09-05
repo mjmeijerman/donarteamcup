@@ -1,0 +1,223 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1><a href="{{ path('organisatieGetContent', { 'page': app.request.get('page') }) }}">
+            <img src="{{ asset('images/back_arrow.png') }}"></a>
+            Gegevens {{ contactpersoon.naam }}
+    </h1>
+<p>
+<div class="titel">
+        <h2>
+            Contactgegevens
+        </h2>
+    </div>
+    <div class="bericht">
+		<table class="overzicht">
+			<tr>
+			    <td>Id: </td>
+			    <td>{{ contactpersoon.id }}</td>
+            </tr>
+            <tr>
+				<td>Gebruikersnaam: </td>
+				<td>{{ contactpersoon.gebruikersnaam }}</td>
+            </tr>
+            <tr>
+				<td>Naam: </td>
+				<td>{{ contactpersoon.naam }}</td>
+            </tr>
+            <tr>
+				<td>Vereniging: </td>
+				<td>{{ contactpersoon.vereniging }}</td>
+            </tr>
+            <tr>
+				<td>Email: </td>
+				<td>{{ contactpersoon.email }}</td>
+            </tr>
+            <tr>
+				<td>Telefoonnummer: </td>
+				<td>{{ contactpersoon.telNr }}</td>
+            </tr>
+		</table>
+    </div>
+</p>
+
+<p>
+    <div class="titel">
+        <h2>
+            Turnsters geplaatst (<span id="turnsters_aantal">{{ turnsters|length }}</span>)
+        </h2>
+    </div>
+    <div class="bericht">
+		<table class="overzicht" id="turnster_table">
+			<tr>
+				<th>ID</th>
+				<th>Naam</th>
+				<th>Geboortejaar</th>
+				<th>Categorie</th>
+				<th>Niveau</th>
+				<th>Opmerking</th>
+				<th></th>
+				<th>Naar wachtlijst</th>
+				<th>Verwijderen</th>
+			</tr>
+			{% for turnster in turnsters %}
+				<tr id="turnster_row_{{ turnster.id }}">
+					<td>{{ turnster.id }}</td>
+					<td>{{ turnster.naam }}</td>
+					<td>{{ turnster.geboortejaar }}</td>
+					<td>{{ turnster.categorie }}</td>
+					<td>{{ turnster.niveau }}</td>
+					<td>{{ turnster.opmerking }}</td>
+					<td>
+					    {% if turnster.vloermuziek %}
+                            <a href="{{ asset(turnster.vloermuziekLocatie) }}" target="_blank">
+                                <img src="{{ asset('images/listen.png') }}" height="18">
+                            </a>
+                        {% endif %}
+					</td>
+					<td class="img">
+						<div onclick="naar_wachtlijst('{{ turnster.id }}')"
+							 style="display: inline">
+    					    <img src="{{ asset('images/down.png') }}" width="20" style="cursor: pointer;">
+                        </div>
+					</td>
+					<td class="img">
+						<div onclick="remove_turnster('{{ turnster.id }}',
+								'{{ turnster.naam }}', '{{ contactpersoon.vereniging }}')"
+							 style="display: inline">
+							<img src="{{ asset('images/remove.png') }}" width="20" style="cursor: pointer;">
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+    </div>
+</p>
+
+<p>
+    <div class="titel">
+        <h2>
+            Turnsters wachtlijst (<span id="wachtlijst_aantal">{{ wachtlijst|length }}</span>)
+        </h2>
+    </div>
+    <div class="bericht">
+		<table class="overzicht" id="wachtlijst_table">
+			<tr>
+				<th>ID</th>
+				<th>Naam</th>
+				<th>Geboortejaar</th>
+				<th>Categorie</th>
+				<th>Niveau</th>
+				<th>Opmerking</th>
+				<th></th>
+				<th>Van wachtlijst</th>
+				<th>Verwijderen</th>
+			</tr>
+			{% for turnster in wachtlijst %}
+				<tr id="turnster_row_{{ turnster.id }}">
+					<td>{{ turnster.id }}</td>
+					<td>{{ turnster.naam }}</td>
+					<td>{{ turnster.geboortejaar }}</td>
+					<td>{{ turnster.categorie }}</td>
+					<td>{{ turnster.niveau }}</td>
+					<td>{{ turnster.opmerking }}</td>
+					<td></td>
+					<td class="img">
+					    <div onclick="van_wachtlijst('{{ turnster.id }}')"
+							 style="display: inline">
+    					    <img src="{{ asset('images/up.png') }}" width="20" style="cursor: pointer;">
+                        </div>
+                    </td>
+					<td class="img">
+						<div onclick="remove_turnster_wachtlijst('{{ turnster.id }}',
+								'{{ turnster.naam }}', '{{ contactpersoon.vereniging }}')"
+							 style="display: inline">
+							<img src="{{ asset('images/remove.png') }}" width="20" style="cursor: pointer;">
+						</div>
+				    </td>
+				</tr>
+			{% endfor %}
+		</table>
+    </div>
+</p>
+
+<p>
+    <div class="titel">
+        <h2>
+            Turnsters afgemeld (<span id="afgemeld_aantal">{{ afgemeld|length }}</span>)
+        </h2>
+    </div>
+    <div class="bericht">
+		<table class="overzicht" id="afgemeld_table">
+			<tr>
+				<th>ID</th>
+				<th>Naam</th>
+				<th>Geboortejaar</th>
+				<th>Categorie</th>
+				<th>Niveau</th>
+				<th>Opmerking</th>
+				<th>Verwijderen</th>
+			</tr>
+			{% for turnster in afgemeld %}
+				<tr id="turnster_row_{{ turnster.id }}">
+					<td>{{ turnster.id }}</td>
+					<td>{{ turnster.naam }}</td>
+					<td>{{ turnster.geboortejaar }}</td>
+					<td>{{ turnster.categorie }}</td>
+					<td>{{ turnster.niveau }}</td>
+					<td>{{ turnster.opmerking }}</td>
+					<td class="img">
+					    <div onclick="remove_turnster_afgemeld('{{ turnster.id }}',
+								'{{ turnster.naam }}', '{{ contactpersoon.vereniging }}')"
+							 style="display: inline">
+							<img src="{{ asset('images/remove.png') }}" width="20" style="cursor: pointer;">
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+    </div>
+</p>
+
+<p>
+    <div class="titel">
+        <h2>
+            Juryleden (<span id="juryleden_aantal">{{ juryleden|length }}</span>)
+        </h2>
+    </div>
+    <div class="bericht">
+		<table class="overzicht" id="jury_table">
+			<tr>
+				<th>ID</th>
+				<th>Naam</th>
+				<th>Opmerking</th>
+				<th>Brevet</th>
+				<th>Dag</th>
+				<th></th>
+			</tr>
+			{% for jurylid in juryleden %}
+				<tr id="jurylid_row_{{ jurylid.id }}">
+					<td>{{ jurylid.id }}</td>
+					<td>{{ jurylid.naam }}</td>
+					<td>{{ jurylid.opmerking }}</td>
+					<td>{{ jurylid.brevet }}</td>
+					<td>{{ jurylid.dag }}</td>
+					<td>
+					    <div onclick="remove_jurylid('{{ jurylid.id }}',
+								'{{ jurylid.naam }}', '{{ contactpersoon.vereniging }}', '{{ app.request.get('page') }}')"
+							 style="display: inline">
+							<img src="{{ asset('images/remove.png') }}" width="20" style="cursor: pointer;">
+						</div>
+                    </td>
+				</tr>
+			{% endfor %}
+		</table>
+    </div>
+</p>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/wachtlijst_remove_etc.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,240 @@
+{% extends 'uitslagen/base.html.twig' %}
+
+{% block styles %}<link href="{{ asset('css/Uitslagen.css') }}" rel="stylesheet"/>{% endblock %}
+
+{% block body %}
+    <div id="menu">
+        <table width="100%">
+            <tr align="center">
+                <td width="150"></td>
+                {% for baan in banen %}
+                    <td>
+                    {% if activeBaan == baan.baan %}
+                        <a id="active">
+                    {% else %}
+                        <a href="{{ path('scores', { 'baan': baan.baan }) }}">
+                    {% endif %}
+                            Baan {{ baan.baan }}</a></td>
+                {% endfor %}
+                <td width="150"></td>
+            </tr>
+        </table>
+    </div>
+
+    {% if activeBaan != '' %}
+        <div id="scores">
+            <h1>Kies hierboven een baan om live scores te bekijken</h1>
+            <h1>U bekijkt nu live de scores van<br />
+                --- BAAN {{ activeBaan }} ---</h1>
+
+            <table width="750">
+                <tr id="toestel">
+                    <td colspan="10"><h2>BRUG</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <th align="center" width="40">#
+                    </th>
+                    <th align="left" width="200" colspan="5">Naam
+                    </th>
+                    <th align="right">D
+                    </th>
+                    <th width="20">
+                    </th>
+                    <th align="right">N
+                    </th>
+                    <th width="20">
+                    </th>
+                    <th align="right" width="50">Totaal
+                    </th>
+                    <th width="10">
+                    </th>
+                </tr>
+                {% for turnster in turnsters.Brug %}
+                    <tr>
+                        <td align="center">{{ turnster.wedstrijdnummer }}
+                        </td>
+                        <td align="left" colspan="5">{{ turnster.naam }}
+                        </td>
+                        <td align="right">{{ turnster.dBrug }}
+                        </td>
+                        <td>
+                        </td>
+                        <td align="right">{{ turnster.nBrug }}
+                        </td>
+                        <td>
+                        </td>
+                        <td align="right"><b>{{ turnster.totaalBrug|number_format(3, ",", ".") }}</b>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                <tr id="fill">
+                </tr>
+
+                <tr id="toestel">
+                    <td colspan="10"><h2>BALK</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <th align="center" width="40">#
+                    </th>
+                    <th align="left" width="200" colspan="5">Naam
+                    </th>
+                    <th align="right">D
+                    </th>
+                    <th width="20">
+                    </th>
+                    <th align="right">N
+                    </th>
+                    <th width="20">
+                    </th>
+                    <th align="right" width="50">Totaal
+                    </th>
+                    <th width="10">
+                    </th>
+                </tr>
+                {% for turnster in turnsters.Balk %}
+                    <tr>
+                        <td align="center">{{ turnster.wedstrijdnummer }}
+                        </td>
+                        <td align="left" colspan="5">{{ turnster.naam }}
+                        </td>
+                        <td align="right">{{ turnster.dBalk }}
+                        </td>
+                        <td>
+                        </td>
+                        <td align="right">{{ turnster.nBalk }}
+                        </td>
+                        <td>
+                        </td>
+                        <td align="right"><b>{{ turnster.totaalBalk|number_format(3, ",", ".") }}</b>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+
+                <tr id="fill">
+                </tr>
+
+                <tr id="toestel">
+                    <td colspan="10"><h2>VLOER</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <th align="center" width="40">#
+                    </th>
+                    <th align="left" width="200" colspan="5">Naam
+                    </th>
+                    <th align="right">D
+                    </th>
+                    <th width="20">
+                    </th>
+                    <th align="right">N
+                    </th>
+                    <th width="20">
+                    </th>
+                    <th align="right" width="50">Totaal
+                    </th>
+                    <th width="10">
+                    </th>
+                </tr>
+                {% for turnster in turnsters.Vloer %}
+                    <tr>
+                        <td align="center">{{ turnster.wedstrijdnummer }}
+                        </td>
+                        <td align="left" colspan="5">{{ turnster.naam }}
+                        </td>
+                        <td align="right">{{ turnster.dVloer }}
+                        </td>
+                        <td>
+                        </td>
+                        <td align="right">{{ turnster.nVloer }}
+                        </td>
+                        <td>
+                        </td>
+                        <td align="right"><b>{{ turnster.totaalVloer|number_format(3, ",", ".") }}</b>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                <tr id="fill">
+                </tr>
+
+                <tr id="toestel">
+                    <td colspan="10"><h2>SPRONG</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <th align="center" width="40">#
+                    </th>
+                    <th align="left" width="350">Naam
+                    </th>
+                    <th align="right" width="20">D1
+                    </th>
+                    <th align="right" width="20">N1
+                    </th>
+                    <th align="right" width="60">Tot 1
+                    </th>
+                    <th align="right" width="20">
+                    </th>
+                    <th align="right" width="20">D2
+                    </th>
+                    <th align="right" width="20">N2
+                    </th>
+                    <th align="right" width="60">Tot 2
+                    </th>
+                    <th width="20">
+                    </th>
+                    <th align="right" width="50">Eind
+                    </th>
+                    <th width="10">
+                    </th>
+                </tr>
+                {% for turnster in turnsters.Sprong %}
+                    <tr>
+                        <td align="center">{{ turnster.wedstrijdnummer }}
+                        </td>
+                        <td align="left">{{ turnster.naam }}
+                        </td>
+                        <td align="right">{{ turnster.dSprong1 }}
+                        </td>
+                        <td align="right">{{ turnster.nSprong1 }}
+                        </td>
+                        <td align="right">{{ turnster.totaalSprong1|number_format(3, ",", ".") }}
+                        </td>
+                        <td align="right">
+                        </td>
+                        <td align="right">{{ turnster.dSprong2 }}
+                        </td>
+                        <td align="right">{{ turnster.nSprong2 }}
+                        </td>
+                        <td align="right">{{ turnster.totaalSprong2|number_format(3, ",", ".") }}
+                        </td>
+                        <td>
+                        </td>
+                        <td align="right"><b>{{ turnster.totaalSprong|number_format(3, ",", ".") }}</b>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function refresh() {
+            window.location.reload(true);
+        }
+        setTimeout(refresh, 30000);
+    </script>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'default/base.html.twig' %}
+
+{% block body %}
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <h1>Sponsor toevoegen</h1>
+        <a href="{{ path('getContent', { 'page': 'Sponsors' }) }}">Annuleer</a>
+        <p>Let op: het bestand mag maximaal 5 Mb zijn!</p>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <table>
+            {% if form.file is defined %}
+                <tr>
+                    <td colspan="2">{{ form_errors(form.file) }}</td>
+                </tr>
+                <tr>
+                    <td>Klein logo</td>
+                    <td>{{ form_widget(form.file) }}</td>
+                </tr>
+            {% endif %}
+            {% if form.file2 is defined %}
+                <tr>
+                    <td colspan="2">{{ form_errors(form.file2) }}</td>
+                </tr>
+                <tr>
+                    <td>Groot logo</td>
+                    <td>{{ form_widget(form.file2) }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td colspan="2">{{ form_errors(form.naam) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.naam) }}</td>
+                <td>{{ form_widget(form.naam) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ form_errors(form.website) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.website) }}</td>
+                <td>{{ form_widget(form.website) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ form_errors(form.omschrijving) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.omschrijving) }}</td>
+                <td>{{ form_widget(form.omschrijving) }}</td>
+            </tr>
+        </table>
+        {{ form_widget(form.opslaan) }}
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

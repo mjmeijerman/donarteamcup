@@ -1,0 +1,170 @@
+{% extends 'uitslagen/base.html.twig' %}
+
+{% block styles %}
+    <link href="{{ asset('css/Uitslagen2.css') }}" rel="stylesheet"/>{% endblock %}
+
+{% block header %}<img src="{{ asset('images/header_uitslagen.png') }}" alt="" />{% endblock %}
+
+{% block body %}
+    <div id="content">
+        <div class="tekst">
+            Uitslagen {{ app.request.get('categorie') }} {{ app.request.get('niveau') }} gesorteerd op {{ order }}.
+            <br/>
+            <hr>
+            <center><a href="{{ path('uitslagen', { 'categorie': app.request.get('categorie'), 'niveau': app.request
+                    .get('niveau'), 'prijswinnaars': 'true' }) }}" target="_blank">
+                    Prijswinnaars
+                </a></center>
+            <a href="{{ path('uitslagen') }}">
+                <input type="submit" style="float:left;" value="Terug"/>
+            </a>
+            <a href="{{ path('uitslagen', { 'categorie': app.request.get('categorie'), 'niveau': app.request
+                .get('niveau'), 'pdf': 'true' }) }}" target="_blank">
+                <input type="submit" style="float:right;" value="Opslaan als PDF"/>
+            </a>
+        </div>
+        <table width="1000" border="1">
+            <tr align="left" style="border-top:0px solid #000;background:#FFFF00;">
+                <td>#</td>
+                <td width="150">Naam</td>
+                <td width="150">Vereniging</td>
+                <th colspan="4" style="text-align:left;border-left:1px solid #000;">
+                    <a href="{{ path('uitslagen', { 'categorie': app.request.get('categorie'), 'niveau': app.request
+                        .get('niveau'), 'order': 'Brug' }) }}">Brug</a>
+                </th>
+                <th colspan="4" style="text-align:left;border-left:1px solid #000;">
+                    <a href="{{ path('uitslagen', { 'categorie': app.request.get('categorie'), 'niveau': app.request
+                        .get('niveau'), 'order': 'Balk' }) }}">Balk</a>
+                </th>
+                <th colspan="4" style="text-align:left;border-left:1px solid #000;">
+                    <a href="{{ path('uitslagen', { 'categorie': app.request.get('categorie'), 'niveau': app.request
+                        .get('niveau'), 'order': 'Vloer' }) }}">Vloer</a>
+                </th>
+                <th colspan="8" style="text-align:left;border-left:1px solid #000;">
+                    <a href="{{ path('uitslagen', { 'categorie': app.request.get('categorie'), 'niveau': app.request
+                        .get('niveau'), 'order': 'Sprong' }) }}">Sprong</a>
+                </th>
+                <th width="30">
+                    <a href="{{ path('uitslagen', { 'categorie': app.request.get('categorie'), 'niveau': app.request
+                        .get('niveau') }) }}">Totaal</a>
+                </th>
+                <th>Plts</th>
+            </tr>
+            <tr style="background:#FFFF00;">
+                <th></th>
+                <th width="150"></th>
+                <th width="150"></th>
+                <th style="border-left:1px solid #000;" width="10">D</th>
+                <th style="border-left:1px solid #000;" width="10">N</th>
+                <th>Result</th>
+                <th>Pl</th>
+                <th style="border-left:1px solid #000;" width="10">D</th>
+                <th style="border-left:1px solid #000;" width="10">N</th>
+                <th>Result</th>
+                <th>Pl</th>
+                <th style="border-left:1px solid #000;" width="10">D</th>
+                <th style="border-left:1px solid #000;" width="10">N</th>
+                <th>Result</th>
+                <th>Pl</th>
+                <th style="border-left:1px solid #000;" width="10">D1</th>
+                <th style="border-left:1px solid #000;" width="10">N1</th>
+                <th>Rslt1</th>
+                <th width="10">D2</th>
+                <th style="border-left:1px solid #000;" width="10">N2</th>
+                <th>Rslt2</th>
+                <th>Result</th>
+                <th style="border-left:1px solid #000;">Pl</th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            {% for turnster in turnsters %}
+                {% if turnster.userId == userId %}
+                    <tr style="background-color: rgb(245,245,167);">
+                {% else %}
+                    <tr>
+                {% endif %}
+                    <td>{{ turnster.wedstrijdnummer }}</td>
+                    <td>{{ turnster.naam }}</td>
+                    <td>{{ turnster.vereniging }}</td>
+                    <td class="score" style="border-left:1px solid #000;">
+                        {{ turnster.dBrug }}
+                    </td>
+                    <td class="score">
+                        {{ turnster.nBrug }}
+                    </td>
+                    <td class="score">{{ turnster.totaalBrug|number_format(3, ',') }}</td>
+                    <td
+                            {% if turnster.rankBrug == 1 or turnster.rankBrug == 2 or turnster.rankBrug == 3 %}
+                            style="background-color:yellow;font-weight:bold;">
+                        {% else %}
+                            class="score">
+                        {% endif %}
+                        {{ turnster.rankBrug }}</td>
+                    <td class="score" style="border-left:1px solid #000;">
+                        {{ turnster.dBalk }}
+                    </td>
+                    <td class="score">
+                        {{ turnster.nBalk }}
+                    </td>
+                    <td class="score">{{ turnster.totaalBalk|number_format(3, ',') }}</td>
+                    <td
+                            {% if turnster.rankBalk == 1 or turnster.rankBalk == 2 or turnster.rankBalk == 3 %}
+                            style="background-color:yellow;font-weight:bold;">
+                        {% else %}
+                            class="score">
+                        {% endif %}
+                        {{ turnster.rankBalk }}</td>
+                    <td class="score" style="border-left:1px solid #000;">
+                        {{ turnster.dVloer }}
+                    </td>
+                    <td class="score">
+                        {{ turnster.nVloer }}
+                    </td>
+                    <td class="score">{{ turnster.totaalVloer|number_format(3, ',') }}</td>
+                    <td
+                            {% if turnster.rankVloer == 1 or turnster.rankVloer == 2 or turnster.rankVloer == 3 %}
+                            style="background-color:yellow;font-weight:bold;">
+                        {% else %}
+                            class="score">
+                        {% endif %}
+                        {{ turnster.rankVloer }}</td>
+                    <td class="score" style="border-left:1px solid #000;">
+                        {{ turnster.dSprong1 }}
+                    </td>
+                    <td class="score">
+                        {{ turnster.nSprong1 }}
+                    </td>
+                    <td class="score">{{ turnster.totaalSprong1|number_format(3, ',') }}</td>
+                    <td class="score" style="border-left:1px solid #000;">
+                        {{ turnster.dSprong2 }}
+                    </td>
+                    <td class="score">
+                        {{ turnster.nSprong2 }}
+                    </td>
+                    <td class="score">{{ turnster.totaalSprong2|number_format(3, ',') }}</td>
+                    <td class="score">{{ turnster.totaalSprong|number_format(3, ',') }}</td>
+                    <td
+                            {% if turnster.rankSprong == 1 or turnster.rankSprong == 2 or turnster.rankSprong == 3 %}
+                            style="background-color:yellow;font-weight:bold;">
+                        {% else %}
+                            class="score">
+                        {% endif %}
+                        {{ turnster.rankSprong }}</td>
+                    <td style="border-left:1px solid #000;">{{ turnster.totaal|number_format(3, ',') }}</td>
+                    <td
+                            {% if turnster.rank == 1 or turnster.rank == 2 or turnster.rank == 3 %}
+                            style="background-color:yellow;font-weight:bold;">
+                        {% else %}
+                            class="score">
+                        {% endif %}
+                        {{ turnster.rank }}</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+
+
+        </table>
+    </div>
+{% endblock %}

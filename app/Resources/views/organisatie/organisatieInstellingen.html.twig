@@ -1,0 +1,211 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1>Instellingen</h1>
+    <p>
+    <div class="titel">
+        <h2>Overzicht</h2>
+    </div>
+    <div class="bericht">
+        <table class="instellingen_overzicht">
+            {% for naam, instelling in instellingen %}
+                <tr>
+                    <td>{{ naam }}</td>
+                    <td><span id="{{ naam|replace ({' ': '_'}) }}" class="edit">{{ instelling }}</span></td>
+                </tr>
+            {% endfor %}
+
+            {#<tr>
+                <td>Factuur e-mailen</td>
+                <td>Datum</td>
+                <td>Countdown</td>
+                <td><a href="#">Edit</a></td>
+                <!-- In-line edit -->
+            </tr>#}
+
+        </table>
+    </div>
+    </p>
+
+    <p>
+    <div class="titel">
+        <h2>Toegestane niveaus</h2>
+    </div>
+    <div class="bericht">
+        <a href="{{ path('niveauToevoegen', { 'page': app.request.get('page') }) }}">
+            <img src="{{ asset('images/add.png') }}" width="20" /> Niveau toevoegen
+        </a>
+        <table class="instellingen_overzicht">
+            <tr>
+                <th width="15%">Categorie</th>
+                <th width="5%">Niveau</th>
+                <th width="10%"></th>
+                <th width="5%"></th>
+            </tr>
+            {% for categorie, niveaus in toegestaneNiveaus %}
+                {% for id, data in niveaus %}
+                    <tr id="niveau_row_{{ id }}">
+                        <td>{{ categorie }}</td>
+                        <td>{{ data.niveau }}</td>
+                        <td>
+                            {% if data.uitslagGepubliceerd %}
+                                <span class="gepubliceerd" id="uitslag_{{ id }}" onclick="uitslag_publiceren
+                                ('{{ id }}')" style="cursor: pointer;">Uitslag de-publiceren
+                                </span>
+                            {% else %}
+                                <span class="niet_gepubliceerd" id="uitslag_{{ id }}" onclick="uitslag_publiceren('{{
+                                 id }}')"
+                                style="cursor: pointer;">Uitslag publiceren</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div onclick="remove_niveau('{{ id }}',
+                                    '{{ categorie }}', '{{ data.niveau }}')"
+                                 style="display: inline">
+                                <img src="{{ asset('images/remove.png') }}" width="20" style="cursor: pointer;">
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </table>
+    </div>
+    </p>
+
+    <p>
+    <div class="titel">
+        <h2>Voorinschrijvingen</h2>
+    </div>
+    <div class="bericht">
+        <a href="{{ path('genereerVoorinschrijving', { 'page': app.request.get('page') }) }}">
+            <img src="{{ asset('images/add.png') }}" width="20" /> Genereer nieuwe link
+        </a>
+        <table class="instellingen">
+            <tr>
+                <th width="30%">Voorinschrijvingslink</th>
+                <th width="30%">Verstuurd naar</th>
+                <th width="15%">Gemaakt op</th>
+                <th width="15%">Gebruikt op</th>
+                <th width="5%"></th>
+                <th width="5%"></th>
+            </tr>
+            {% for voorinschrijving in voorinschrijvingen %}
+                <tr>
+                    <td>/inschrijven?token={{ voorinschrijving.token }}</td>
+                    <td>{{ voorinschrijving.tokenSentTo }}</td>
+                    <td>{{ voorinschrijving.createdAt }}</td>
+                    <td>{{ voorinschrijving.usedAt }}</td>
+                    <td>
+                        <a href="{{ path('refreshVoorinschrijving', { 'page': app.request.get('page'), 'id':
+                        voorinschrijving.id
+                         }) }}">
+                            <img src="{{ asset('images/refresh.png') }}" width="20" />
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('removeVoorinschrijving', { 'page': app.request.get('page'), 'id':
+                        voorinschrijving.id
+                         }) }}">
+                            <img src="{{ asset('images/remove.png') }}" width="20" />
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    </p>
+
+    <p>
+    <div class="titel">
+        <h2>Reglementen</h2>
+    </div>
+    <div class="bericht">
+        <table id="uploads" border="1" class="instellingen">
+        <col width="15%"/>
+        <col width="66.5%"/>
+        <col width="18.5%"/>
+        <col width="3.5%"/>
+        <tr>
+            <th>Naam</th>
+            <th>Locatie</th>
+            <th>Datum</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>{{ reglementen.naam }}</td>
+            <td>/uploads/reglementen/{{ reglementen.locatie }}</td>
+            <td>{{ reglementen.createdAt }}</td>
+            <td><a href="{{ path('addReglementen', { 'page': app.request.get('page') }) }}">
+                    <img src="{{ asset('images/refresh.png') }}" width="18px"/>
+                </a>
+            </td>
+        </tr>
+    </table>
+    </div>
+    </p>
+
+    <p>
+    <div class="titel">
+        <h2>Development</h2>
+    </div>
+    <div class="bericht">
+        <table>
+            <tr>
+                {% if not disableRemoveInschrijvingenButton %}
+                    <div class="indelingen_button" style="float: left;">
+                        <a href="{{ path('removeInschrijvingen', { 'page': app.request.get('page'), }) }}">
+                            Alle inschrijvingen verwijderen
+                        </a>
+                    </div>
+                {% endif %}
+            </tr>
+        </table>
+    </div>
+    </p>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/EditFieldByClicking.js') }}"></script>
+    <script>
+        $('.edit').click(function () {
+            var data = $(this).text();
+            var fieldName = this.id;
+            if (fieldName === 'Max_aantal_turnsters') {
+                onClick(data, fieldName, 'number');
+            } else {
+                onClick(data, fieldName, 'datetime-local');
+            }
+        });
+        $(document).on('blur keypress', '.txt_edit', function (e) {
+            if (e.type === 'keypress' && e.keyCode !== 13) return;
+            var data = $(this).val();
+            var fieldName = this.id.replace('txt_', '');
+            onChange(data, fieldName, 'editInstellingen');
+        });
+
+        function uitslag_publiceren(id)
+        {
+            var uitslag_span = document.getElementById('uitslag_' + id);
+            if (uitslag_span.className == "niet_gepubliceerd") {
+                uitslag_span.className = "gepubliceerd";
+                uitslag_span.innerHTML = "Uitslag gepubliceerd (ongedaan maken)";
+                $.ajax({
+                    type: 'get',
+                    url: Routing.generate('publiceeerUitslagAjaxCall', {id: id})
+                });
+            } else {
+                uitslag_span.className = "niet_gepubliceerd";
+                uitslag_span.innerHTML = "Uitslag publiceren";
+                $.ajax({
+                    type: 'get',
+                    url: Routing.generate('annuleerPublicerenAjaxCall', {id: id})
+                });
+            }
+        }
+
+
+    </script>
+        <script src="{{ asset('js/wachtlijst_remove_etc.js') }}"></script>
+{% endblock %}

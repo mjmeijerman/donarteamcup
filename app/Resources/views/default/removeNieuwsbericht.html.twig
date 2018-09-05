@@ -1,0 +1,24 @@
+{% extends 'default/base.html.twig' %}
+
+{% block body %}
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <h1>Nieuwsbericht verwijderen</h1>
+        <p><span style="color:red;">Weet u zeker dat u onderstaand nieuwsbericht wilt verwijderen?</span></p>
+        <h1>{{ content.titel }}</h1>
+        <p>{{ content.bericht|raw }}</p>
+        <table>
+            <tr>
+                <td>
+                    <form method="post" action="{{ path('removeNieuwsberichtPage', { id: app.request.get('id') }) }}">
+                        <input name="bevestig" type="submit" value="Bevestig">
+                    </form>
+                </td>
+                <td>
+                    <a href="{{ path('getContent', { 'page': 'Laatste nieuws' }) }}">
+                        <input type="button" value="Annuleren">
+                    </a>
+                </td>
+            </tr>
+        </table>
+    {% endif %}
+{% endblock %}

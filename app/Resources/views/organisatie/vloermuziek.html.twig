@@ -1,0 +1,95 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1>Vloermuziek: nog niet geupload!</h1>
+    {% for categorie, niveaus in vloermuziek %}
+        {% for niveau, vloermuziek in niveaus %}
+            <p>
+                <div class="titel">
+                    <h2>{{ categorie }} {{ niveau }}</h2>
+                </div>
+                <div class="bericht">
+                    <table border="1" class="overzicht" style="font-size:8pt;">
+                    <tr>
+                        <th>#</th>
+                        <th>Naam</th>
+                        <th>Vereniging</th>
+                        <th>Dag</th>
+                        <th>Ronde</th>
+                        <th>Baan</th>
+                        <th>Groep</th>
+                        <th>Contactpersoon</th>
+                        <th>Email</th>
+                        <th>Tel. Nr.</th>
+                    </tr>
+                        {% if vloermuziek.niet is defined %}
+                            {% for user in vloermuziek.niet %}
+                                {% for turnster in user %}
+                                    <tr>
+                                        <td>{{ turnster.wedstrijdNummer }}</td>
+                                        <td>{{ turnster.turnsterNaam }}</td>
+                                        <td>{{ turnster.vereniging }}</td>
+                                        <td>{{ turnster.wedstrijdDag }}</td>
+                                        <td>{{ turnster.wedstrijdRonde }}</td>
+                                        <td>{{ turnster.baan }}</td>
+                                        <td>{{ turnster.groep }}</td>
+                                        <td>{{ turnster.contactPersoon }}</td>
+                                        <td>{{ turnster.mail }}</td>
+                                        <td>{{ turnster.telNr }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>
+            </p>
+        {% endfor %}
+    {% endfor %}
+
+    <h1>Vloermuziek: wel geupload!</h1>
+    {% for categorie, niveaus in vloermuziek %}
+        {% for niveau, vloermuziek in niveaus %}
+            <p>
+                <div class="titel">
+                    <h2>{{ categorie }} {{ niveau }}</h2>
+                </div>
+                <div class="bericht">
+                    <table border="1" class="overzicht" style="font-size:8pt;">
+                    <tr>
+                        <th>#</th>
+                        <th>Naam</th>
+                        <th>Vereniging</th>
+                        <th>Dag</th>
+                        <th>Ronde</th>
+                        <th>Baan</th>
+                        <th>Groep</th>
+                        <th></th>
+                    </tr>
+                        {% if vloermuziek.wel is defined %}
+                            {% for user in vloermuziek.wel %}
+                                {% for turnster in user %}
+                                    <tr>
+                                        <td>{{ turnster.wedstrijdNummer }}</td>
+                                        <td>{{ turnster.turnsterNaam }}</td>
+                                        <td>{{ turnster.vereniging }}</td>
+                                        <td>{{ turnster.wedstrijdDag }}</td>
+                                        <td>{{ turnster.wedstrijdRonde }}</td>
+                                        <td>{{ turnster.baan }}</td>
+                                        <td>{{ turnster.groep }}</td>
+                                        <td>
+                                            <a href="{{ asset(turnster.locatie) }}" target="_blank">
+                                                <img src="{{ asset('images/listen.png') }}" height="18">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>
+            </p>
+        {% endfor %}
+    {% endfor %}
+
+
+{% endblock %}

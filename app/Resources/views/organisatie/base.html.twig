@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Haagse Donar Cup</title>
+    <meta charset="UTF-8"/>
+    {% block stylesheets %}
+        <link href="{{ asset('css/organisatie.css') }}" rel="stylesheet"/>
+    {% endblock %}
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/favicon.png') }}"/>
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+</head>
+<body>
+<center>
+    <div id="error_container">
+        {% if app.session.flashbag.get('error') is defined %}
+            {% for flash_message in app.session.flashbag.get('error') %}
+                <div id="error">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div id="error_success_container">
+        {% if app.session.flashbag.get('success') is defined %}
+            {% for flash_message in app.session.flashbag.get('success') %}
+                <div id="error_success">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div id="container">
+        <header>
+            <a href="{{ path('organisatieGetContent', { 'page': 'Mijn gegevens' }) }}">
+                <img src="{{ asset('images/header_organisatie.png') }}" alt=""/>
+            </a>
+        </header>
+
+        <nav id="menu">
+            {% for menuItem in menuItems %}
+                <a href="{{ path('organisatieGetContent', { 'page': menuItem.naam }) }}">{{ menuItem.naam }}</a>
+            {% endfor %}
+            <a href="{{ path('getIndexPage') }}">HDC site</a>
+            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                <a href="{{ path('getContent', {'_switch_user': '_exit', 'page': 'Inloggen'}) }}">Uitloggen</a>
+            {% else %}
+                <a href="{{ path('logout') }}">Uitloggen</a>
+            {% endif %}
+        </nav>
+
+        <div id="statistiek">
+            {{ totaalAantalVerenigingen }} VERENIGINGEN | {{ totaalAantalTurnsters }} TURNSTERS |
+            {{ totaalAantalTurnstersWachtlijst }} WACHTLIJST | {{ totaalAantalJuryleden }} JURYLEDEN
+        </div>
+
+        <article class="index">
+            {% block body %}{% endblock %}
+        </article>
+
+        {#<aside>
+            <h1>To do</h1>
+            <ul>
+                <li><s>Ding 1</s>
+                    <ul>
+                        <li>Subding 1</li>
+                        <li>Subding 2</li>
+                    </ul>
+                </li>
+                <li>Ding 3</li>
+                <li>Ding 4</li>
+            </ul>
+        </aside>#}
+
+    </div>
+</center>
+{% block javascripts %}
+
+{% endblock %}
+</body>
+</html>

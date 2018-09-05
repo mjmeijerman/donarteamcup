@@ -1,0 +1,25 @@
+{% extends 'uitslagen/base.html.twig' %}
+
+{% block body %}
+    <div id="uitslagen_index">
+        <h1>Kies een leeftijdscategorie en niveau om uitslagen te bekijken</h1>
+
+        <table>
+            {% for categorie, niveaus in toegestaneNiveaus %}
+                <tr>
+                    <td>
+                        <div id="categorie">{{ categorie }}</div>
+                    </td>
+                    {% for id, data in niveaus %}
+                        <td>
+                            <a href="{{ path('uitslagen', { 'categorie': categorie, 'niveau': data.niveau }) }}">
+                                {{ data.niveau }}
+                            </a>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,354 @@
+body {
+	font-family: Calibri, Verdana;
+	font-size: 12pt;
+	width: 100%;
+	background: #000;
+	background-image: url(images/background.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	margin: 0;
+}
+
+#container {
+	text-align: center;
+}
+
+/* HEADER */
+
+#header {
+	text-align: center;
+	margin-top: 10px;
+}
+
+#header img {
+	max-width: 90%;
+}
+
+/* BELANGRIJKE LINKS */
+
+#belangrijk {
+	text-align: center;
+	margin-top: 10px;
+}
+
+#belangrijk a:link, #belangrijk a:visited {
+	background: #E5E109;
+	font-size: 18pt;
+	display: inline-block;
+	width: 90%;
+	color: #000;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	margin: 3px;
+	float: none;
+}
+
+#belangrijk a:hover, #belangrijk a:active {
+	background: #212121;
+	font-size: 18pt;
+	display: inline-block;
+	width: 90%;
+	color: #FFFF00;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	margin: 3px;
+	float: none;
+}
+
+/* NORMALE LINKS */
+
+#content {
+	text-align: center;
+	margin-top: 10px;
+}
+
+#content a:link, #content a:visited {
+	background: #E2E2E2;
+	font-size: 18pt;
+	display: inline-block;
+	width: 90%;
+	color: #000;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	margin: 3px;
+}
+
+#content a:hover, #content a:active {
+	background: #212121;
+	font-size: 18pt;
+	display: inline-block;
+	width: 90%;
+	color: #FFFF00;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+/* INLOGGEN */
+
+#inloggen {
+	text-align: center;
+	margin-top: 10px;
+}
+
+#inloggen a:link, #inloggen a:visited {
+	background: #212121;
+	font-size: 18pt;
+	display: inline-block;
+	width: 90%;
+	color: #FFF;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	margin: 3px;
+}
+
+#inloggen a:hover, #inloggen a:active {
+	background: #212121;
+	font-size: 18pt;
+	display: inline-block;
+	width: 90%;
+	color: #FFFF00;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+/* BELANGRIJKE LINKS OP ANDERE PAGINA'S DAN INDEX*/
+
+#belangrijk_sub {
+	text-align: center;
+	margin-top: 10px;
+}
+
+#belangrijk_sub a:link, #belangrijk_sub a:visited {
+	background: #E5E109;
+	font-size: 12pt;
+	display: inline-block;
+	width: 43%;
+	color: #000;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	margin: 3px;
+	float: none;
+}
+
+#belangrijk_sub a:hover, #belangrijk_sub a:active {
+	background: #212121;
+	font-size: 12pt;
+	display: inline-block;
+	width: 43%;
+	color: #FFFF00;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	margin: 3px;
+	float: none;
+}
+
+/* CONTENT OP ANDERE PAGINA'S DAN INDEX */
+
+#content_sub {
+	width: 90%;
+	font-size: 9pt;
+	display: inline-block;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 3em;
+	background: #E2E2E2;
+	border-radius: 5px;
+}
+
+#content_sub p {
+	margin: 0.8em;
+}
+
+#content_sub i {
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+}
+
+#content u {
+	text-decoration: none;
+	font-size: 6pt;
+	margin: 0;
+}
+
+#content_sub h1 {
+	font-size: 16pt;
+	color: #FFF;
+	background: #212121;
+	display: inline-block;
+	font-weight: normal;
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+	margin-top: 0.2em;
+	width: 100%;
+}
+
+#content_sub h2 {
+	font-size: 16pt;
+	color: #000;
+	background: #F1F1F1;
+	display: inline-block;
+	font-weight: normal;
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+	width: 100%;
+}
+
+#content_sub h3 {
+	font-size: 16pt;
+	color: #000;
+	background: #E5E109;
+	display: inline-block;
+	font-weight: normal;
+	padding-top: 0.4em;
+	padding-bottom: 0.4em;
+	width: 100%;
+}
+
+#content_sub #factuur a:link, #content_sub #factuur a:visited {
+	color: #FF0000;
+	text-decoration: none;
+	font-size: 16pt;
+	background: #F1F1F1;
+	display: inline-block;
+	font-weight: normal;
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+	width: 100%;
+}
+
+#content_sub #factuur a:hover, #content_sub #factuur a:active {
+	background: #FF0000;
+	color: #FFF;
+	text-decoration: none;
+}
+
+#content_sub table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 14pt;
+}
+
+#content_sub table th {
+	background: #000;
+	color: #FFFF00;
+}
+
+#content_sub table tr:nth-child(odd) {
+	background: #FFF;
+}
+
+#content_sub table td {
+	vertical-align: top;
+}
+
+#content_sub a:link, #content_sub a:visited {
+	color: #FFFF00;
+	text-decoration: none;
+}
+
+#content_sub a:hover, #content_sub a:active {
+	color: #FFFF00;
+	text-decoration: underline;
+}
+
+#content_sub #belangrijk {
+	background: #E5E109;
+	font-size: 18pt;
+	display: inline-block;
+	width: 90%;
+	color: #000;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	float: none;
+}
+
+#content_sub #content a:link, #content_sub #content a:visited {
+	background: #B2B2B2;
+	font-size: 18pt;
+	display: inline-block;
+	width: 90%;
+	color: #000;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	margin: 3px;
+}
+
+#content_sub #content a:hover, #content_sub #content a:active {
+	background: #212121;
+	font-size: 18pt;
+	display: inline-block;
+	width: 90%;
+	color: #FFFF00;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+#content_sub #content #niet_beschikbaar {
+	color: rgba(0,0,0,0.2);
+	background: #B2B2B2;
+	font-size: 18pt;
+	display: inline-block;
+	width: 90%;
+	border-radius: 5px;
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	margin: 3px;
+}
+
+/* FOOTER */
+
+#footer {
+	text-align: center;
+	background: #212121;
+	padding: 5px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+#footer a:link, #footer a:visited {
+	color: #E2E2E2;
+	text-decoration: none;
+}
+
+#footer a:hover, #footer a:active {
+	color: #E2E200;
+}

@@ -1,0 +1,25 @@
+{% extends 'contactpersoon/base.html.twig' %}
+
+{% block body %}
+    <div id="inschrijven_controle">
+        <h1><a href="{{ path('getContactpersoonIndexPage') }}">
+                <img src="{{ asset('images/back_arrow.png') }}"></a>
+            Vloermuziek uploaden</h1>
+        Via deze pagina kun je vloermuziek uploaden voor {{ turnster.naam }}!
+
+        <h4>&#187; Kies je bestand</h4>
+        Let op: het bestand mag maximaal 5 Mb zijn en kan alleen .mp3 of .wma zijn!<br/><br/>
+
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+            <table class="aanpas_tabel">
+                <tr>
+                    <td>Selecteer het bestand</td>
+                    <td>{{ form_widget(form.file) }}</td>
+                </tr>
+            </table>
+        <br/>
+        {{ form_widget(form.uploadBestand) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends 'admin/base.html.twig' %}
+
+{#{% block inlogmenu %}#}
+{#{% endblock %}#}
+
+{#{% block inlogNavigation %}#}
+{#{% endblock %}#}
+
+{% block body %}
+    <h1>Inloggen</h1>
+    <i>Ingelogd als Admin</i>
+
+    <hr>
+
+    <h2>Organisatie
+        <a href="{{ path('addOrganisatieLid') }}">
+            <img src="{{ asset('images/add.png') }}" width="18px"/>
+        </a></h2>
+    <table border="1">
+        <tr>
+            <th>Inlognaam</th>
+            <th>Naam</th>
+            <th>Email</th>
+            <th>Taak</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for lid in organisatieLeden %}
+            <tr>
+                <td>{{ lid.username }}</td>
+                <td>{{ lid.voornaam }} {{ lid.achternaam }}</td>
+                <td>{{ lid.email }}</td>
+                <td>{{ lid.verantwoordelijkheid }}</td>
+                <td><a href="{{ path('editOrganisatieLid', { 'username': lid.username }) }}">
+                        <img src="{{ asset('images/edit.png') }}" width="18px"/>
+                    </a>
+                </td>
+                <td><a href="{{ path('removeOrganisatieLid', { 'username': lid.username }) }}">
+                        <img src="{{ asset('images/remove.png') }}" width="18px"/>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('getContent', {'_switch_user': lid.username, 'page': 'Inloggen'}) }}">
+                        <img src="{{ asset('images/login_as.png') }}" width="18px"/>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Foto's
+        <a href="{{ path('addAdminFile', { 'type': 'Foto' }) }}">
+            <img src="{{ asset('images/add.png') }}" width="18px"/>
+        </a></h2>
+    <table id="uploads" border="1">
+        <col width="30%"/>
+        <col width="66.5%"/>
+        <col width="3.5%"/>
+        <tr>
+            <th>Naam</th>
+            <th>Locatie</th>
+            <th></th>
+        </tr>
+        {% for foto in fotoUploads %}
+            <tr>
+                <td>{{ foto.naam }}</td>
+                <td>/uploads/adminFotos/{{ foto.locatie }}</td>
+                <td><a href="{{ path('removeAdminFile', { 'id': foto.id, 'type': 'Foto' }) }}">
+                        <img src="{{ asset('images/remove.png') }}" width="18px"/>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Overige bestanden
+        <a href="{{ path('addAdminFile', { 'type': 'File' }) }}">
+            <img src="{{ asset('images/add.png') }}" width="18px"/>
+        </a></h2>
+    <table id="uploads" border="1">
+        <col width="30%"/>
+        <col width="66.5%"/>
+        <col width="3.5%"/>
+        <tr>
+            <th>Naam</th>
+            <th>Locatie</th>
+            <th></th>
+        </tr>
+        {% for file in fileUploads %}
+            <tr>
+                <td>{{ file.naam }}</td>
+                <td>/uploads/adminFiles/{{ file.locatie }}</td>
+                <td><a href="{{ path('removeAdminFile', { 'id': file.id, 'type': 'File' }) }}">
+                        <img src="{{ asset('images/remove.png') }}" width="18px"/>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Jurysysteem gebruikers
+        <a href="{{ path('addJuryGebruiker') }}">
+            <img src="{{ asset('images/add.png') }}" width="18px"/>
+        </a></h2>
+    <table border="1">
+        <tr>
+            <th>Inlognaam</th>
+            <th></th>
+        </tr>
+        {% for lid in juryGebruikers %}
+            <tr>
+                <td>{{ lid.username }}</td>
+                <td><a href="{{ path('removeOrganisatieLid', { 'username': lid.username }) }}">
+                        <img src="{{ asset('images/remove.png') }}" width="18px"/>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

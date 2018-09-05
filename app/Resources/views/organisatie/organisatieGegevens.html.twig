@@ -1,0 +1,55 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <p>
+		<div class="titel">
+			<h2>Mijn gegevens</h2>
+		</div>
+		<div class="bericht">
+		    <table class="overzicht_factuur">
+		        <tr>
+		            <td>Gebruikersnaam: </td><td>{{ gegevens.username }}</td>
+                </tr>
+                <tr>
+		            <td>Naam: </td><td><span id="voornaam" class="edit">{{ gegevens.voornaam }}</span> <span id="achternaam" class="edit">{{ gegevens.achternaam }}</span></td>
+                </tr>
+                <tr>
+		            <td>Emailadres: </td><td><span id="email" class="edit">{{ gegevens.email }}</span></td>
+                </tr>
+                <tr>
+		            <td>Verantwoordelijkheid: </td><td>
+		            {% if gegevens.verantwoordelijkheid %}
+		                <span id="verantwoordelijkheid" class="edit">{{ gegevens.verantwoordelijkheid }}</span>
+                    {% else %}
+                        <span id="verantwoordelijkheid" class="edit">Klik om te wijzigen</span>
+                    {% endif %}
+		            </td>
+                </tr>
+                <tr>
+		            <td>Wachtwoord: </td><td><a href="{{ path('editPassword', { 'page': app.request.get('page') }) }}">Wachtwoord wijzigen</a></td>
+                </tr>
+			</table>
+		</div>
+	</p>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/EditFieldByClicking.js') }}"></script>
+    <script>
+        $('.edit').click(function() {
+            var data = $(this).text();
+            var fieldName = this.id;
+            onClick(data, fieldName, 'text');
+        });
+        $(document).on('blur keypress','.txt_edit', function(e){
+            if(e.type === 'keypress' && e.keyCode !== 13) return;
+            var data = $(this).val();
+            var fieldName = this.id.replace('txt_', '');
+            onChange(data, fieldName, 'editGegevens');
+        });
+    </script>
+
+{% endblock %}

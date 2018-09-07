@@ -36,3 +36,8 @@ web_writable_folders:
 
 project_environment:
   SYMFONY_ENV: "prod"
+
+project_post_build_commands:
+  - "bin/console doctrine:migrations:migrate --no-interaction"
+  - "bin/console cache:clear"
+  - "bin/console assets:install"

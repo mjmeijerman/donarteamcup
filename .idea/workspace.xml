@@ -2,192 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="221375e8-7e4c-4103-9c31-f15aa3c39b7e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/admin/addAdminFile.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/admin/addJuryGebruiker.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/admin/addOrganisatieLid.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/admin/adminIndex.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/admin/base.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/admin/removeAdminFile.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/admin/removeOrganisatieLid.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/contactpersoon/addJury.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/contactpersoon/addTurnster.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/contactpersoon/addVloermuziek.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/contactpersoon/base.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/contactpersoon/editJury.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/contactpersoon/editPassword.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/contactpersoon/editTurnster.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/default/addNieuwsbericht.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/default/addSponsor.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/default/base.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/default/editIndex.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/default/nieuws.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/default/removeNieuwsbericht.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/default/removeSponsor.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/default/sponsors.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/default/wedstrijdIndeling.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/error/NotAuthorized.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/error/pageNotFound.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/inloggen/base.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/inschrijven/base.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/inschrijven/inschrijven_contactpersoon.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/inschrijven/inschrijven_turnsters.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/mails/inschrijven_contactpersoon.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/mails/inschrijven_jurylid.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/mails/new_password.txt.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/mails/new_user.txt.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/mails/voorinschrijving.txt.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/addBetaling.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/base.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/bekijkInschrijvingenPerContactpersoon.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/bekijkInschrijvingenPerNiveau.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/betalingInzien.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/editPassword.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/genereerVoorinschrijving.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/juryIndeling.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/niveauToevoegen.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieGegevens.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieIndex.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieInschrijvingen.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieInstellingen.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieJuryPage.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/reglementen.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/removeContactpersoon.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/removeInschrijvingen.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/tijdSchema.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/uploadWedstrijdindelingen.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/vloermuziek.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/security/login.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/security/newPass.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/uitslagen/base.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/uitslagen/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/uitslagen/scores.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/uitslagen/showUitslag.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/AdminController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/AlphaPDFController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/ContentController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/DiplomaPdfController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/FpdfController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/InschrijvingController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/JurybadgePdfController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/SecurityController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenPdfController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Controller/WedstrijdIndelingPdfController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Betaling.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Content.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/ContentRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/FileUpload.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/FileUploadRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/FotoUpload.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/FotoUploadRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/HoofdmenuItem.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/HoofdmenuItemRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Instellingen.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/InstellingenRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/JuryIndeling.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Jurylid.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/JurylidRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Nieuwsbericht.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/NieuwsberichtRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/OrganisatiemenuItem.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/OrganisatiemenuItemRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Reglementen.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Scores.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/ScoresRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/SendMail.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Sponsor.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/SponsorRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/SubmenuItem.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/TijdSchema.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/ToegestaneNiveaus.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/TurnsterRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/User.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/UserRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Vereniging.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Vloermuziek.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Voorinschrijving.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Entity/VoorinschrijvingRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/ContentType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/EditSponsorType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/JuryGebruikerType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/NieuwsberichtType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/OrganisatieType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/SponsorType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AppBundle/Helper/ImageResizer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/css/Uitslagen.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/css/Uitslagen2.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/css/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/css/mobile.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/css/organisatie.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/BadgeBackground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/BadgeHeader.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/DiplomaBackground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/HBCFactuurHeader.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/HDCDiplomaHeader.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/HDCFactuurHeader.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/VoorbeeldImport2.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/add.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/back_arrow.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/background.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/background2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/background3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/background4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/background4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/background5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/check.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/check2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/down.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/edit.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/facebook.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/hbclogo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/header.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/header_organisatie.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/header_uitslagen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/jury.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/listen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/live.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/login_as.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/logodonar.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/logodonarPNG.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/logohbcPNG.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/mobileheader.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/organisatie_background_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/organisatie_background_logo_donar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/password.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/pdf_background_landscape.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/refresh.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/remove.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/up.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/upload.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/user.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/images/voorbeeldImport.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/js/EditFieldByClicking.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/js/countdown_clock.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/js/inschrijf_check.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/js/jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/js/wachtlijst_remove_etc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/donarteamcup.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/donarteamcup.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/AppKernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/AppKernel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Resources/views/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/config/routing.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/routing.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/security.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/security.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/services.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/services.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppBundle/Entity/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/UserRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppBundle/Form/Type/NieuwsberichtType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/NieuwsberichtType.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -201,38 +20,84 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="config.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/config.yml">
+      <file leaf-file-name="Version20180907183425.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/DoctrineMigrations/Version20180907183425.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="64" column="30" selection-start-line="64" selection-start-column="30" selection-end-line="64" selection-end-column="30" />
+            <state relative-caret-position="515">
+              <caret line="79" column="28" selection-start-line="79" selection-start-column="28" selection-end-line="79" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Version20180905201526.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/DoctrineMigrations/Version20180905201526.php">
+      <file leaf-file-name="base.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="26" column="55" lean-forward="true" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
+            <state relative-caret-position="335">
+              <caret line="123" column="24" selection-start-line="123" selection-start-column="24" selection-end-line="123" selection-end-column="24" />
+              <folding>
+                <element signature="n#style#0;n#a#0;n#div#0;n#div#5;n#div#3;n#center#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="services.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/services.yml">
+      <file leaf-file-name="AdminController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/AdminController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="33" column="20" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
+            <state relative-caret-position="276">
+              <caret line="362" column="28" selection-start-line="362" selection-start-column="28" selection-end-line="362" selection-end-column="28" />
+              <folding>
+                <element signature="e#40#69#0#PHP" expanded="true" />
+                <element signature="e#1959#1975#1#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageResizer.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Helper/ImageResizer.php">
+      <file leaf-file-name="NieuwsberichtType.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/NieuwsberichtType.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="263">
+              <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserRepository.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/UserRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="28">
+              <caret line="15" column="76" selection-start-line="15" selection-start-column="76" selection-end-line="15" selection-end-column="76" />
+              <folding>
+                <element signature="e#36#70#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Route.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Component/Routing/Annotation/Route.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Method.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/sensio/framework-extra-bundle/Configuration/Method.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
-              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+              <caret line="13" column="113" selection-start-line="13" selection-start-column="113" selection-end-line="13" selection-end-column="113" />
             </state>
           </provider>
         </entry>
@@ -240,56 +105,17 @@
       <file leaf-file-name="security.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/config/security.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
+            <state relative-caret-position="225">
+              <caret line="33" column="18" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="console" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bin/console">
+      <file leaf-file-name="routing.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AppKernel.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/AppKernel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="20" column="76" selection-start-line="20" selection-start-column="76" selection-end-line="20" selection-end-column="76" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="composer.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/composer.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractMigration.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/doctrine/migrations/lib/Doctrine/Migrations/AbstractMigration.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/doctrine/migrations/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="-728">
-                <caret line="20" column="73" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="73" />
-              </first_editor>
-              <second_editor />
+            <state relative-caret-position="90">
+              <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -304,6 +130,12 @@
       <find>cs</find>
       <find>doctrine-</find>
       <find>Deze pagina bestaat niet</find>
+      <find>Sensio\Bundle\FrameworkExtraBundle\Configuration\Route</find>
+      <find>deprecate</find>
+      <find>Route</find>
+      <find>Us</find>
+      <find>logout</find>
+      <find>addNieuws</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/ansible</dir>
@@ -329,16 +161,21 @@
         <option value="$PROJECT_DIR$/web/app_dev.php" />
         <option value="$PROJECT_DIR$/ansible/hosts" />
         <option value="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/app/config/config_dev.yml" />
-        <option value="$PROJECT_DIR$/app/config/routing.yml" />
         <option value="$PROJECT_DIR$/app/config/services.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/MakeFont/makefont.php" />
         <option value="$PROJECT_DIR$/app/config/security.yml" />
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/app/AppKernel.php" />
         <option value="$PROJECT_DIR$/app/config/config.yml" />
+        <option value="$PROJECT_DIR$/app/DoctrineMigrations/Version20180907183425.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/UserRepository.php" />
+        <option value="$PROJECT_DIR$/app/config/routing.yml" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/NieuwsberichtType.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/AdminController.php" />
       </list>
     </option>
   </component>
@@ -402,7 +239,7 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-migrations-bundle" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="877" />
@@ -413,6 +250,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -440,6 +278,19 @@
             <path>
               <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
               <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="bin" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
@@ -459,6 +310,13 @@
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="AppBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Controller" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="AppBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Entity" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
@@ -509,7 +367,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -549,11 +406,12 @@
       <workItem from="1536085417263" duration="223000" />
       <workItem from="1536085648244" duration="2873000" />
       <workItem from="1536156711074" duration="4299000" />
+      <workItem from="1536345247620" duration="2035000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7184000" />
+    <option name="totallyTimeSpent" value="9219000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="0" />
@@ -565,10 +423,10 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25679544" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26037195" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32893" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -587,6 +445,37 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/doctrine/migrations/lib/Doctrine/Migrations/AbstractMigration.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/doctrine/migrations/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="300">
+            <caret line="20" column="73" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="73" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/DoctrineMigrations/Version20180905201526.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="26" column="55" lean-forward="true" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/parameters.yml.dist">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -762,16 +651,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="131" column="8" selection-start-line="131" selection-start-column="8" selection-end-line="131" selection-end-column="8" />
-          <folding>
-            <element signature="n#style#0;n#iframe#0;n#div#0;n#div#3;n#div#3;n#center#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -779,26 +658,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/robots.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/ContentType.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/admin/base.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/config_dev.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
@@ -816,23 +679,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/MakeFont/makefont.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="351" column="4" selection-start-line="351" selection-start-column="4" selection-end-line="351" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/font/Frabk.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/security.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/MakeFont/makefont.php" />
     <entry file="file://$PROJECT_DIR$/bin/console">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -850,7 +697,7 @@
     <entry file="file://$PROJECT_DIR$/vendor/doctrine/migrations/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="-728">
+          <first_editor relative-caret-position="300">
             <caret line="20" column="73" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="73" />
           </first_editor>
           <second_editor />
@@ -859,21 +706,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/composer.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
+        <state relative-caret-position="375">
           <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/AppKernel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
+        <state relative-caret-position="270">
           <caret line="20" column="76" selection-start-line="20" selection-start-column="76" selection-end-line="20" selection-end-column="76" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/config/config.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
+        <state relative-caret-position="960">
           <caret line="64" column="30" selection-start-line="64" selection-start-column="30" selection-end-line="64" selection-end-column="30" />
         </state>
       </provider>
@@ -881,7 +728,87 @@
     <entry file="file://$PROJECT_DIR$/app/DoctrineMigrations/Version20180905201526.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
-          <caret line="26" column="55" lean-forward="true" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
+          <caret line="26" column="55" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/DoctrineMigrations/Version20180907183425.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="515">
+          <caret line="79" column="28" selection-start-line="79" selection-start-column="28" selection-end-line="79" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="123" column="24" selection-start-line="123" selection-start-column="24" selection-end-line="123" selection-end-column="24" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#5;n#div#3;n#center#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/sensio/framework-extra-bundle/Configuration/Method.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="13" column="113" selection-start-line="13" selection-start-column="113" selection-end-line="13" selection-end-column="113" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Component/Routing/Annotation/Route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/UserRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="15" column="76" selection-start-line="15" selection-start-column="76" selection-end-line="15" selection-end-column="76" />
+          <folding>
+            <element signature="e#36#70#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/security.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="33" column="18" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/NieuwsberichtType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/AdminController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="362" column="28" selection-start-line="362" selection-start-column="28" selection-end-line="362" selection-end-column="28" />
+          <folding>
+            <element signature="e#40#69#0#PHP" expanded="true" />
+            <element signature="e#1959#1975#1#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

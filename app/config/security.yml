@@ -30,6 +30,7 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 default_target_path: /pagina/Inloggen
             switch_user: true
+            logout_on_user_change: true
 
             logout:
                 path:   /logout

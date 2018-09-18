@@ -101,10 +101,10 @@ class SubmenuItem
     /**
      * Set hoofmenuItem
      *
-     * @param \AppBundle\Entity\HoofdmenuItem $hoofdmenuItem
+     * @param HoofdmenuItem $hoofdmenuItem
      * @return SubmenuItem
      */
-    public function setHoofdmenuItem(\AppBundle\Entity\HoofdmenuItem $hoofdmenuItem)
+    public function setHoofdmenuItem(HoofdmenuItem $hoofdmenuItem)
     {
         $this->hoofdmenuItem = $hoofdmenuItem;
 
@@ -114,7 +114,7 @@ class SubmenuItem
     /**
      * Get hoofdmenuItem
      *
-     * @return \AppBundle\Entity\HoofdmenuItem 
+     * @return HoofdmenuItem
      */
     public function getHoofdmenuItem()
     {

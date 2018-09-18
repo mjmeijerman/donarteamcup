@@ -14,7 +14,9 @@ use AppBundle\Form\Type\JuryGebruikerType;
 use AppBundle\Form\Type\NieuwsberichtType;
 use AppBundle\Form\Type\OrganisatieType;
 use AppBundle\Form\Type\SponsorType;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,6 +27,7 @@ class AdminController extends BaseController
 {
     /**
      * @Route("/admin/", name="getAdminIndexPage", methods={"GET"})
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getIndexPageAction()
     {
@@ -46,6 +49,9 @@ class AdminController extends BaseController
         );
     }
 
+    /**
+     * @return User[]
+     */
     private function getOrganisatieLeden()
     {
         $results          = $this->getDoctrine()
@@ -87,15 +93,19 @@ class AdminController extends BaseController
 
     /**
      * @Route("/admin/organisatie/add/", name="addOrganisatieLid", methods={"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function addOrganisatieLid(Request $request)
     {
         $this->setBasicPageData();
         $organisatieLid = new User();
-        $form           = $this->createForm(new OrganisatieType(), $organisatieLid);
+        $form           = $this->createForm(OrganisatieType::class, $organisatieLid);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $password = $this->container->getParameter('standaard_wachtwoord');
             $encoder  = $this->container
                 ->get('security.encoder_factory')
@@ -114,7 +124,7 @@ class AdminController extends BaseController
                 'username' => $organisatieLid->getUsername(),
                 'password' => $password
             );
-            $from           = 'webmaster@haagsedonarcup.nl';
+            $from           = 'info@donarteamcup.nl';
             $this->sendEmail($subject, $to, $view, $mailParameters, $from);
 
             return $this->redirectToRoute('getAdminIndexPage');
@@ -133,15 +143,19 @@ class AdminController extends BaseController
 
     /**
      * @Route("/admin/organisatie/addJuryGebruiker/", name="addJuryGebruiker", methods={"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function addJuryGebruiker(Request $request)
     {
         $this->setBasicPageData();
         $organisatieLid = new User();
-        $form           = $this->createForm(new JuryGebruikerType(), $organisatieLid);
+        $form           = $this->createForm(JuryGebruikerType::class, $organisatieLid);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $password = $request->request->get('password');
             $encoder  = $this->container
                 ->get('security.encoder_factory')
@@ -171,6 +185,11 @@ class AdminController extends BaseController
 
     /**
      * @Route("/admin/organisatie/edit/{username}/", name="editOrganisatieLid", methods={"GET", "POST"})
+     * @param         $username
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function editOrganisatieLid($username, Request $request)
     {
@@ -178,10 +197,10 @@ class AdminController extends BaseController
         $organisatieLid = $this->getDoctrine()
             ->getRepository('AppBundle:User')
             ->loadUserByUsername($username);
-        $form           = $this->createForm(new OrganisatieType(), $organisatieLid);
+        $form           = $this->createForm(OrganisatieType::class, $organisatieLid);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->addToDB($organisatieLid);
 
             return $this->redirectToRoute('getAdminIndexPage');
@@ -199,6 +218,11 @@ class AdminController extends BaseController
 
     /**
      * @Route("/admin/organisatie/remove/{username}/", name="removeOrganisatieLid", methods={"GET", "POST"})
+     * @param         $username
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function removeOrganisatieLid($username, Request $request)
     {
@@ -226,6 +250,12 @@ class AdminController extends BaseController
 
     /**
      * @Route("/admin/file/remove/{id}/{type}/", name="removeAdminFile", methods={"GET", "POST"})
+     * @param         $id
+     * @param Request $request
+     * @param         $type
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function removeAdminFile($id, Request $request, $type)
     {
@@ -246,18 +276,26 @@ class AdminController extends BaseController
             } elseif ($request->getMethod() == 'POST') {
                 $this->removeFromDB($file);
                 return $this->redirectToRoute('getAdminIndexPage');
+            } else {
+                throw new \Exception('This is crazy');
             }
-        } else {
-            return $this->render(
-                'error/pageNotFound.html.twig',
-                array(
-                    'menuItems' => $this->menuItems,
-                    'sponsors'  => $this->sponsors,
-                )
-            );
         }
+
+        return $this->render(
+            'error/pageNotFound.html.twig',
+            array(
+                'menuItems' => $this->menuItems,
+                'sponsors'  => $this->sponsors,
+            )
+        );
     }
 
+    /**
+     * @param $type
+     *
+     * @return FileUpload|FotoUpload
+     * @throws \Exception
+     */
     private function getNewFileObject($type)
     {
         switch ($type) {
@@ -265,12 +303,19 @@ class AdminController extends BaseController
                 return new FileUpload();
             case 'Foto':
                 return new FotoUpload();
+            default:
+                throw new \Exception('This is crazy');
         }
     }
 
 
     /**
      * @Route("/admin/file/add/{type}/", name="addAdminFile", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $type
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function addAdminFileAction(Request $request, $type)
     {
@@ -279,11 +324,11 @@ class AdminController extends BaseController
         $form = $this->createFormBuilder($file)
             ->add('naam')
             ->add('file')
-            ->add('uploadBestand', 'submit')
+            ->add('uploadBestand', SubmitType::class)
             ->getForm();
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->addToDB($file);
             if ($type == 'Foto') {
                 $this->get('helper.imageresizer')->resizeImage(
@@ -308,6 +353,11 @@ class AdminController extends BaseController
 
     /**
      * @Route("/pagina/{page}/edit/", defaults={"page" = "geschiedenis"}, name="editDefaultPage", methods={"GET", "POST"})
+     * @param         $page
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function editDefaultPageAction($page, Request $request)
     {
@@ -320,10 +370,10 @@ class AdminController extends BaseController
                     array('gewijzigd' => 'DESC')
                 );
             $result ? $content = $result : $content = new Content();
-            $form = $this->createForm(new ContentType(), $content);
+            $form = $this->createForm(ContentType::class, $content);
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $editedContent = new Content();
                 $editedContent->setGewijzigd(new \DateTime('NOW'))
                     ->setPagina($page)
@@ -354,6 +404,10 @@ class AdminController extends BaseController
 
     /**
      * @Route("/pagina/Laatste%20nieuws/add/", name="addNieuwsPage", methods={"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function addNieuwsPage(Request $request)
     {
@@ -362,7 +416,7 @@ class AdminController extends BaseController
         $form          = $this->createForm(NieuwsberichtType::class, $nieuwsbericht);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $nieuwsbericht->setDatumtijd(date('d-m-Y: H:i', time()))
                 ->setJaar(date('Y', time()))
                 ->setBericht(str_replace("\n", "<br />", $nieuwsbericht->getBericht()));
@@ -382,6 +436,11 @@ class AdminController extends BaseController
 
     /**
      * @Route("/pagina/Laatste%20nieuws/edit/{id}/", name="editNieuwsberichtPage", methods={"GET", "POST"})
+     * @param         $id
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function editNieuwsberichtPage($id, Request $request)
     {
@@ -391,10 +450,10 @@ class AdminController extends BaseController
             ->find($id);
         if ($nieuwsbericht) {
             $nieuwsbericht->setBericht(str_replace("<br />", "\n", $nieuwsbericht->getBericht()));
-            $form = $this->createForm(new NieuwsberichtType(), $nieuwsbericht);
+            $form = $this->createForm(NieuwsberichtType::class, $nieuwsbericht);
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $nieuwsbericht->setBericht(str_replace("\n", "<br />", $nieuwsbericht->getBericht()));
                 $this->addToDB($nieuwsbericht);
                 return $this->redirectToRoute('getContent', array('page' => 'Laatste nieuws'));
@@ -421,6 +480,11 @@ class AdminController extends BaseController
 
     /**
      * @Route("/pagina/Laatste%20nieuws//remove/{id}/", name="removeNieuwsberichtPage", methods={"GET", "POST"})
+     * @param         $id
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function removeNieuwsberichtPage($id, Request $request)
     {
@@ -455,15 +519,19 @@ class AdminController extends BaseController
 
     /**
      * @Route("/pagina/Sponsors/add/", name="addSponsorPage", methods={"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function addSponsorPageAction(Request $request)
     {
         $this->setBasicPageData();
         $sponsor = new Sponsor();
-        $form    = $this->createForm(new SponsorType(), $sponsor);
+        $form    = $this->createForm(SponsorType::class, $sponsor);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->addToDB($sponsor);
             $this->get('helper.imageresizer')->resizeImage(
                 $sponsor->getAbsolutePath(),
@@ -492,6 +560,11 @@ class AdminController extends BaseController
 
     /**
      * @Route("/pagina/Sponsors/edit/{id}/", name="editSponsorPage", methods={"GET", "POST"})
+     * @param         $id
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function editSponsorPage($id, Request $request)
     {
@@ -500,10 +573,10 @@ class AdminController extends BaseController
             ->getRepository('AppBundle:Sponsor')
             ->find($id);
         if ($sponsor) {
-            $form = $this->createForm(new EditSponsorType(), $sponsor);
+            $form = $this->createForm(EditSponsorType::class, $sponsor);
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $this->addToDB($sponsor);
                 return $this->redirectToRoute('getContent', array('page' => 'Sponsors'));
             } else {
@@ -529,17 +602,26 @@ class AdminController extends BaseController
 
     /**
      * @Route("/pagina/Sponsors/remove/{id}/", name="removeSponsorPage", methods={"GET", "POST"})
+     * @param         $id
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function removeSponsorPage($id, Request $request)
     {
         $this->setBasicPageData();
-        $em      = $this->getDoctrine()->getManager();
-        $query   = $em->createQuery(
+        /** @var EntityManager $em */
+        $em    = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
             'SELECT sponsor
                 FROM AppBundle:Sponsor sponsor
                 WHERE sponsor.id = :id'
         )
             ->setParameter('id', $id);
+        /** @var Sponsor $sponsor */
         $sponsor = $query->setMaxResults(1)->getOneOrNullResult();
         if ($sponsor) {
             if ($request->getMethod() == 'GET') {

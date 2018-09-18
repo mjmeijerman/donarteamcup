@@ -2,12 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * JurylidRepository
@@ -17,6 +13,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class JurylidRepository extends EntityRepository
 {
+    /**
+     * @return int
+     * @throws NonUniqueResultException
+     */
     public function getTotaalAantalIngeschrevenJuryleden()
     {
         $ingeschrevenJuryleden = $this->createQueryBuilder('u')
@@ -26,33 +26,55 @@ class JurylidRepository extends EntityRepository
         return $ingeschrevenJuryleden;
     }
 
-    public function getIngeschrevenJuryleden($user, $orderBy = 'brevet')
+    /**
+     * @param User   $user
+     * @param string $orderBy
+     *
+     * @return int
+     * @throws NonUniqueResultException
+     */
+    public function getIngeschrevenJuryleden(User $user, $orderBy = 'brevet')
     {
         $ingeschrevenJuryleden = $this->createQueryBuilder('u')
             ->select('count(u.id)')
             ->Where('u.user = :user')
             ->orderBy('u.' . $orderBy)
-            ->setParameters([
-                'user' => $user,
-            ])
+            ->setParameters(
+                [
+                    'user' => $user,
+                ]
+            )
             ->getQuery()
             ->getSingleScalarResult();
         return $ingeschrevenJuryleden;
     }
 
-    public function getIngeschrevenJuryledenPerUser($user, $orderBy = 'brevet')
+    /**
+     * @param User   $user
+     * @param string $orderBy
+     *
+     * @return Jurylid[]
+     */
+    public function getIngeschrevenJuryledenPerUser(User $user, $orderBy = 'brevet')
     {
         $ingeschrevenJuryleden = $this->createQueryBuilder('u')
             ->Where('u.user = :user')
             ->orderBy('u.' . $orderBy)
-            ->setParameters([
-                'user' => $user,
-            ])
+            ->setParameters(
+                [
+                    'user' => $user,
+                ]
+            )
             ->getQuery()
             ->getResult();
         return $ingeschrevenJuryleden;
     }
 
+    /**
+     * @param string $orderBy
+     *
+     * @return Jurylid[]
+     */
     public function getAllJuryleden($orderBy = 'brevet')
     {
         $results = $this->createQueryBuilder('u')

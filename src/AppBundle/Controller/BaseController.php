@@ -13,16 +13,12 @@ use AppBundle\Entity\Turnster;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Vereniging;
 use AppBundle\Entity\Voorinschrijving;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\Content;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpKernel\Exception;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 use Symfony\Component\Validator\Constraints\NotBlank as EmptyConstraint;
 
@@ -31,22 +27,22 @@ define('EURO', chr(128));
 class BaseController extends Controller
 {
 
-    const OPENING_INSCHRIJVING = 'Opening inschrijving';
-    const OPENING_UPLOADEN_VLOERMUZIEK = 'Opening uploaden vloermuziek';
+    const OPENING_INSCHRIJVING            = 'Opening inschrijving';
+    const OPENING_UPLOADEN_VLOERMUZIEK    = 'Opening uploaden vloermuziek';
     const SLUITING_INSCHRIJVING_TURNSTERS = 'Sluiting inschrijving turnsters';
     const SLUITING_INSCHRIJVING_JURYLEDEN = 'Sluiting inschrijving juryleden';
-    const SLUITING_UPLOADEN_VLOERMUZIEK = 'Sluiting uploaden vloermuziek';
-    const FACTUUR_BEKIJKEN_TOEGESTAAN = 'Factuur publiceren';
-    const UITERLIJKE_BETAALDATUM_FACTUUR = 'Uiterlijke betaaldatum';
-    const MAX_AANTAL_TURNSTERS = 'Max aantal turnsters';
-    const EMPTY_RESULT = 'Klik om te wijzigen';
-    const BEDRAG_PER_TURNSTER = 16.50;
-    const JURY_BOETE_BEDRAG = 50;
-    const AANTAL_TURNSTERS_PER_JURY = 10;
-    const DATUM_HBC = '9 & 10 juni 2018';
-    const LOCATIE_HBC = 'Sporthal Overbosch';
-    const REKENINGNUMMER = 'NL81 INGB 000 007 81 99';
-    const REKENING_TNV = 'Gymnastiekver. Donar';
+    const SLUITING_UPLOADEN_VLOERMUZIEK   = 'Sluiting uploaden vloermuziek';
+    const FACTUUR_BEKIJKEN_TOEGESTAAN     = 'Factuur publiceren';
+    const UITERLIJKE_BETAALDATUM_FACTUUR  = 'Uiterlijke betaaldatum';
+    const MAX_AANTAL_TURNSTERS            = 'Max aantal turnsters';
+    const EMPTY_RESULT                    = 'Klik om te wijzigen';
+    const BEDRAG_PER_TURNSTER             = 16.50;
+    const JURY_BOETE_BEDRAG               = 50;
+    const AANTAL_TURNSTERS_PER_JURY       = 10;
+    const DATUM_HBC                       = '9 & 10 juni 2018';
+    const LOCATIE_HBC                     = 'Sporthal Overbosch';
+    const REKENINGNUMMER                  = 'NL81 INGB 000 007 81 99';
+    const REKENING_TNV                    = 'Gymnastiekver. Donar';
 
     protected $sponsors = [];
     protected $menuItems = [];
@@ -55,11 +51,19 @@ class BaseController extends Controller
     protected $aantalWachtlijst;
     protected $aantalJury;
 
-    protected function getFactuurNummer($user)
+    /**
+     * @param User $user
+     *
+     * @return string
+     */
+    protected function getFactuurNummer(User $user)
     {
         return ('HDC' . date('Y', time()) . '-' . $user->getId());
     }
 
+    /**
+     * @return Vereniging[]
+     */
     protected function getVerenigingen()
     {
         $verenigingen = [];
@@ -96,6 +100,7 @@ class BaseController extends Controller
 
     /**
      * @param bool|false $fieldname
+     *
      * @return array
      */
     protected function getOrganisatieInstellingen($fieldname = false)
@@ -150,15 +155,26 @@ class BaseController extends Controller
         $this->addToDB($result);
     }
 
+    /**
+     * @param $geboorteJaar
+     *
+     * @return bool
+     */
     protected function isKeuzeOefenstof($geboorteJaar)
     {
-        $leeftijd = (date('Y', time())-$geboorteJaar);
+        $leeftijd = (date('Y', time()) - $geboorteJaar);
         if ($leeftijd >= 13) {
             return true;
         }
         return false;
     }
 
+    /**
+     * @param              $token
+     * @param Session|null $session
+     *
+     * @return bool
+     */
     protected function checkVoorinschrijvingsToken($token, Session $session = null)
     {
         if ($token === null) {
@@ -183,6 +199,9 @@ class BaseController extends Controller
         return false;
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     protected function updateGereserveerdePlekken()
     {
         /** @var Turnster[] $gereserveerdePlekken */
@@ -205,9 +224,13 @@ class BaseController extends Controller
         }
     }
 
-    protected function getBeschikbareDag($juryObject)
+    /**
+     * @param Jurylid $juryObject
+     *
+     * @return string
+     */
+    protected function getBeschikbareDag(Jurylid $juryObject)
     {
-        /** @var Jurylid $juryObject */
         if ($juryObject->getZaterdag() && $juryObject->getZondag()) {
             return 'ZaZo';
         } elseif ($juryObject->getZaterdag()) {
@@ -222,19 +245,21 @@ class BaseController extends Controller
     protected function getToegestaneNiveaus()
     {
         $toegestaneNiveaus = [];
-        $repo = $this->getDoctrine()->getRepository('AppBundle:ToegestaneNiveaus');
+        $repo              = $this->getDoctrine()->getRepository('AppBundle:ToegestaneNiveaus');
         /** @var ToegestaneNiveaus[] $results */
         if ($this->getUser() && $this->getUser()->getRole() == 'ROLE_ORGANISATIE') {
             $results = $repo->findAll();
         } else {
-            $results = $repo->findBy([
-                'uitslagGepubliceerd' => 1,
-            ]);
+            $results = $repo->findBy(
+                [
+                    'uitslagGepubliceerd' => 1,
+                ]
+            );
         }
         foreach ($results as $result) {
             /** @var ToegestaneNiveaus[] $results */
             $toegestaneNiveaus[$result->getCategorie()][$result->getId()] = [
-                'niveau' => $result->getNiveau(),
+                'niveau'              => $result->getNiveau(),
                 'uitslagGepubliceerd' => $result->getUitslagGepubliceerd(),
             ];
         }
@@ -242,14 +267,22 @@ class BaseController extends Controller
         return $toegestaneNiveaus;
     }
 
+    /**
+     * @param $categorie
+     * @param $niveau
+     *
+     * @return bool
+     */
     protected function checkIfNiveauToegestaan($categorie, $niveau)
     {
         /** @var ToegestaneNiveaus $result */
         $result = $this->getDoctrine()->getRepository("AppBundle:ToegestaneNiveaus")
-            ->findOneBy([
-                'categorie' => $categorie,
-                'niveau' => $niveau,
-            ]);
+            ->findOneBy(
+                [
+                    'categorie' => $categorie,
+                    'niveau'    => $niveau,
+                ]
+            );
         if (!$result) {
             return false;
         }
@@ -278,19 +311,24 @@ class BaseController extends Controller
     {
         return [
             'Voorinstap' => ['N2', 'N3', 'D1', 'D2'],
-            'Instap' => ['N2', 'N3', 'D1', 'D2'],
-            'Pupil 1' => ['N3', 'D1', 'D2'],
-            'Pupil 2' => ['N3', 'D1', 'D2'],
-            'Jeugd 1' => ['N4', 'D1', 'D2'],
-            'Jeugd 2' => ['Div. 3', 'Div. 4', 'Div. 5'],
-            'Junior' => ['Div. 3', 'Div. 4', 'Div. 5'],
-            'Senior' => ['Div. 3', 'Div. 4', 'Div. 5'],
+            'Instap'     => ['N2', 'N3', 'D1', 'D2'],
+            'Pupil 1'    => ['N3', 'D1', 'D2'],
+            'Pupil 2'    => ['N3', 'D1', 'D2'],
+            'Jeugd 1'    => ['N4', 'D1', 'D2'],
+            'Jeugd 2'    => ['Div. 3', 'Div. 4', 'Div. 5'],
+            'Junior'     => ['Div. 3', 'Div. 4', 'Div. 5'],
+            'Senior'     => ['Div. 3', 'Div. 4', 'Div. 5'],
         ];
     }
 
+    /**
+     * @param $geboorteJaar
+     *
+     * @return string
+     */
     protected function getCategorie($geboorteJaar)
     {
-        $leeftijd = (date('Y', time())-$geboorteJaar);
+        $leeftijd = (date('Y', time()) - $geboorteJaar);
         if ($leeftijd < 8) {
             return '';
         } elseif ($leeftijd == 8) {
@@ -312,28 +350,48 @@ class BaseController extends Controller
         }
     }
 
+    /**
+     * @param $categorie
+     *
+     * @return array|false|int|string
+     * @throws \Exception
+     */
     protected function getGeboortejaarFromCategorie($categorie)
     {
         switch ($categorie) {
-            case 'Voorinstap': return date('Y', time()) - 8;
-            case 'Instap': return date('Y', time()) - 9;
-            case 'Pupil 1': return date('Y', time()) - 10;
-            case 'Pupil 2': return date('Y', time()) - 11;
-            case 'Jeugd 1': return date('Y', time()) - 12;
-            case 'Jeugd 2': return date('Y', time()) - 13;
-            case 'Junior': return [date('Y', time()) - 14, date('Y', time()) - 15];
+            case 'Voorinstap':
+                return date('Y', time()) - 8;
+            case 'Instap':
+                return date('Y', time()) - 9;
+            case 'Pupil 1':
+                return date('Y', time()) - 10;
+            case 'Pupil 2':
+                return date('Y', time()) - 11;
+            case 'Jeugd 1':
+                return date('Y', time()) - 12;
+            case 'Jeugd 2':
+                return date('Y', time()) - 13;
+            case 'Junior':
+                return [date('Y', time()) - 14, date('Y', time()) - 15];
             case 'Senior':
                 $geboortejaren = [];
                 for ($i = 16; $i < 60; $i++) {
                     $geboortejaren[] = date('Y', time()) - $i;
                 }
                 return $geboortejaren;
+            default:
+                throw new \Exception('This is crazy');
         }
     }
 
+    /**
+     * @param $geboorteJaar
+     *
+     * @return array
+     */
     protected function getAvailableNiveaus($geboorteJaar)
     {
-        $leeftijd = (date('Y', time())-$geboorteJaar);
+        $leeftijd = (date('Y', time()) - $geboorteJaar);
         if ($leeftijd < 8) {
             return [];
         } elseif ($leeftijd == 8 || $leeftijd == 9) {
@@ -347,18 +405,25 @@ class BaseController extends Controller
         }
     }
 
+    /**
+     * @return array
+     */
     protected function getGeboorteJaren()
     {
         $geboorteJaren = [];
-        for ($i = (date('Y', time())-8); $i >= 1950 ; $i--) {
+        for ($i = (date('Y', time()) - 8); $i >= 1950; $i--) {
             $geboorteJaren[] = $i;
         }
         return $geboorteJaren;
     }
 
+    /**
+     * @return int|mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     protected function getVrijePlekken()
     {
-        $result = $this->getDoctrine()
+        $result     = $this->getDoctrine()
             ->getRepository('AppBundle:Turnster')
             ->getBezettePlekken();
         $maxPlekken = $this->getOrganisatieInstellingen(self::MAX_AANTAL_TURNSTERS);
@@ -368,10 +433,14 @@ class BaseController extends Controller
         return ($maxPlekken[self::MAX_AANTAL_TURNSTERS] - $result);
     }
 
+    /**
+     * @return \DateTime
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     protected function getTijdVol()
     {
         $datumGeopend = 0;
-        $result = $this->getDoctrine()
+        $result       = $this->getDoctrine()
             ->getRepository('AppBundle:Instellingen')
             ->findBy(
                 array('instelling' => self::OPENING_INSCHRIJVING),
@@ -389,7 +458,7 @@ class BaseController extends Controller
         if ($result) {
             return $result->getDatum();
         } else {
-            $result = $this->getDoctrine()
+            $result     = $this->getDoctrine()
                 ->getRepository('AppBundle:Turnster')
                 ->getTijdVol();
             $instelling = new Instellingen();
@@ -404,9 +473,15 @@ class BaseController extends Controller
         }
     }
 
+    /**
+     * @param null         $token
+     * @param Session|null $session
+     *
+     * @return bool
+     */
     protected function inschrijvingToegestaan($token = null, Session $session = null)
     {
-        $instellingGeopend = $this->getOrganisatieInstellingen(self::OPENING_INSCHRIJVING);
+        $instellingGeopend  = $this->getOrganisatieInstellingen(self::OPENING_INSCHRIJVING);
         $instellingGesloten = $this->getOrganisatieInstellingen(self::SLUITING_INSCHRIJVING_TURNSTERS);
         if ((time() > strtotime($instellingGeopend[self::OPENING_INSCHRIJVING]) &&
                 time() < strtotime($instellingGesloten[self::SLUITING_INSCHRIJVING_TURNSTERS])) ||
@@ -417,6 +492,9 @@ class BaseController extends Controller
         return false;
     }
 
+    /**
+     * @return bool
+     */
     protected function isAfterOpeningInschrijving()
     {
         $instellingGeopend = $this->getOrganisatieInstellingen(self::OPENING_INSCHRIJVING);
@@ -427,9 +505,12 @@ class BaseController extends Controller
         return false;
     }
 
+    /**
+     * @return bool
+     */
     protected function wijzigTurnsterToegestaan()
     {
-        $instellingGeopend = $this->getOrganisatieInstellingen(self::OPENING_INSCHRIJVING);
+        $instellingGeopend  = $this->getOrganisatieInstellingen(self::OPENING_INSCHRIJVING);
         $instellingGesloten = $this->getOrganisatieInstellingen(self::SLUITING_INSCHRIJVING_TURNSTERS);
         if ((time() > strtotime($instellingGeopend[self::OPENING_INSCHRIJVING]) &&
             time() < strtotime($instellingGesloten[self::SLUITING_INSCHRIJVING_TURNSTERS]))
@@ -486,7 +567,7 @@ class BaseController extends Controller
 
     protected function wijzigJuryToegestaan()
     {
-        $instellingGeopend = $this->getOrganisatieInstellingen(self::OPENING_INSCHRIJVING);
+        $instellingGeopend  = $this->getOrganisatieInstellingen(self::OPENING_INSCHRIJVING);
         $instellingGesloten = $this->getOrganisatieInstellingen(self::SLUITING_INSCHRIJVING_JURYLEDEN);
         if (time() > strtotime($instellingGeopend[self::OPENING_INSCHRIJVING]) &&
             time() < strtotime($instellingGesloten[self::SLUITING_INSCHRIJVING_JURYLEDEN])) {
@@ -498,7 +579,7 @@ class BaseController extends Controller
 
     protected function uploadenVloermuziekToegestaan()
     {
-        $openingUploadenVloermuziek = $this->getOrganisatieInstellingen(self::OPENING_UPLOADEN_VLOERMUZIEK);
+        $openingUploadenVloermuziek  = $this->getOrganisatieInstellingen(self::OPENING_UPLOADEN_VLOERMUZIEK);
         $sluitingUploadenVloermuziek = $this->getOrganisatieInstellingen(self::SLUITING_UPLOADEN_VLOERMUZIEK);
         if ($openingUploadenVloermuziek[self::OPENING_UPLOADEN_VLOERMUZIEK] == self::EMPTY_RESULT) {
             return false;
@@ -555,6 +636,9 @@ class BaseController extends Controller
         }
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     private function setStatistieken()
     {
         $verenigingIds = [];
@@ -566,21 +650,21 @@ class BaseController extends Controller
             if ($result->getRole() == 'ROLE_CONTACT') {
                 if (!in_array($result->getVereniging()->getId(), $verenigingIds)) {
                     if ($turnstersAantal = $this->getDoctrine()
-                        ->getRepository('AppBundle:Turnster')
-                        ->getIngeschrevenTurnsters($result) > 0) {
+                            ->getRepository('AppBundle:Turnster')
+                            ->getIngeschrevenTurnsters($result) > 0) {
                         $verenigingIds[] = $result->getVereniging()->getId();
                     }
                 }
             }
         }
         $this->aantalVerenigingen = count($verenigingIds);
-        $this->aantalTurnsters = $this->getDoctrine()
+        $this->aantalTurnsters    = $this->getDoctrine()
             ->getRepository('AppBundle:Turnster')
             ->getBezettePlekken();
-        $this->aantalWachtlijst = $this->getDoctrine()
+        $this->aantalWachtlijst   = $this->getDoctrine()
             ->getRepository('AppBundle:Turnster')
             ->getAantalWachtlijstPlekken();
-        $this->aantalJury = $this->getDoctrine()
+        $this->aantalJury         = $this->getDoctrine()
             ->getRepository('AppBundle:Jurylid')
             ->getTotaalAantalIngeschrevenJuryleden();
     }
@@ -609,6 +693,12 @@ class BaseController extends Controller
         return $pageExists;
     }
 
+    /**
+     * @param $maandNummer
+     *
+     * @return string
+     * @throws \Exception
+     */
     protected function maand($maandNummer)
     {
         switch ($maandNummer) {
@@ -648,13 +738,15 @@ class BaseController extends Controller
             case '12':
                 return 'December';
                 break;
+            default:
+                throw new \Exception('This is crazy');
         }
     }
 
     protected function generatePassword($length = 8)
     {
-        $password = "";
-        $possible = "2346789bcdfghjkmnpqrtvwxyzBCDFGHJKLMNPQRTVWXYZ";
+        $password  = "";
+        $possible  = "2346789bcdfghjkmnpqrtvwxyzBCDFGHJKLMNPQRTVWXYZ";
         $maxlength = strlen($possible);
         if ($length > $maxlength) {
             $length = $maxlength;
@@ -670,6 +762,11 @@ class BaseController extends Controller
         return $password;
     }
 
+    /**
+     * @param string $type
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     protected function setBasicPageData($type = 'Hoofd')
     {
         $this->setMenuItems($type);
@@ -681,6 +778,10 @@ class BaseController extends Controller
 
     /**
      * Creates a token voor voorinschrijvingen
+     *
+     * @param      $email
+     * @param null $tokenObject
+     *
      * @return void
      */
     protected function createVoorinschrijvingToken($email, $tokenObject = null)
@@ -695,17 +796,18 @@ class BaseController extends Controller
 
         $this->addToDB($tokenObject);
 
-        $subject = 'Voorinschrijving HDC';
-        $to = $email;
-        $view = 'mails/voorinschrijving.txt.twig';
+        $subject        = 'Voorinschrijving HDC';
+        $to             = $email;
+        $view           = 'mails/voorinschrijving.txt.twig';
         $mailParameters = [
-            'token' =>$token,
+            'token' => $token,
         ];
         $this->sendEmail($subject, $to, $view, $mailParameters);
     }
 
     /**
      * Creates a token usable in a form
+     *
      * @return string
      */
     protected function getToken()
@@ -721,7 +823,9 @@ class BaseController extends Controller
 
     /**
      * Check if a token is valid. Removes it from the valid tokens list
+     *
      * @param string $token The token
+     *
      * @return bool
      */
     protected function isTokenValid($token)
@@ -733,7 +837,7 @@ class BaseController extends Controller
         return false;
     }
 
-    protected function sendEmail($subject, $to, $view, array $parameters = array(), $from = 'info@haagsedonarcup.nl')
+    protected function sendEmail($subject, $to, $view, array $parameters = array(), $from = 'info@donarteamcup.nl')
     {
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
@@ -775,8 +879,11 @@ class BaseController extends Controller
     }
 
     /**
-     * @Route("/contactgegevens/edit/{fieldName}/{data}/", name="editGegevens", options={"expose"=true})
-     * @Method("GET")
+     * @Route("/contactgegevens/edit/{fieldName}/{data}/", name="editGegevens", options={"expose"=true}, methods={"GET"})
+     * @param $fieldName
+     * @param $data
+     *
+     * @return JsonResponse
      */
     public function editGegevens($fieldName, $data)
     {
@@ -784,14 +891,14 @@ class BaseController extends Controller
             $data = false;
         }
         /** @var User $userObject */
-        $emptyConstraint = new EmptyConstraint();
-        $userObject = $this->getUser();
-        $returnData['data'] = '';
+        $emptyConstraint     = new EmptyConstraint();
+        $userObject          = $this->getUser();
+        $returnData['data']  = '';
         $returnData['error'] = null;
         switch ($fieldName) {
             case 'voornaam':
                 $returnData['data'] = $userObject->getVoornaam();
-                $errors = $this->get('validator')->validate(
+                $errors             = $this->get('validator')->validate(
                     $data,
                     $emptyConstraint
                 );
@@ -811,7 +918,7 @@ class BaseController extends Controller
                 break;
             case 'achternaam':
                 $returnData['data'] = $userObject->getAchternaam();
-                $errors = $this->get('validator')->validate(
+                $errors             = $this->get('validator')->validate(
                     $data,
                     $emptyConstraint
                 );
@@ -831,13 +938,13 @@ class BaseController extends Controller
                 break;
             case 'email':
                 $returnData['data'] = $userObject->getEmail();
-                $errors = $this->get('validator')->validate(
+                $errors             = $this->get('validator')->validate(
                     $data,
                     $emptyConstraint
                 );
                 if (count($errors) == 0) {
                     $emailConstraint = new EmailConstraint();
-                    $errors = $this->get('validator')->validate(
+                    $errors          = $this->get('validator')->validate(
                         $data,
                         $emailConstraint
                     );
@@ -862,7 +969,7 @@ class BaseController extends Controller
                 break;
             case 'telefoonnummer':
                 $returnData['data'] = $userObject->getTelefoonnummer();
-                $errors = $this->get('validator')->validate(
+                $errors             = $this->get('validator')->validate(
                     $data,
                     $emptyConstraint
                 );
@@ -896,7 +1003,7 @@ class BaseController extends Controller
                 }
                 break;
             default:
-                $returnData['error'] = 'An unknown error occurred, please contact webmaster@haagsedonarcup.nl';
+                $returnData['error'] = 'An unknown error occurred, please contact webmaster@donarteamcup.nl';
         }
         return new JsonResponse($returnData);
     }
@@ -930,7 +1037,8 @@ class BaseController extends Controller
         $locatieHBC,
         $rekeningNummer,
         $rekeningTNV
-    ) {
+    )
+    {
         $pdf->SetX(3);
         $pdf->SetAlpha(0.6);
         $pdf->SetFont('Gotham', '', 8);
@@ -950,14 +1058,14 @@ class BaseController extends Controller
         $pdf->Text(180, 290, 'www.donargym.nl');
 
         //HBC SITE
-        $pdf->Text(171, 294, 'www.haagsedonarcup.nl');
+        $pdf->Text(171, 294, 'www.donarteamcup.nl');
         return $pdf;
     }
 
     //ROUNDED RECTANGLE
     function RoundedRect($x, $y, $w, $h, $r, $style = '', $angle = '1234', AlphaPDFController $pdf)
     {
-        $k = $pdf->k;
+        $k  = $pdf->k;
         $hp = $pdf->h;
         if ($style == 'F') {
             $op = 'f';
@@ -1012,14 +1120,26 @@ class BaseController extends Controller
     function _Arc($x1, $y1, $x2, $y2, $x3, $y3, AlphaPDFController $pdf)
     {
         $h = $pdf->h;
-        $pdf->_out(sprintf('%.2f %.2f %.2f %.2f %.2f %.2f c ', $x1 * $pdf->k, ($h - $y1) * $pdf->k,
-            $x2 * $pdf->k, ($h - $y2) * $pdf->k, $x3 * $pdf->k, ($h - $y3) * $pdf->k));
+        $pdf->_out(
+            sprintf(
+                '%.2f %.2f %.2f %.2f %.2f %.2f c ',
+                $x1 * $pdf->k,
+                ($h - $y1) * $pdf->k,
+                $x2 * $pdf->k,
+                ($h - $y2) * $pdf->k,
+                $x3 * $pdf->k,
+                ($h - $y3) * $pdf->k
+            )
+        );
         return $pdf;
     }
 
     /**
-     * @Route("/contactpersoon/factuur/", name="pdfFactuur")
-     * @Method("GET")
+     * @Route("/contactpersoon/factuur/", name="pdfFactuur", methods={"GET"})
+     * @param null $userId
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function pdfFactuur($userId = null)
     {
@@ -1035,21 +1155,23 @@ class BaseController extends Controller
                         ->getRepository('AppBundle:User')
                         ->findOneBy(['id' => $userId]);
                 }
-                $factuurNummer = $this->getFactuurNummer($user);
-                $bedragPerTurnster = self::BEDRAG_PER_TURNSTER; //todo: bedrag per turnster toevoegen aan instellingen
-                $juryBoeteBedrag = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
-                $datumHBC = self::DATUM_HBC; // todo: datum toernooi toevoegen aan instellingen
-                $locatieHBC = self::LOCATIE_HBC; //todo: locatie toernooi toevoegen aan instellingen
-                $rekeningNummer = self::REKENINGNUMMER; // todo: rekeningnummer toevoegen aan instellingen
-                $rekeningTNV = self::REKENING_TNV; // todo: TNV toevoegen aan instellingen
+                $factuurNummer             = $this->getFactuurNummer($user);
+                $bedragPerTurnster
+                                           = self::BEDRAG_PER_TURNSTER; //todo: bedrag per turnster toevoegen aan instellingen
+                $juryBoeteBedrag
+                                           = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
+                $datumHBC                  = self::DATUM_HBC; // todo: datum toernooi toevoegen aan instellingen
+                $locatieHBC                = self::LOCATIE_HBC; //todo: locatie toernooi toevoegen aan instellingen
+                $rekeningNummer            = self::REKENINGNUMMER; // todo: rekeningnummer toevoegen aan instellingen
+                $rekeningTNV               = self::REKENING_TNV; // todo: TNV toevoegen aan instellingen
                 $jurylidPerAantalTurnsters = self::AANTAL_TURNSTERS_PER_JURY; //todo: toevoegen als instelling
-                $juryledenAantal = $this->getDoctrine()
+                $juryledenAantal           = $this->getDoctrine()
                     ->getRepository('AppBundle:Jurylid')
                     ->getIngeschrevenJuryleden($user);
-                $turnstersAantal = $this->getDoctrine()
+                $turnstersAantal           = $this->getDoctrine()
                     ->getRepository('AppBundle:Turnster')
                     ->getIngeschrevenTurnsters($user);
-                $turnstersAfgemeldAantal = $this->getDoctrine()
+                $turnstersAfgemeldAantal   = $this->getDoctrine()
                     ->getRepository('AppBundle:Turnster')
                     ->getAantalAfgemeldeTurnsters($user);
 
@@ -1069,14 +1191,20 @@ class BaseController extends Controller
                 $pdf->AddPage();
 
                 $pdf = $this->factuurHeader($pdf, $factuurNummer);
-                $pdf = $this->factuurFooter($pdf, $factuurNummer, $datumHBC, $locatieHBC, $rekeningNummer,
-                    $rekeningTNV);
+                $pdf = $this->factuurFooter(
+                    $pdf,
+                    $factuurNummer,
+                    $datumHBC,
+                    $locatieHBC,
+                    $rekeningNummer,
+                    $rekeningTNV
+                );
 
                 //CONTACTPERSOON EN VERENIGING
                 $pdf->SetFont('Franklin', '', 16);
                 $pdf->SetTextColor(0);
                 $pdf->SetFillColor(0);
-				$pdf->SetAlpha(1.0);
+                $pdf->SetAlpha(1.0);
                 $pdf->Rect(5, 43, 0.5, 13, 'F');
                 $pdf->Text(7, 48, $user->getVoornaam() . ' ' . $user->getAchternaam());
                 $pdf->Text(7, 54, $user->getVereniging()->getNaam() . ' ' . $user->getVereniging()->getPlaats());
@@ -1163,9 +1291,13 @@ class BaseController extends Controller
                 //BETAALDETAILS
                 $pdf->Cell(3, 35);
                 $pdf->SetFontSize(12);
-                $pdf->MultiCell(53, 5,
+                $pdf->MultiCell(
+                    53,
+                    5,
                     "Over te maken bedrag: \n Uiterste betaaldatum: \n \n Rekeningnummer: \n Ten name van: \n\n Factuurnummer:",
-                    0, 'R');
+                    0,
+                    'R'
+                );
 
                 //EURO-TEKEN
                 $pdf->SetFont('Courier', '', 13);
@@ -1177,8 +1309,17 @@ class BaseController extends Controller
 
                 //BETAALDATUM
                 $uitersteBetaalDatum = $this->getOrganisatieInstellingen(self::UITERLIJKE_BETAALDATUM_FACTUUR);
-                $pdf->Text(57, 154.5, date('d-m-Y', strtotime
-                ($uitersteBetaalDatum[self::UITERLIJKE_BETAALDATUM_FACTUUR])));
+                $pdf->Text(
+                    57,
+                    154.5,
+                    date(
+                        'd-m-Y',
+                        strtotime
+                        (
+                            $uitersteBetaalDatum[self::UITERLIJKE_BETAALDATUM_FACTUUR]
+                        )
+                    )
+                );
 
                 //REKENINGNUMMER
                 $pdf->Text(57, 164.5, $rekeningNummer);
@@ -1219,11 +1360,16 @@ class BaseController extends Controller
                 //CONTACT BIJ PROBLEMEN
                 $pdf->SetAlpha(0.6);
                 $pdf->SetFontSize(8);
-                $pdf->Text(34, 209,
-                    'Mochten er zich problemen voordoen, neemt u dan alstublieft contact op via info@haagsedonarcup.nl');
-                return new Response($pdf->Output(), 200, array(
-                    'Content-Type' => 'application/pdf'
-                ));
+                $pdf->Text(
+                    34,
+                    209,
+                    'Mochten er zich problemen voordoen, neemt u dan alstublieft contact op via info@donarteamcup.nl'
+                );
+                return new Response(
+                    $pdf->Output(), 200, array(
+                                      'Content-Type' => 'application/pdf'
+                                  )
+                );
             } else {
                 return $this->redirectToRoute('getIndexPage');
             }
@@ -1233,12 +1379,17 @@ class BaseController extends Controller
     }
 
     /**
-     * @Route("/updateScores/{wedstrijdnummer}/", name="updateScores")
-     * @Method({"GET"})
+     * @Route("/updateScores/{wedstrijdnummer}/", name="updateScores", methods={"GET"})
+     * @param Request $request
+     * @param         $wedstrijdnummer
+     *
+     * @return Response
      */
     public function updateScores(Request $request, $wedstrijdnummer)
     {
-        if ($request->query->get('key') && $request->query->get('key') === $this->getParameter('update_scores_string')) {
+        if ($request->query->get('key') && $request->query->get('key') === $this->getParameter(
+                'update_scores_string'
+            )) {
             $toestellen = ['sprong', 'brug', 'balk', 'vloer'];
             if ($request->query->get('toestel') && in_array(strtolower($request->query->get('toestel')), $toestellen)) {
                 /** @var Scores $score */
@@ -1247,9 +1398,15 @@ class BaseController extends Controller
                 if ($score) {
                     switch (strtolower($request->query->get('toestel'))) {
                         case 'sprong':
-                            if ($request->query->get('dSprong1') !== null && $request->query->get('eSprong1') !== null &&
-                                $request->query->get('nSprong1') !== null && $request->query->get('dSprong2') !== null &&
-                                $request->query->get('eSprong2') !== null && $request->query->get('nSprong2') !== null) {
+                            if ($request->query->get('dSprong1') !== null && $request->query->get(
+                                    'eSprong1'
+                                ) !== null &&
+                                $request->query->get('nSprong1') !== null && $request->query->get(
+                                    'dSprong2'
+                                ) !== null &&
+                                $request->query->get('eSprong2') !== null && $request->query->get(
+                                    'nSprong2'
+                                ) !== null) {
                                 try {
                                     $score->setDSprong1($request->query->get('dSprong1'));
                                     $score->setESprong1($request->query->get('eSprong1'));
@@ -1331,18 +1488,26 @@ class BaseController extends Controller
     }
 
     /**
-     * @Route("/publiceerUitslag/{categorie}/{niveau}/", name="publiceerUitslag")
-     * @Method({"GET"})
+     * @Route("/publiceerUitslag/{categorie}/{niveau}/", name="publiceerUitslag", methods={"GET"})
+     * @param Request $request
+     * @param         $categorie
+     * @param         $niveau
+     *
+     * @return Response
      */
     public function publiceerUitslag(Request $request, $categorie, $niveau)
     {
-        if ($request->query->get('key') && $request->query->get('key') === $this->getParameter('update_scores_string')) {
+        if ($request->query->get('key') && $request->query->get('key') === $this->getParameter(
+                'update_scores_string'
+            )) {
             /** @var ToegestaneNiveaus $result */
             $result = $this->getDoctrine()->getRepository('AppBundle:ToegestaneNiveaus')
-                ->findOneBy([
-                    'categorie' => $categorie,
-                    'niveau' => $niveau,
-                ]);
+                ->findOneBy(
+                    [
+                        'categorie' => $categorie,
+                        'niveau'    => $niveau,
+                    ]
+                );
             if ($result) {
                 try {
                     $result->setUitslagGepubliceerd(true);
@@ -1359,12 +1524,18 @@ class BaseController extends Controller
     }
 
     /**
-     * @Route("/getScore/{wedstrijdnummer}/{toestel}/", name="getScore")
-     * @Method({"GET"})
+     * @Route("/getScore/{wedstrijdnummer}/{toestel}/", name="getScore", methods={"GET"})
+     * @param Request $request
+     * @param         $wedstrijdnummer
+     * @param         $toestel
+     *
+     * @return Response
      */
     public function getScore(Request $request, $wedstrijdnummer, $toestel)
     {
-        if ($request->query->get('key') && $request->query->get('key') === $this->getParameter('update_scores_string')) {
+        if ($request->query->get('key') && $request->query->get('key') === $this->getParameter(
+                'update_scores_string'
+            )) {
             $toestellen = ['sprong', 'brug', 'balk', 'vloer'];
             if (in_array(strtolower($toestel), $toestellen)) {
                 /** @var Scores $score */
@@ -1373,42 +1544,42 @@ class BaseController extends Controller
                 if ($score) {
                     switch (strtolower($toestel)) {
                         case 'sprong':
-			    $scoreArray = [
-				'dSprong1' => $score->getDSprong1(),
+                            $scoreArray   = [
+                                'dSprong1' => $score->getDSprong1(),
                                 'eSprong1' => $score->getESprong1(),
                                 'nSprong1' => $score->getNSprong1(),
                                 'dSprong2' => $score->getDSprong2(),
                                 'eSprong2' => $score->getESprong2(),
                                 'nSprong2' => $score->getNSprong2(),
-			    ];
-			    $responseData = json_encode($scoreArray);
+                            ];
+                            $responseData = json_encode($scoreArray);
                             return new Response($responseData, 200);
                             break;
                         case 'brug':
-                            $scoreArray = [
-				'dBrug' => $score->getDBrug(),
+                            $scoreArray   = [
+                                'dBrug' => $score->getDBrug(),
                                 'eBrug' => $score->getEBrug(),
                                 'nBrug' => $score->getNBrug(),
-			    ];
-			    $responseData = json_encode($scoreArray);
+                            ];
+                            $responseData = json_encode($scoreArray);
                             return new Response($responseData, 200);
                             break;
                         case 'balk':
-                            $scoreArray = [
-				'dBalk' => $score->getDBalk(),
+                            $scoreArray   = [
+                                'dBalk' => $score->getDBalk(),
                                 'eBalk' => $score->getEBalk(),
                                 'nBalk' => $score->getNBalk(),
-			    ];
-			    $responseData = json_encode($scoreArray);
+                            ];
+                            $responseData = json_encode($scoreArray);
                             return new Response($responseData, 200);
                             break;
                         case 'vloer':
-                            $scoreArray = [
-				'dVloer' => $score->getDVloer(),
+                            $scoreArray   = [
+                                'dVloer' => $score->getDVloer(),
                                 'eVloer' => $score->getEVloer(),
                                 'nVloer' => $score->getNVloer(),
-			    ];
-			    $responseData = json_encode($scoreArray);
+                            ];
+                            $responseData = json_encode($scoreArray);
                             return new Response($responseData, 200);
                             break;
                     }
@@ -1427,30 +1598,38 @@ class BaseController extends Controller
     {
         $toestellen = ['Sprong', 'Brug', 'Balk', 'Vloer', ''];
         foreach ($toestellen as $toestel) {
-            usort($scores, function ($a, $b) use ($toestel) {
-                $epsilon = 0.00001;
-                if (abs($a['totaal' . $toestel] - $b['totaal' . $toestel]) < $epsilon) {
-                    return 0;
+            usort(
+                $scores,
+                function ($a, $b) use ($toestel) {
+                    $epsilon = 0.00001;
+                    if (abs($a['totaal' . $toestel] - $b['totaal' . $toestel]) < $epsilon) {
+                        return 0;
+                    }
+                    return ($a['totaal' . $toestel] > $b['totaal' . $toestel]) ? -1 : 1;
                 }
-                return ($a['totaal' . $toestel] > $b['totaal' . $toestel]) ? -1 : 1;
-            });
+            );
             $epsilon = 0.00001;
             for ($i = 1; $i <= count($scores); $i++) {
                 if ($i == 1) {
                     $scores[($i - 1)]['rank' . $toestel] = $i;
-                } elseif (abs($scores[($i - 1)]['totaal' . $toestel] - $scores[($i - 2)]['totaal' . $toestel]) < $epsilon) {
+                } elseif (abs(
+                        $scores[($i - 1)]['totaal' . $toestel] - $scores[($i - 2)]['totaal' . $toestel]
+                    ) < $epsilon) {
                     $scores[($i - 1)]['rank' . $toestel] = $scores[($i - 2)]['rank' . $toestel];
                 } else {
                     $scores[($i - 1)]['rank' . $toestel] = $i;
                 }
             }
         }
-        usort($scores, function ($a, $b) use ($order) {
-            if ($a['totaal' . $order] == $b['totaal' . $order]) {
-                return 0;
+        usort(
+            $scores,
+            function ($a, $b) use ($order) {
+                if ($a['totaal' . $order] == $b['totaal' . $order]) {
+                    return 0;
+                }
+                return ($a['totaal' . $order] > $b['totaal' . $order]) ? -1 : 1;
             }
-            return ($a['totaal' . $order] > $b['totaal' . $order]) ? -1 : 1;
-        });
+        );
         return $scores;
     }
 }

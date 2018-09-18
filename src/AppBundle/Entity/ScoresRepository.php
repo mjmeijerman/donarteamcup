@@ -3,10 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class ScoresRepository
+ *
  * @package AppBundle\Entity
  */
 class ScoresRepository extends EntityRepository
@@ -72,10 +72,12 @@ class ScoresRepository extends EntityRepository
             ->where('cc.wedstrijdronde IS NOT NULL')
             ->andWhere('cc.wedstrijddag = :dag')
             ->andWhere('u.id = :userId')
-            ->setParameters([
-                'userId' => $userId,
-                'dag' => $dag,
-            ])
+            ->setParameters(
+                [
+                    'userId' => $userId,
+                    'dag'    => $dag,
+                ]
+            )
             ->orderBy('cc.wedstrijdronde')
             ->distinct()
             ->getQuery()
@@ -92,11 +94,13 @@ class ScoresRepository extends EntityRepository
             ->andWhere('cc.wedstrijddag = :dag')
             ->andWhere('cc.wedstrijdronde = :ronde')
             ->andWhere('cc.baan = :baan')
-            ->setParameters([
-                'dag' => $dag,
-                'ronde' => $ronde,
-                'baan' => $baan
-            ])
+            ->setParameters(
+                [
+                    'dag'   => $dag,
+                    'ronde' => $ronde,
+                    'baan'  => $baan
+                ]
+            )
             ->distinct()
             ->getQuery()
             ->getResult();
@@ -114,12 +118,14 @@ class ScoresRepository extends EntityRepository
             ->andWhere('cc.wedstrijdronde = :ronde')
             ->andWhere('cc.baan = :baan')
             ->andWhere('u.id = :userId')
-            ->setParameters([
-                'dag' => $dag,
-                'ronde' => $ronde,
-                'baan' => $baan,
-                'userId' => $userId,
-            ])
+            ->setParameters(
+                [
+                    'dag'    => $dag,
+                    'ronde'  => $ronde,
+                    'baan'   => $baan,
+                    'userId' => $userId,
+                ]
+            )
             ->distinct()
             ->getQuery()
             ->getResult();
@@ -149,10 +155,12 @@ class ScoresRepository extends EntityRepository
             ->where('cc.baan IS NOT NULL')
             ->andWhere('cc.wedstrijddag = :dag')
             ->andWhere('u.id = :userId')
-            ->setParameters([
-                'userId' => $userId,
-                'dag' => $dag,
-            ])
+            ->setParameters(
+                [
+                    'userId' => $userId,
+                    'dag'    => $dag,
+                ]
+            )
             ->orderBy('cc.baan')
             ->distinct()
             ->getQuery()
@@ -183,22 +191,35 @@ class ScoresRepository extends EntityRepository
         return $results;
     }
 
+    /**
+     * @param $baan
+     * @param $toestel
+     *
+     * @return Scores[]
+     */
     public function getLiveScoresPerBaanPerToestel($baan, $toestel)
     {
-        $tijd = new \DateTime('now - 30 minutes');
+        $tijd    = new \DateTime('now - 30 minutes');
         $results = $this->createQueryBuilder('cc')
             ->where('cc.baan = :baan')
             ->andWhere('cc.updated' . $toestel . ' > :tijd')
-            ->setParameters([
-                'tijd' => $tijd,
-                'baan' => $baan,
-            ])
+            ->setParameters(
+                [
+                    'tijd' => $tijd,
+                    'baan' => $baan,
+                ]
+            )
             ->getQuery()
             ->getResult();
         return $results;
     }
 
 
+    /**
+     * @param $toestel
+     *
+     * @return Scores[]
+     */
     public function getTePublicerenScores($toestel)
     {
         $results = $this->createQueryBuilder('cc')

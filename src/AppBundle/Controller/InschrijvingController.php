@@ -8,17 +8,24 @@ use AppBundle\Entity\Turnster;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Vereniging;
 use AppBundle\Entity\Voorinschrijving;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 
 
 class InschrijvingController extends BaseController
 {
+    /**
+     * @param User    $user
+     * @param Session $session
+     * @param Request $request
+     *
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     private function InschrijvenPageDeelTwee(User $user, Session $session, Request $request)
     {
         $aantalJury = (ceil($session->get('aantalTurnsters') / 10) - count($user->getJurylid()));
@@ -93,7 +100,10 @@ class InschrijvingController extends BaseController
                                 $jurylid->setEmail($request->request->get('jury_email_' . $i));
                                 $jurylid->setBrevet($request->request->get('jury_brevet_' . $i));
                                 $jurylid->setOpmerking($request->request->get('jury_opmerking_' . $i));
-                                $this->setJurylidBeschikbareDagenFromPostData($request->request->get('jury_dag_' . $i), $jurylid);
+                                $this->setJurylidBeschikbareDagenFromPostData(
+                                    $request->request->get('jury_dag_' . $i),
+                                    $jurylid
+                                );
                                 $jurylid->setUser($user);
                                 $user->addJurylid($jurylid);
                                 $this->addToDB($user);
@@ -109,7 +119,7 @@ class InschrijvingController extends BaseController
                                         $user->getVereniging()->getPlaats(),
                                     'contactEmail'   => $user->getEmail(),
                                 ];
-                                $this->sendEmail($subject, $to, $view, $parameters, 'jury@haagsedonarcup.nl');
+                                $this->sendEmail($subject, $to, $view, $parameters, 'jury@donarteamcup.nl');
                             }
                         }
                     }
@@ -197,8 +207,11 @@ class InschrijvingController extends BaseController
     }
 
     /**
-     * @Route("/inschrijven", name="inschrijven")
-     * @Method({"GET", "POST"})
+     * @Route("/inschrijven", name="inschrijven", methods={"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function inschrijvenPage(Request $request)
     {
@@ -553,14 +566,23 @@ class InschrijvingController extends BaseController
     }
 
     /**
-     * @Route("/checkUsername/{username}/", name="checkUsernameAvailabilityAjaxCall", options={"expose"=true})
-     * @Method("GET")
+     * @Route("/checkUsername/{username}/", name="checkUsernameAvailabilityAjaxCall", options={"expose"=true}, methods={"GET"})
+     * @param $username
+     *
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function checkUsernameAvailabilityAjaxCall($username)
     {
         return new Response($this->checkUsernameAvailability($username));
     }
 
+    /**
+     * @param $username
+     *
+     * @return string
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     private function checkUsernameAvailability($username)
     {
         $this->updateGereserveerdePlekken();
@@ -581,8 +603,10 @@ class InschrijvingController extends BaseController
 
     /**
      * @Route("/getAvailableNiveausAjaxCall/{geboorteJaar}/", name="getAvailableNiveausAjaxCall",
-     * options={"expose"=true})
-     * @Method("GET")
+     * options={"expose"=true}, methods={"GET"})
+     * @param $geboorteJaar
+     *
+     * @return JsonResponse
      */
     public function getAvailableNiveausAjaxCall($geboorteJaar)
     {

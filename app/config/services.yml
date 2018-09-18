@@ -36,3 +36,4 @@ services:
 
     helper.imageresizer:
         class: AppBundle\Helper\ImageResizer
+        public: true

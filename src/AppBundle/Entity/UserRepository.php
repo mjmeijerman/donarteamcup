@@ -15,6 +15,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserRepository extends EntityRepository implements UserLoaderInterface
 {
+    /**
+     * @param string $username
+     *
+     * @return User|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function loadUserByUsername($username)
     {
         $user = $this->createQueryBuilder('u')
@@ -25,6 +31,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return $user;
     }
 
+    /**
+     * @param $role
+     *
+     * @return User[]
+     */
     public function loadUsersByRole($role)
     {
         $users = $this->createQueryBuilder('u')
@@ -35,7 +46,12 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return $users;
     }
 
-    public function refreshUser(UserInterface $user)
+    /**
+     * @param User $user
+     *
+     * @return null|User
+     */
+    public function refreshUser(User $user)
     {
         $class = get_class($user);
         if (!$this->supportsClass($class)) {

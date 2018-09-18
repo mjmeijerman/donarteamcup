@@ -100,12 +100,6 @@ class Turnster
      **/
     private $scores;
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-
     public function getUitslagenLijst()
     {
         $totaalBrug = (floatval($this->getScores()->getTotaalBrug()));
@@ -336,10 +330,10 @@ class Turnster
     /**
      * Set user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param User $user
      * @return Turnster
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -349,7 +343,7 @@ class Turnster
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {
@@ -359,10 +353,10 @@ class Turnster
     /**
      * Set vloermuziek
      *
-     * @param \AppBundle\Entity\Vloermuziek $vloermuziek
+     * @param Vloermuziek $vloermuziek
      * @return Turnster
      */
-    public function setVloermuziek(\AppBundle\Entity\Vloermuziek $vloermuziek = null)
+    public function setVloermuziek(Vloermuziek $vloermuziek = null)
     {
         $this->vloermuziek = $vloermuziek;
 
@@ -372,7 +366,7 @@ class Turnster
     /**
      * Get vloermuziek
      *
-     * @return \AppBundle\Entity\Vloermuziek 
+     * @return Vloermuziek
      */
     public function getVloermuziek()
     {
@@ -382,10 +376,10 @@ class Turnster
     /**
      * Set scores
      *
-     * @param \AppBundle\Entity\Scores $scores
+     * @param Scores $scores
      * @return Turnster
      */
-    public function setScores(\AppBundle\Entity\Scores $scores = null)
+    public function setScores(Scores $scores = null)
     {
         $this->scores = $scores;
 

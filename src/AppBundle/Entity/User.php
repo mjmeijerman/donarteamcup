@@ -2,10 +2,10 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -117,12 +117,12 @@ class User implements AdvancedUserInterface, \Serializable
     public function getAll()
     {
         $user = [
-            'id' => $this->id,
-            'voornaam' => $this->voornaam,
-            'achternaam' => $this->achternaam,
-            'email' => $this->email,
-            'username' => $this->username,
-            'role' => $this->role,
+            'id'                   => $this->id,
+            'voornaam'             => $this->voornaam,
+            'achternaam'           => $this->achternaam,
+            'email'                => $this->email,
+            'username'             => $this->username,
+            'role'                 => $this->role,
             'verantwoordelijkheid' => ''
         ];
 
@@ -141,6 +141,7 @@ class User implements AdvancedUserInterface, \Serializable
      * Set roles
      *
      * @param string $role
+     *
      * @return User
      */
     public function setRoles($role)
@@ -186,24 +187,30 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->username;
     }
-    
+
     public function getPassword()
     {
         return $this->password;
     }
 
-    /** @see \Serializable::serialize() */
+    /**
+     * @return string
+     */
     public function serialize()
     {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            $this->isActive
-        ));
+        return serialize(
+            array(
+                $this->id,
+                $this->username,
+                $this->password,
+                $this->isActive
+            )
+        );
     }
 
-    /** @see \Serializable::unserialize() */
+    /**
+     * @param string $serialized
+     */
     public function unserialize($serialized)
     {
         list (
@@ -211,13 +218,14 @@ class User implements AdvancedUserInterface, \Serializable
             $this->username,
             $this->password,
             $this->isActive
-            ) = unserialize($serialized);
+            )
+            = unserialize($serialized);
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -228,6 +236,7 @@ class User implements AdvancedUserInterface, \Serializable
      * Set username
      *
      * @param string $username
+     *
      * @return User
      */
     public function setUsername($username)
@@ -241,6 +250,7 @@ class User implements AdvancedUserInterface, \Serializable
      * Set role
      *
      * @param string $role
+     *
      * @return User
      */
     public function setRole($role)
@@ -253,7 +263,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get role
      *
-     * @return string 
+     * @return string
      */
     public function getRole()
     {
@@ -264,6 +274,7 @@ class User implements AdvancedUserInterface, \Serializable
      * Set email
      *
      * @param string $email
+     *
      * @return User
      */
     public function setEmail($email)
@@ -276,7 +287,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -287,6 +298,7 @@ class User implements AdvancedUserInterface, \Serializable
      * Set voornaam
      *
      * @param string $voornaam
+     *
      * @return User
      */
     public function setVoornaam($voornaam)
@@ -299,7 +311,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get voornaam
      *
-     * @return string 
+     * @return string
      */
     public function getVoornaam()
     {
@@ -310,6 +322,7 @@ class User implements AdvancedUserInterface, \Serializable
      * Set achternaam
      *
      * @param string $achternaam
+     *
      * @return User
      */
     public function setAchternaam($achternaam)
@@ -322,7 +335,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get achternaam
      *
-     * @return string 
+     * @return string
      */
     public function getAchternaam()
     {
@@ -333,6 +346,7 @@ class User implements AdvancedUserInterface, \Serializable
      * Set password
      *
      * @param string $password
+     *
      * @return User
      */
     public function setPassword($password)
@@ -346,6 +360,7 @@ class User implements AdvancedUserInterface, \Serializable
      * Set isActive
      *
      * @param boolean $isActive
+     *
      * @return User
      */
     public function setIsActive($isActive)
@@ -358,7 +373,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get isActive
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsActive()
     {
@@ -369,6 +384,7 @@ class User implements AdvancedUserInterface, \Serializable
      * Set verantwoordelijkheid
      *
      * @param string $verantwoordelijkheid
+     *
      * @return User
      */
     public function setVerantwoordelijkheid($verantwoordelijkheid)
@@ -387,12 +403,13 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->verantwoordelijkheid;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->jurylid = new ArrayCollection();
+        $this->jurylid  = new ArrayCollection();
         $this->turnster = new ArrayCollection();
         $this->betaling = new ArrayCollection();
     }
@@ -401,6 +418,7 @@ class User implements AdvancedUserInterface, \Serializable
      * Set telefoonnummer
      *
      * @param string $telefoonnummer
+     *
      * @return User
      */
     public function setTelefoonnummer($telefoonnummer)
@@ -413,7 +431,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get telefoonnummer
      *
-     * @return string 
+     * @return string
      */
     public function getTelefoonnummer()
     {
@@ -424,6 +442,7 @@ class User implements AdvancedUserInterface, \Serializable
      * Set createdAt
      *
      * @param \DateTime $createdAt
+     *
      * @return User
      */
     public function setCreatedAt($createdAt)
@@ -436,7 +455,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -447,6 +466,7 @@ class User implements AdvancedUserInterface, \Serializable
      * Set factuurNummer
      *
      * @param string $factuurNummer
+     *
      * @return User
      */
     public function setFactuurNummer($factuurNummer)
@@ -459,7 +479,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get factuurNummer
      *
-     * @return string 
+     * @return string
      */
     public function getFactuurNummer()
     {
@@ -469,10 +489,11 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set vereniging
      *
-     * @param \AppBundle\Entity\Vereniging $vereniging
+     * @param Vereniging $vereniging
+     *
      * @return User
      */
-    public function setVereniging(\AppBundle\Entity\Vereniging $vereniging = null)
+    public function setVereniging(Vereniging $vereniging = null)
     {
         $this->vereniging = $vereniging;
 
@@ -482,7 +503,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get vereniging
      *
-     * @return \AppBundle\Entity\Vereniging 
+     * @return Vereniging
      */
     public function getVereniging()
     {
@@ -492,10 +513,11 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Add jurylid
      *
-     * @param \AppBundle\Entity\Jurylid $jurylid
+     * @param Jurylid $jurylid
+     *
      * @return User
      */
-    public function addJurylid(\AppBundle\Entity\Jurylid $jurylid)
+    public function addJurylid(Jurylid $jurylid)
     {
         $this->jurylid[] = $jurylid;
 
@@ -505,9 +527,9 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Remove jurylid
      *
-     * @param \AppBundle\Entity\Jurylid $jurylid
+     * @param Jurylid $jurylid
      */
-    public function removeJurylid(\AppBundle\Entity\Jurylid $jurylid)
+    public function removeJurylid(Jurylid $jurylid)
     {
         $this->jurylid->removeElement($jurylid);
     }
@@ -515,7 +537,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get jurylid
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getJurylid()
     {
@@ -525,10 +547,11 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Add turnster
      *
-     * @param \AppBundle\Entity\Turnster $turnster
+     * @param Turnster $turnster
+     *
      * @return User
      */
-    public function addTurnster(\AppBundle\Entity\Turnster $turnster)
+    public function addTurnster(Turnster $turnster)
     {
         $this->turnster[] = $turnster;
 
@@ -538,9 +561,9 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Remove turnster
      *
-     * @param \AppBundle\Entity\Turnster $turnster
+     * @param Turnster $turnster
      */
-    public function removeTurnster(\AppBundle\Entity\Turnster $turnster)
+    public function removeTurnster(Turnster $turnster)
     {
         $this->turnster->removeElement($turnster);
     }
@@ -548,7 +571,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get turnster
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getTurnster()
     {
@@ -558,10 +581,11 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Add betaling
      *
-     * @param \AppBundle\Entity\Betaling $betaling
+     * @param Betaling $betaling
+     *
      * @return User
      */
-    public function addBetaling(\AppBundle\Entity\Betaling $betaling)
+    public function addBetaling(Betaling $betaling)
     {
         $this->betaling[] = $betaling;
 
@@ -571,9 +595,9 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Remove betaling
      *
-     * @param \AppBundle\Entity\Betaling $betaling
+     * @param Betaling $betaling
      */
-    public function removeBetaling(\AppBundle\Entity\Betaling $betaling)
+    public function removeBetaling(Betaling $betaling)
     {
         $this->betaling->removeElement($betaling);
     }
@@ -581,7 +605,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get betaling
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getBetaling()
     {

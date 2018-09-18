@@ -2,12 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * TurnsterRepository
@@ -17,6 +13,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class TurnsterRepository extends EntityRepository
 {
+    /**
+     * @return int
+     * @throws NonUniqueResultException
+     */
     public function getBezettePlekken()
     {
         $bezettePlekken = $this->createQueryBuilder('u')
@@ -28,6 +28,10 @@ class TurnsterRepository extends EntityRepository
         return $bezettePlekken;
     }
 
+    /**
+     * @return int
+     * @throws NonUniqueResultException
+     */
     public function getAantalWachtlijstPlekken()
     {
         $bezettePlekken = $this->createQueryBuilder('u')
@@ -39,6 +43,12 @@ class TurnsterRepository extends EntityRepository
         return $bezettePlekken;
     }
 
+    /**
+     * @param $user
+     *
+     * @return int
+     * @throws NonUniqueResultException
+     */
     public function getAantalAfgemeldeTurnsters($user)
     {
         $afgemeldeTurnsters = $this->createQueryBuilder('u')
@@ -51,6 +61,13 @@ class TurnsterRepository extends EntityRepository
         return $afgemeldeTurnsters;
     }
 
+    /**
+     * @param $geboortejaar
+     * @param $niveau
+     *
+     * @return int
+     * @throws NonUniqueResultException
+     */
     public function getAantalTurnstersPerNiveau($geboortejaar, $niveau)
     {
         $turnsters = $this->createQueryBuilder('u')
@@ -59,15 +76,24 @@ class TurnsterRepository extends EntityRepository
             ->andWhere('u.wachtlijst = 0')
             ->andWhere('u.geboortejaar = :geboortejaar')
             ->andWhere('u.niveau = :niveau')
-            ->setParameters([
-                'geboortejaar' => $geboortejaar,
-                'niveau' => $niveau,
-            ])
+            ->setParameters(
+                [
+                    'geboortejaar' => $geboortejaar,
+                    'niveau'       => $niveau,
+                ]
+            )
             ->getQuery()
             ->getSingleScalarResult();
         return $turnsters;
     }
 
+    /**
+     * @param $geboortejaar
+     * @param $niveau
+     *
+     * @return int
+     * @throws NonUniqueResultException
+     */
     public function getAantalTurnstersWachtlijstPerNiveau($geboortejaar, $niveau)
     {
         $turnsters = $this->createQueryBuilder('u')
@@ -76,15 +102,23 @@ class TurnsterRepository extends EntityRepository
             ->andWhere('u.wachtlijst = 1')
             ->andWhere('u.geboortejaar = :geboortejaar')
             ->andWhere('u.niveau = :niveau')
-            ->setParameters([
-                'geboortejaar' => $geboortejaar,
-                'niveau' => $niveau,
-            ])
+            ->setParameters(
+                [
+                    'geboortejaar' => $geboortejaar,
+                    'niveau'       => $niveau,
+                ]
+            )
             ->getQuery()
             ->getSingleScalarResult();
         return $turnsters;
     }
 
+    /**
+     * @param $user
+     *
+     * @return int
+     * @throws NonUniqueResultException
+     */
     public function getIngeschrevenTurnsters($user)
     {
         $ingeschrevenTurnsters = $this->createQueryBuilder('u')
@@ -98,6 +132,12 @@ class TurnsterRepository extends EntityRepository
         return $ingeschrevenTurnsters;
     }
 
+    /**
+     * @param $user
+     *
+     * @return int
+     * @throws NonUniqueResultException
+     */
     public function getWachtlijstTurnsters($user)
     {
         $ingeschrevenTurnsters = $this->createQueryBuilder('u')
@@ -111,6 +151,12 @@ class TurnsterRepository extends EntityRepository
         return $ingeschrevenTurnsters;
     }
 
+    /**
+     * @param $user
+     *
+     * @return int
+     * @throws NonUniqueResultException
+     */
     public function getAfgemeldeTurnsters($user)
     {
         $ingeschrevenTurnsters = $this->createQueryBuilder('u')
@@ -123,6 +169,11 @@ class TurnsterRepository extends EntityRepository
         return $ingeschrevenTurnsters;
     }
 
+    /**
+     * @param $user
+     *
+     * @return Turnster[]
+     */
     public function getIngeschrevenTurnstersForUser($user)
     {
         $results = $this->createQueryBuilder('u')
@@ -135,6 +186,11 @@ class TurnsterRepository extends EntityRepository
         return $results;
     }
 
+    /**
+     * @param $user
+     *
+     * @return Turnster[]
+     */
     public function getWachtlijstTurnstersForUser($user)
     {
         $results = $this->createQueryBuilder('u')
@@ -147,6 +203,11 @@ class TurnsterRepository extends EntityRepository
         return $results;
     }
 
+    /**
+     * @param $user
+     *
+     * @return Turnster[]
+     */
     public function getAfgemeldTurnstersForUser($user)
     {
         $results = $this->createQueryBuilder('u')
@@ -158,6 +219,12 @@ class TurnsterRepository extends EntityRepository
         return $results;
     }
 
+    /**
+     * @param $categorie
+     * @param $niveau
+     *
+     * @return Turnster[]
+     */
     public function getIngeschrevenTurnstersCatNiveau($categorie, $niveau)
     {
         $ingeschrevenTurnsters = $this->createQueryBuilder('u')
@@ -166,15 +233,23 @@ class TurnsterRepository extends EntityRepository
             ->andWhere('u.categorie = :categorie')
             ->andWhere('u.niveau = :niveau')
             ->orderBy('u.user')
-            ->setParameters([
-                'niveau' => $niveau,
-                'categorie' => $categorie,
-            ])
+            ->setParameters(
+                [
+                    'niveau'    => $niveau,
+                    'categorie' => $categorie,
+                ]
+            )
             ->getQuery()
             ->getResult();
         return $ingeschrevenTurnsters;
     }
 
+    /**
+     * @param $categorie
+     * @param $niveau
+     *
+     * @return Turnster[]
+     */
     public function getWachtlijstTurnstersCatNiveau($categorie, $niveau)
     {
         $ingeschrevenTurnsters = $this->createQueryBuilder('u')
@@ -183,15 +258,20 @@ class TurnsterRepository extends EntityRepository
             ->andWhere('u.categorie = :categorie')
             ->andWhere('u.niveau = :niveau')
             ->orderBy('u.id')
-            ->setParameters([
-                'niveau' => $niveau,
-                'categorie' => $categorie,
-            ])
+            ->setParameters(
+                [
+                    'niveau'    => $niveau,
+                    'categorie' => $categorie,
+                ]
+            )
             ->getQuery()
             ->getResult();
         return $ingeschrevenTurnsters;
     }
 
+    /**
+     * @return Turnster[]
+     */
     public function getGereserveerdePlekken()
     {
         $gereserveerdePlekken = $this->createQueryBuilder('u')
@@ -202,6 +282,11 @@ class TurnsterRepository extends EntityRepository
         return $gereserveerdePlekken;
     }
 
+    /**
+     * @param $limit
+     *
+     * @return Turnster[]
+     */
     public function getWachtlijstPlekken($limit)
     {
         $result = $this->createQueryBuilder('u')
@@ -239,11 +324,16 @@ class TurnsterRepository extends EntityRepository
         return $results;
     }
 
+    /**
+     * @return array
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function getTurnstersOrderedByDayAndVereniging()
     {
         $connection = $this->getEntityManager()->getConnection();
 
-        $sql = <<<EOQ
+        $sql
+            = <<<EOQ
 SELECT
   t.id,
   t.categorie,

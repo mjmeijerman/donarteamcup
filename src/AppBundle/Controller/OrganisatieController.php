@@ -13,13 +13,12 @@ use AppBundle\Entity\Turnster;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserRepository;
 use AppBundle\Entity\Voorinschrijving;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Security("has_role('ROLE_ORGANISATIE')")
@@ -28,8 +27,13 @@ class OrganisatieController extends BaseController
 {
 
     /**
-     * @Route("/organisatie/{page}/", name="organisatieGetContent", defaults={"page" = "Mijn gegevens"})
-     * @Method({"GET", "POST"})
+     * @Route("/organisatie/{page}/", name="organisatieGetContent", defaults={"page" = "Mijn gegevens"}, methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     *
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Exception
      */
     public function getOrganisatiePage(Request $request, $page)
     {
@@ -54,16 +58,23 @@ class OrganisatieController extends BaseController
                 return $this->getOrganisatieGegevensPage();
             case 'Vloermuziek':
                 return $this->getOrganisatieVloermuziekPage();
+            default:
+                throw new \Exception('This is crazy');
         }
     }
 
     /**
-     * @Route("/organisatie/removeContactpersoon/{id}/", name="removeContactpersoon")
-     * @Method({"GET", "POST"})
+     * @Route("/organisatie/removeContactpersoon/{id}/", name="removeContactpersoon", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function removeContactpersoon(Request $request, $id)
     {
         $this->setBasicPageData('Organisatie');
+        /** @var User $result */
         $result = $this->getDoctrine()
             ->getRepository('AppBundle:User')
             ->findOneBy(
@@ -96,9 +107,12 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Template()
-     * @Route("/organisatie/{page}/addReglementen/", name="addReglementen")
-     * @Method({"GET", "POST"})
+     * @Route("/organisatie/{page}/addReglementen/", name="addReglementen", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function addReglementenAction(Request $request, $page)
     {
@@ -107,11 +121,11 @@ class OrganisatieController extends BaseController
         $form = $this->createFormBuilder($file)
             ->add('naam')
             ->add('file')
-            ->add('uploadBestand', 'submit')
+            ->add('uploadBestand', SubmitType::class)
             ->getForm();
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $user */
             $user = $this->getUser();
             $file->setUploader($user->getUsername());
@@ -134,9 +148,12 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Template()
-     * @Route("/organisatie/{page}/addjuryIndeling/", name="addjuryIndeling")
-     * @Method({"GET", "POST"})
+     * @Route("/organisatie/{page}/addjuryIndeling/", name="addjuryIndeling", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function addjuryIndelingAction(Request $request, $page)
     {
@@ -145,11 +162,11 @@ class OrganisatieController extends BaseController
         $form = $this->createFormBuilder($file)
             ->add('naam')
             ->add('file')
-            ->add('uploadBestand', 'submit')
+            ->add('uploadBestand', SubmitType::class)
             ->getForm();
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $user */
             $user = $this->getUser();
             $file->setUploader($user->getUsername());
@@ -172,9 +189,12 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Template()
-     * @Route("/organisatie/{page}/tijdSchema/", name="addtijdSchema")
-     * @Method({"GET", "POST"})
+     * @Route("/organisatie/{page}/tijdSchema/", name="addtijdSchema", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function addtijdSchemaAction(Request $request, $page)
     {
@@ -183,11 +203,11 @@ class OrganisatieController extends BaseController
         $form = $this->createFormBuilder($file)
             ->add('naam')
             ->add('file')
-            ->add('uploadBestand', 'submit')
+            ->add('uploadBestand', SubmitType::class)
             ->getForm();
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $user */
             $user = $this->getUser();
             $file->setUploader($user->getUsername());
@@ -215,6 +235,13 @@ class OrganisatieController extends BaseController
         return $userObject->getAll();
     }
 
+    /**
+     * @param Request $request
+     * @param         $page
+     *
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     private function getJuryPage(Request $request, $page)
     {
         if ($request->getMethod() === 'POST') {
@@ -265,10 +292,12 @@ class OrganisatieController extends BaseController
         /** @var User[] $users */
         $users = $this->getDoctrine()->getRepository('AppBundle:User')->loadUsersByRole('ROLE_CONTACT');
 
-        usort($users, function($a, $b)
-        {
-            return strcmp($a->getVereniging()->getNaam(), $b->getVereniging()->getNaam());
-        });
+        usort(
+            $users,
+            function (User $a, User $b) {
+                return strcmp($a->getVereniging()->getNaam(), $b->getVereniging()->getNaam());
+            }
+        );
 
         $juryIndeling = $this->getJuryIndeling();
         /** @var Jurylid[] $results */
@@ -409,8 +438,11 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Route("/organisatie/editInstellingen/{fieldName}/{data}/", name="editInstellingen", options={"expose"=true})
-     * @Method("GET")
+     * @Route("/organisatie/editInstellingen/{fieldName}/{data}/", name="editInstellingen", options={"expose"=true}, methods={"GET"})
+     * @param $fieldName
+     * @param $data
+     *
+     * @return JsonResponse
      */
     public function editInstellingen($fieldName, $data)
     {
@@ -451,8 +483,12 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Route("/organisatie/{page}/genereerVoorinschrijving/", name="genereerVoorinschrijving")
-     * @Method({"GET", "POST"})
+     * @Route("/organisatie/{page}/genereerVoorinschrijving/", name="genereerVoorinschrijving", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function genereerVoorinschrijving(Request $request, $page)
     {
@@ -478,6 +514,9 @@ class OrganisatieController extends BaseController
         }
     }
 
+    /**
+     * @param $id
+     */
     private function removeVoorinschrijving($id)
     {
         $result = $this->getDoctrine()
@@ -491,8 +530,11 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Route("/organisatie/{page}/removeVoorinschrijving/{id}", name="removeVoorinschrijving")
-     * @Method({"GET"})
+     * @Route("/organisatie/{page}/removeVoorinschrijving/{id}", name="removeVoorinschrijving", methods={"GET"})
+     * @param $page
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function removeVoorinschrijvingsPage($page, $id)
     {
@@ -522,8 +564,11 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Route("/organisatie/{page}/refreshVoorinschrijving/{id}", name="refreshVoorinschrijving")
-     * @Method({"GET"})
+     * @Route("/organisatie/{page}/refreshVoorinschrijving/{id}", name="refreshVoorinschrijving", methods={"GET"})
+     * @param $page
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function refreshVoorinschrijvingsPage($page, $id)
     {
@@ -672,6 +717,13 @@ class OrganisatieController extends BaseController
         return $contactpersonen;
     }
 
+    /**
+     * @param $groepen
+     *
+     * @return array
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Exception
+     */
     private function getAantallenPerNiveau($groepen)
     {
         $aantallenPerNiveau               = [];
@@ -686,7 +738,7 @@ class OrganisatieController extends BaseController
                     $aantallenPerNiveau['geplaatst'][$categorie][$niveau]  = 0;
                     $aantallenPerNiveau['wachtlijst'][$categorie][$niveau] = 0;
                     foreach ($geboortejaren as $geboortejaar) {
-                        $aantallenPerNiveau['geplaatst'][$categorie][$niveau] += $this->getDoctrine()->getRepository
+                        $aantallenPerNiveau['geplaatst'][$categorie][$niveau]  += $this->getDoctrine()->getRepository
                         (
                             'AppBundle:Turnster'
                         )
@@ -714,6 +766,10 @@ class OrganisatieController extends BaseController
         return $aantallenPerNiveau;
     }
 
+    /**
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     private function getOrganisatieFacturenPage()
     {
         /** @var User[] $results */
@@ -794,8 +850,12 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Route("/organisatie/{page}/niveauToevoegen/", name="niveauToevoegen")
-     * @Method({"GET", "POST"})
+     * @Route("/organisatie/{page}/niveauToevoegen/", name="niveauToevoegen", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function niveauToevoegen(Request $request, $page)
     {
@@ -829,10 +889,12 @@ class OrganisatieController extends BaseController
 
     /**
      * @Route("/organisatie/{page}/niveauVerwijderen/{id}/",
-     * name="niveauVerwijderenAjaxCall", options={"expose"=true})
-     * @Method("GET")
+     * name="niveauVerwijderenAjaxCall", options={"expose"=true}, methods={"GET"})
+     * @param $id
+     *
+     * @return Response
      */
-    public function niveauVerwijderenAjaxCall($id, $page)
+    public function niveauVerwijderenAjaxCall($id)
     {
         $result = $this->getDoctrine()->getRepository('AppBundle:ToegestaneNiveaus')
             ->findOneBy(['id' => $id]);
@@ -843,13 +905,16 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Route("/organisatie/{page}/betalingInzien/{userId}/", name="betalingInzien")
-     * @Method("GET")
+     * @Route("/organisatie/{page}/betalingInzien/{userId}/", name="betalingInzien", methods={"GET"})
+     * @param $userId
+     *
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function betalingInzien($page, $userId)
+    public function betalingInzien($userId)
     {
         $this->setBasicPageData('Organisatie');
-        /** @var User[] $results */
+        /** @var User $result */
         $result                    = $this->getDoctrine()
             ->getRepository('AppBundle:User')
             ->findOneBy(['id' => $userId]);
@@ -886,7 +951,7 @@ class OrganisatieController extends BaseController
             /** @var Betaling $betaling */
             foreach ($betalingenObjecten as $betaling) {
                 $betaaldBedrag += $betaling->getBedrag();
-                $betalingen[] = [
+                $betalingen[]  = [
                     'id'     => $betaling->getId(),
                     'datum'  => $betaling->getDatumBetaald()->format('d-m-Y'),
                     'bedrag' => $betaling->getBedrag(),
@@ -932,8 +997,11 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Route("/organisatie/{page}/organisatieGetFacturen/{userId}/", name="organisatieGetFacturen")
-     * @Method("GET")
+     * @Route("/organisatie/{page}/organisatieGetFacturen/{userId}/", name="organisatieGetFacturen", methods={"GET"})
+     * @param $userId
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function organisatieGetFacturen($userId)
     {
@@ -941,8 +1009,12 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Route("/organisatie/{page}/removeBetaling/{userId}/", name="removeBetaling")
-     * @Method({"POST"})
+     * @Route("/organisatie/{page}/removeBetaling/{userId}/", name="removeBetaling", methods={"POST"})
+     * @param Request $request
+     * @param         $page
+     * @param         $userId
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function removeBetaling(Request $request, $page, $userId)
     {
@@ -977,8 +1049,13 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Route("/organisatie/{page}/addBetaling/{userId}/", name="addBetaling")
-     * @Method({"GET", "POST"})
+     * @Route("/organisatie/{page}/addBetaling/{userId}/", name="addBetaling", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     * @param         $userId
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function addBetaling(Request $request, $page, $userId)
     {
@@ -1035,6 +1112,10 @@ class OrganisatieController extends BaseController
         );
     }
 
+    /**
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     private function getOrganisatieInschrijvingenPage()
     {
         $groepen            = $this->getGroepen();
@@ -1057,8 +1138,10 @@ class OrganisatieController extends BaseController
 
     /**
      * @Route("/organisatie/bekijkInschrijvingenPerNiveau/removeOrganisatieTurnster/{id}",
-     * name="removeOrganisatieTurnsterAjaxCall", options={"expose"=true})
-     * @Method("GET")
+     * name="removeOrganisatieTurnsterAjaxCall", options={"expose"=true}, methods={"GET"})
+     * @param $id
+     *
+     * @return Response
      */
     public function removeOrganisatieTurnsterAjaxCall($id)
     {
@@ -1072,8 +1155,10 @@ class OrganisatieController extends BaseController
 
     /**
      * @Route("/organisatie/Instellingen/publiceeerUitslag/{id}",
-     * name="publiceeerUitslagAjaxCall", options={"expose"=true})
-     * @Method("GET")
+     * name="publiceeerUitslagAjaxCall", options={"expose"=true}, methods={"GET"})
+     * @param $id
+     *
+     * @return Response
      */
     public function publiceeerUitslagAjaxCall($id)
     {
@@ -1089,8 +1174,10 @@ class OrganisatieController extends BaseController
 
     /**
      * @Route("/organisatie/Instellingen/annuleerPubliceren/{id}",
-     * name="annuleerPublicerenAjaxCall", options={"expose"=true})
-     * @Method("GET")
+     * name="annuleerPublicerenAjaxCall", options={"expose"=true}, methods={"GET"})
+     * @param $id
+     *
+     * @return Response
      */
     public function annuleerPublicerenAjaxCall($id)
     {
@@ -1106,8 +1193,11 @@ class OrganisatieController extends BaseController
 
     /**
      * @Route("/organisatie/Juryzaken/changeJuryDagAjaxCall/{id}/{dag}/",
-     * name="changeJuryDagAjaxCall", options={"expose"=true})
-     * @Method("GET")
+     * name="changeJuryDagAjaxCall", options={"expose"=true}, methods={"GET"})
+     * @param $id
+     * @param $dag
+     *
+     * @return Response
      */
     public function changeJuryDagAjaxCall($id, $dag)
     {
@@ -1125,8 +1215,10 @@ class OrganisatieController extends BaseController
 
     /**
      * @Route("/organisatie/bekijkInschrijvingenPerNiveau/removeOrganisatieJury/{id}",
-     * name="removeOrganisatieJuryAjaxCall", options={"expose"=true})
-     * @Method("GET")
+     * name="removeOrganisatieJuryAjaxCall", options={"expose"=true}, methods={"GET"})
+     * @param $id
+     *
+     * @return Response
      */
     public function removeOrganisatieJuryAjaxCall($id)
     {
@@ -1140,8 +1232,10 @@ class OrganisatieController extends BaseController
 
     /**
      * @Route("/organisatie/bekijkInschrijvingenPerNiveau/moveTurnsterToWachtlijst/{id}",
-     * name="moveTurnsterToWachtlijst", options={"expose"=true})
-     * @Method("GET")
+     * name="moveTurnsterToWachtlijst", options={"expose"=true}, methods={"GET"})
+     * @param $id
+     *
+     * @return Response
      */
     public function moveTurnsterToWachtlijst($id)
     {
@@ -1157,8 +1251,10 @@ class OrganisatieController extends BaseController
 
     /**
      * @Route("/organisatie/bekijkInschrijvingenPerNiveau/moveTurnsterFromWachtlijst/{id}",
-     * name="moveTurnsterFromWachtlijst", options={"expose"=true})
-     * @Method("GET")
+     * name="moveTurnsterFromWachtlijst", options={"expose"=true}, methods={"GET"})
+     * @param $id
+     *
+     * @return Response
      */
     public function moveTurnsterFromWachtlijst($id)
     {
@@ -1173,10 +1269,14 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Route("/organisatie/{page}/bekijkInschrijvingenPerNiveau/{categorie}/{niveau}/", name="bekijkInschrijvingenPerNiveau")
-     * @Method("GET")
+     * @Route("/organisatie/{page}/bekijkInschrijvingenPerNiveau/{categorie}/{niveau}/", name="bekijkInschrijvingenPerNiveau", methods={"GET"})
+     * @param $categorie
+     * @param $niveau
+     *
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function bekijkInschrijvingenPerNiveau($page, $categorie, $niveau)
+    public function bekijkInschrijvingenPerNiveau($categorie, $niveau)
     {
         /* todo:
          * todo: Naar wachtlijst:
@@ -1229,10 +1329,13 @@ class OrganisatieController extends BaseController
 
     /**
      * @Route("/organisatie/{page}/bekijkInschrijvingenPerContactpersoon/{userId}/",
-     * name="bekijkInschrijvingenPerContactpersoon")
-     * @Method("GET")
+     * name="bekijkInschrijvingenPerContactpersoon", methods={"GET"})
+     * @param $userId
+     *
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function bekijkInschrijvingenPerContactpersoon($page, $userId)
+    public function bekijkInschrijvingenPerContactpersoon($userId)
     {
         /* todo:
          * todo: Naar wachtlijst:
@@ -1335,8 +1438,13 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Route("/organisatie/{page}/editPassword/", name="editPassword")
-     * @Method({"GET", "POST"})
+     * @Route("/organisatie/{page}/editPassword/", name="editPassword", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Exception
      */
     public function editPassword(Request $request, $page)
     {
@@ -1396,11 +1504,17 @@ class OrganisatieController extends BaseController
                 )
             );
         }
+
+        throw new \Exception('This is crazy');
     }
 
     /**
-     * @Route("/organisatie/{page}/uploadWedstrijdindelingen/", name="uploadWedstrijdindelingen")
-     * @Method({"GET", "POST"})
+     * @Route("/organisatie/{page}/uploadWedstrijdindelingen/", name="uploadWedstrijdindelingen", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     *
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function uploadWedstrijdindelingen(Request $request, $page)
     {
@@ -1474,8 +1588,12 @@ class OrganisatieController extends BaseController
     }
 
     /**
-     * @Route("/organisatie/{page}/removeInschrijvingen/", name="removeInschrijvingen")
-     * @Method({"GET", "POST"})
+     * @Route("/organisatie/{page}/removeInschrijvingen/", name="removeInschrijvingen", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function removeInschrijvingen(Request $request, $page)
     {

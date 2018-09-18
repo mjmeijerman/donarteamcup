@@ -2,11 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\AppBundle;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Entity\Turnster;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ScoresRepository")
@@ -277,45 +273,47 @@ class Scores
 
     public function getScores()
     {
-        $totaalBrug = $this->getTotaalBrug();
-        $totaalBalk = $this->getTotaalBalk();
-        $totaalVloer = $this->getTotaalVloer();
+        $totaalBrug    = $this->getTotaalBrug();
+        $totaalBalk    = $this->getTotaalBalk();
+        $totaalVloer   = $this->getTotaalVloer();
         $totaalSprong1 = $this->getTotaalSprong1();
         $totaalSprong2 = $this->getTotaalSprong2();
-        $totaalSprong = $this->getTotaalSprong();
-        $totaal = $totaalSprong + $totaalBrug + $totaalBalk + $totaalVloer;
+        $totaalSprong  = $this->getTotaalSprong();
+        $totaal        = $totaalSprong + $totaalBrug + $totaalBalk + $totaalVloer;
         return [
-            'userId' => $this->getTurnster()->getUser()->getId(),
+            'userId'          => $this->getTurnster()->getUser()->getId(),
             'wedstrijdnummer' => $this->getWedstrijdnummer(),
-            'naam' => $this->getTurnster()->getVoornaam() . ' ' . $this->getTurnster()->getAchternaam(),
-            'vereniging' => $this->getTurnster()->getUser()->getVereniging()->getNaam() . ' ' . $this->getTurnster()
-                ->getUser()->getVereniging()->getPlaats(),
-            'categorie' => $this->getTurnster()->getCategorie(),
-            'niveau' => $this->getTurnster()->getNiveau(),
-            'dBrug' => number_format($this->getDBrug(), 2, ",", "."),
-            'nBrug' => number_format($this->getNBrug(), 2, ",", "."),
-            'totaalBrug' => $totaalBrug,
-            'dBalk' => number_format($this->getDBalk(), 2, ",", "."),
-            'nBalk' => number_format($this->getNBalk(), 2, ",", "."),
-            'totaalBalk' => $totaalBalk,
-            'dVloer' => number_format($this->getDVloer(), 2, ",", "."),
-            'nVloer' => number_format($this->getNVloer(), 2, ",", "."),
-            'totaalVloer' => $totaalVloer,
-            'dSprong1' => number_format($this->getDSprong1(), 2, ",", "."),
-            'nSprong1' => number_format($this->getNSprong1(), 2, ",", "."),
-            'totaalSprong1' => $totaalSprong1,
-            'dSprong2' => number_format($this->getDSprong2(), 2, ",", "."),
-            'nSprong2' => number_format($this->getNSprong2(), 2, ",", "."),
-            'totaalSprong2' => $totaalSprong2,
-            'totaalSprong' => $totaalSprong, 3,
-            'totaal' => $totaal,
+            'naam'            => $this->getTurnster()->getVoornaam() . ' ' . $this->getTurnster()->getAchternaam(),
+            'vereniging'      => $this->getTurnster()->getUser()->getVereniging()->getNaam() . ' ' . $this->getTurnster(
+                )
+                    ->getUser()->getVereniging()->getPlaats(),
+            'categorie'       => $this->getTurnster()->getCategorie(),
+            'niveau'          => $this->getTurnster()->getNiveau(),
+            'dBrug'           => number_format($this->getDBrug(), 2, ",", "."),
+            'nBrug'           => number_format($this->getNBrug(), 2, ",", "."),
+            'totaalBrug'      => $totaalBrug,
+            'dBalk'           => number_format($this->getDBalk(), 2, ",", "."),
+            'nBalk'           => number_format($this->getNBalk(), 2, ",", "."),
+            'totaalBalk'      => $totaalBalk,
+            'dVloer'          => number_format($this->getDVloer(), 2, ",", "."),
+            'nVloer'          => number_format($this->getNVloer(), 2, ",", "."),
+            'totaalVloer'     => $totaalVloer,
+            'dSprong1'        => number_format($this->getDSprong1(), 2, ",", "."),
+            'nSprong1'        => number_format($this->getNSprong1(), 2, ",", "."),
+            'totaalSprong1'   => $totaalSprong1,
+            'dSprong2'        => number_format($this->getDSprong2(), 2, ",", "."),
+            'nSprong2'        => number_format($this->getNSprong2(), 2, ",", "."),
+            'totaalSprong2'   => $totaalSprong2,
+            'totaalSprong'    => $totaalSprong,
+            3,
+            'totaal'          => $totaal,
         ];
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -326,6 +324,7 @@ class Scores
      * Set wedstrijdnummer
      *
      * @param integer $wedstrijdnummer
+     *
      * @return Scores
      */
     public function setWedstrijdnummer($wedstrijdnummer)
@@ -338,7 +337,7 @@ class Scores
     /**
      * Get wedstrijdnummer
      *
-     * @return integer 
+     * @return integer
      */
     public function getWedstrijdnummer()
     {
@@ -349,6 +348,7 @@ class Scores
      * Set turnster
      *
      * @param \AppBundle\Entity\Turnster $turnster
+     *
      * @return Scores
      */
     public function setTurnster(\AppBundle\Entity\Turnster $turnster = null)
@@ -361,7 +361,7 @@ class Scores
     /**
      * Get turnster
      *
-     * @return \AppBundle\Entity\Turnster 
+     * @return \AppBundle\Entity\Turnster
      */
     public function getTurnster()
     {
@@ -372,6 +372,7 @@ class Scores
      * Set wedstrijddag
      *
      * @param string $wedstrijddag
+     *
      * @return Scores
      */
     public function setWedstrijddag($wedstrijddag)
@@ -384,7 +385,7 @@ class Scores
     /**
      * Get wedstrijddag
      *
-     * @return string 
+     * @return string
      */
     public function getWedstrijddag()
     {
@@ -395,6 +396,7 @@ class Scores
      * Set wedstrijdronde
      *
      * @param string $wedstrijdronde
+     *
      * @return Scores
      */
     public function setWedstrijdronde($wedstrijdronde)
@@ -407,7 +409,7 @@ class Scores
     /**
      * Get wedstrijdronde
      *
-     * @return string 
+     * @return string
      */
     public function getWedstrijdronde()
     {
@@ -418,6 +420,7 @@ class Scores
      * Set baan
      *
      * @param string $baan
+     *
      * @return Scores
      */
     public function setBaan($baan)
@@ -430,7 +433,7 @@ class Scores
     /**
      * Get baan
      *
-     * @return string 
+     * @return string
      */
     public function getBaan()
     {
@@ -441,6 +444,7 @@ class Scores
      * Set groep
      *
      * @param string $groep
+     *
      * @return Scores
      */
     public function setGroep($groep)
@@ -453,7 +457,7 @@ class Scores
     /**
      * Get groep
      *
-     * @return string 
+     * @return string
      */
     public function getGroep()
     {
@@ -464,6 +468,7 @@ class Scores
      * Set dSprong1
      *
      * @param string $dSprong1
+     *
      * @return Scores
      */
     public function setDSprong1($dSprong1)
@@ -476,7 +481,7 @@ class Scores
     /**
      * Get dSprong1
      *
-     * @return string 
+     * @return string
      */
     public function getDSprong1()
     {
@@ -487,6 +492,7 @@ class Scores
      * Set eSprong1
      *
      * @param string $eSprong1
+     *
      * @return Scores
      */
     public function setESprong1($eSprong1)
@@ -499,7 +505,7 @@ class Scores
     /**
      * Get eSprong1
      *
-     * @return string 
+     * @return string
      */
     public function getESprong1()
     {
@@ -510,6 +516,7 @@ class Scores
      * Set nSprong1
      *
      * @param string $nSprong1
+     *
      * @return Scores
      */
     public function setNSprong1($nSprong1)
@@ -522,7 +529,7 @@ class Scores
     /**
      * Get nSprong1
      *
-     * @return string 
+     * @return string
      */
     public function getNSprong1()
     {
@@ -533,6 +540,7 @@ class Scores
      * Set dSprong2
      *
      * @param string $dSprong2
+     *
      * @return Scores
      */
     public function setDSprong2($dSprong2)
@@ -545,7 +553,7 @@ class Scores
     /**
      * Get dSprong2
      *
-     * @return string 
+     * @return string
      */
     public function getDSprong2()
     {
@@ -556,6 +564,7 @@ class Scores
      * Set eSprong2
      *
      * @param string $eSprong2
+     *
      * @return Scores
      */
     public function setESprong2($eSprong2)
@@ -568,7 +577,7 @@ class Scores
     /**
      * Get eSprong2
      *
-     * @return string 
+     * @return string
      */
     public function getESprong2()
     {
@@ -579,6 +588,7 @@ class Scores
      * Set nSprong2
      *
      * @param string $nSprong2
+     *
      * @return Scores
      */
     public function setNSprong2($nSprong2)
@@ -591,7 +601,7 @@ class Scores
     /**
      * Get nSprong2
      *
-     * @return string 
+     * @return string
      */
     public function getNSprong2()
     {
@@ -602,6 +612,7 @@ class Scores
      * Set getoondSprong
      *
      * @param boolean $getoondSprong
+     *
      * @return Scores
      */
     public function setGetoondSprong($getoondSprong)
@@ -614,7 +625,7 @@ class Scores
     /**
      * Get getoondSprong
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getGetoondSprong()
     {
@@ -625,6 +636,7 @@ class Scores
      * Set gepubliceerdSprong
      *
      * @param boolean $gepubliceerdSprong
+     *
      * @return Scores
      */
     public function setGepubliceerdSprong($gepubliceerdSprong)
@@ -637,7 +649,7 @@ class Scores
     /**
      * Get gepubliceerdSprong
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getGepubliceerdSprong()
     {
@@ -648,6 +660,7 @@ class Scores
      * Set updatedSprong
      *
      * @param \DateTime $updatedSprong
+     *
      * @return Scores
      */
     public function setUpdatedSprong($updatedSprong)
@@ -660,7 +673,7 @@ class Scores
     /**
      * Get updatedSprong
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedSprong()
     {
@@ -671,6 +684,7 @@ class Scores
      * Set dBrug
      *
      * @param string $dBrug
+     *
      * @return Scores
      */
     public function setDBrug($dBrug)
@@ -683,7 +697,7 @@ class Scores
     /**
      * Get dBrug
      *
-     * @return string 
+     * @return string
      */
     public function getDBrug()
     {
@@ -694,6 +708,7 @@ class Scores
      * Set eBrug
      *
      * @param string $eBrug
+     *
      * @return Scores
      */
     public function setEBrug($eBrug)
@@ -706,7 +721,7 @@ class Scores
     /**
      * Get eBrug
      *
-     * @return string 
+     * @return string
      */
     public function getEBrug()
     {
@@ -717,6 +732,7 @@ class Scores
      * Set nBrug
      *
      * @param string $nBrug
+     *
      * @return Scores
      */
     public function setNBrug($nBrug)
@@ -729,7 +745,7 @@ class Scores
     /**
      * Get nBrug
      *
-     * @return string 
+     * @return string
      */
     public function getNBrug()
     {
@@ -740,6 +756,7 @@ class Scores
      * Set getoondBrug
      *
      * @param boolean $getoondBrug
+     *
      * @return Scores
      */
     public function setGetoondBrug($getoondBrug)
@@ -752,7 +769,7 @@ class Scores
     /**
      * Get getoondBrug
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getGetoondBrug()
     {
@@ -763,6 +780,7 @@ class Scores
      * Set gepubliceerdBrug
      *
      * @param boolean $gepubliceerdBrug
+     *
      * @return Scores
      */
     public function setGepubliceerdBrug($gepubliceerdBrug)
@@ -775,7 +793,7 @@ class Scores
     /**
      * Get gepubliceerdBrug
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getGepubliceerdBrug()
     {
@@ -786,6 +804,7 @@ class Scores
      * Set updatedBrug
      *
      * @param \DateTime $updatedBrug
+     *
      * @return Scores
      */
     public function setUpdatedBrug($updatedBrug)
@@ -798,7 +817,7 @@ class Scores
     /**
      * Get updatedBrug
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedBrug()
     {
@@ -809,6 +828,7 @@ class Scores
      * Set dBalk
      *
      * @param string $dBalk
+     *
      * @return Scores
      */
     public function setDBalk($dBalk)
@@ -821,7 +841,7 @@ class Scores
     /**
      * Get dBalk
      *
-     * @return string 
+     * @return string
      */
     public function getDBalk()
     {
@@ -832,6 +852,7 @@ class Scores
      * Set eBalk
      *
      * @param string $eBalk
+     *
      * @return Scores
      */
     public function setEBalk($eBalk)
@@ -844,7 +865,7 @@ class Scores
     /**
      * Get eBalk
      *
-     * @return string 
+     * @return string
      */
     public function getEBalk()
     {
@@ -855,6 +876,7 @@ class Scores
      * Set nBalk
      *
      * @param string $nBalk
+     *
      * @return Scores
      */
     public function setNBalk($nBalk)
@@ -867,7 +889,7 @@ class Scores
     /**
      * Get nBalk
      *
-     * @return string 
+     * @return string
      */
     public function getNBalk()
     {
@@ -878,6 +900,7 @@ class Scores
      * Set getoondBalk
      *
      * @param boolean $getoondBalk
+     *
      * @return Scores
      */
     public function setGetoondBalk($getoondBalk)
@@ -890,7 +913,7 @@ class Scores
     /**
      * Get getoondBalk
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getGetoondBalk()
     {
@@ -901,6 +924,7 @@ class Scores
      * Set gepubliceerdBalk
      *
      * @param boolean $gepubliceerdBalk
+     *
      * @return Scores
      */
     public function setGepubliceerdBalk($gepubliceerdBalk)
@@ -913,7 +937,7 @@ class Scores
     /**
      * Get gepubliceerdBalk
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getGepubliceerdBalk()
     {
@@ -924,6 +948,7 @@ class Scores
      * Set updatedBalk
      *
      * @param \DateTime $updatedBalk
+     *
      * @return Scores
      */
     public function setUpdatedBalk($updatedBalk)
@@ -936,7 +961,7 @@ class Scores
     /**
      * Get updatedBalk
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedBalk()
     {
@@ -947,6 +972,7 @@ class Scores
      * Set dVloer
      *
      * @param string $dVloer
+     *
      * @return Scores
      */
     public function setDVloer($dVloer)
@@ -959,7 +985,7 @@ class Scores
     /**
      * Get dVloer
      *
-     * @return string 
+     * @return string
      */
     public function getDVloer()
     {
@@ -970,6 +996,7 @@ class Scores
      * Set eVloer
      *
      * @param string $eVloer
+     *
      * @return Scores
      */
     public function setEVloer($eVloer)
@@ -982,7 +1009,7 @@ class Scores
     /**
      * Get eVloer
      *
-     * @return string 
+     * @return string
      */
     public function getEVloer()
     {
@@ -993,6 +1020,7 @@ class Scores
      * Set nVloer
      *
      * @param string $nVloer
+     *
      * @return Scores
      */
     public function setNVloer($nVloer)
@@ -1005,7 +1033,7 @@ class Scores
     /**
      * Get nVloer
      *
-     * @return string 
+     * @return string
      */
     public function getNVloer()
     {
@@ -1016,6 +1044,7 @@ class Scores
      * Set getoondVloer
      *
      * @param boolean $getoondVloer
+     *
      * @return Scores
      */
     public function setGetoondVloer($getoondVloer)
@@ -1028,7 +1057,7 @@ class Scores
     /**
      * Get getoondVloer
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getGetoondVloer()
     {
@@ -1039,6 +1068,7 @@ class Scores
      * Set gepubliceerdVloer
      *
      * @param boolean $gepubliceerdVloer
+     *
      * @return Scores
      */
     public function setGepubliceerdVloer($gepubliceerdVloer)
@@ -1051,7 +1081,7 @@ class Scores
     /**
      * Get gepubliceerdVloer
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getGepubliceerdVloer()
     {
@@ -1062,6 +1092,7 @@ class Scores
      * Set updatedVloer
      *
      * @param \DateTime $updatedVloer
+     *
      * @return Scores
      */
     public function setUpdatedVloer($updatedVloer)
@@ -1074,7 +1105,7 @@ class Scores
     /**
      * Get updatedVloer
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedVloer()
     {
@@ -1085,6 +1116,7 @@ class Scores
      * Set begintoestel
      *
      * @param string $begintoestel
+     *
      * @return Scores
      */
     public function setBegintoestel($begintoestel)
@@ -1097,7 +1129,7 @@ class Scores
     /**
      * Get begintoestel
      *
-     * @return string 
+     * @return string
      */
     public function getBegintoestel()
     {

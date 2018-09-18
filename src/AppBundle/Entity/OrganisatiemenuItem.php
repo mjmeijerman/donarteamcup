@@ -49,13 +49,10 @@ class OrganisatiemenuItem
      * Set naam
      *
      * @param string $naam
-     * @return HoofdmenuItem
      */
     public function setNaam($naam)
     {
         $this->naam = $naam;
-
-        return $this;
     }
 
     /**
@@ -72,13 +69,10 @@ class OrganisatiemenuItem
      * Set positie
      *
      * @param integer $positie
-     * @return HoofdmenuItem
      */
     public function setPostitie($positie)
     {
         $this->positie = $positie;
-
-        return $this;
     }
 
     /**

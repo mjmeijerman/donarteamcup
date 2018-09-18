@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,8 +37,8 @@ class Vereniging
     public function getAll()
     {
         return [
-            'id' => $this->id,
-            'naam' => $this->naam,
+            'id'     => $this->id,
+            'naam'   => $this->naam,
             'plaats' => $this->plaats,
         ];
     }
@@ -46,13 +48,13 @@ class Vereniging
      */
     public function __construct()
     {
-        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -63,6 +65,7 @@ class Vereniging
      * Set naam
      *
      * @param string $naam
+     *
      * @return Vereniging
      */
     public function setNaam($naam)
@@ -75,7 +78,7 @@ class Vereniging
     /**
      * Get naam
      *
-     * @return string 
+     * @return string
      */
     public function getNaam()
     {
@@ -86,6 +89,7 @@ class Vereniging
      * Set plaats
      *
      * @param string $plaats
+     *
      * @return Vereniging
      */
     public function setPlaats($plaats)
@@ -98,7 +102,7 @@ class Vereniging
     /**
      * Get plaats
      *
-     * @return string 
+     * @return string
      */
     public function getPlaats()
     {
@@ -108,10 +112,11 @@ class Vereniging
     /**
      * Add user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param User $user
+     *
      * @return Vereniging
      */
-    public function addUser(\AppBundle\Entity\User $user)
+    public function addUser(User $user)
     {
         $this->user[] = $user;
 
@@ -121,9 +126,9 @@ class Vereniging
     /**
      * Remove user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param User $user
      */
-    public function removeUser(\AppBundle\Entity\User $user)
+    public function removeUser(User $user)
     {
         $this->user->removeElement($user);
     }
@@ -131,7 +136,7 @@ class Vereniging
     /**
      * Get user
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getUser()
     {

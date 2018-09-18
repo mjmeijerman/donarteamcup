@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller;
 
 class PrijswinnaarsPdfController extends AlphaPDFController
@@ -19,15 +20,22 @@ class PrijswinnaarsPdfController extends AlphaPDFController
     function Header()
     {
         $this->SetFillColor(127);
-		$this->Rect(0,0,297,32,'F');
-		$this->Image('images/pdf_background_landscape.png', 0, 0);
-		$this->Image('images/HDCFactuurHeader.png', 30, -1);
+        $this->Rect(0, 0, 297, 32, 'F');
+        $this->Image('images/pdf_background_landscape.png', 0, 0);
+        $this->Image('images/HDCFactuurHeader.png', 30, -1);
         $this->Ln(40);
         $this->SetTextColor(0, 0, 0);
         $this->SetFont('Helvetica', 'B', 20);
-        $this->Cell(277, 10, "Haagse Donar Cup " . date('Y', time()) . ": Prijswinnaars " . $this->categorie . " " .
-            $this->niveau, 0, 1, 'C');
-		$this->Ln(14);
+        $this->Cell(
+            277,
+            10,
+            "Haagse Donar Cup " . date('Y', time()) . ": Prijswinnaars " . $this->categorie . " " .
+            $this->niveau,
+            0,
+            1,
+            'C'
+        );
+        $this->Ln(14);
     }
 
     function Footer()
@@ -83,8 +91,21 @@ class PrijswinnaarsPdfController extends AlphaPDFController
                         $this->Cell($w[$j], 7, '', 0, 0);
                     } elseif ($j == 2) {
                         if (isset($waardes[$k][$i][$j])) {
-                            $this->Cell($w[$j], 7, utf8_decode(number_format
-                            ($waardes[$k][$i][$j], 3, ',', '.')), 1, 0);
+                            $this->Cell(
+                                $w[$j],
+                                7,
+                                utf8_decode(
+                                    number_format
+                                    (
+                                        $waardes[$k][$i][$j],
+                                        3,
+                                        ',',
+                                        '.'
+                                    )
+                                ),
+                                1,
+                                0
+                            );
                         } else {
                             $this->Cell($w[$j], 7, '', 0, 0);
                         }
@@ -129,8 +150,21 @@ class PrijswinnaarsPdfController extends AlphaPDFController
                         $this->Cell($w[$j], 7, '', 0, 0);
                     } elseif ($j == 2) {
                         if (isset($waardes[$k][$i][$j])) {
-                            $this->Cell($w[$j], 7, utf8_decode(number_format
-                            ($waardes[$k][$i][$j], 3, ',', '.')), 1, 0);
+                            $this->Cell(
+                                $w[$j],
+                                7,
+                                utf8_decode(
+                                    number_format
+                                    (
+                                        $waardes[$k][$i][$j],
+                                        3,
+                                        ',',
+                                        '.'
+                                    )
+                                ),
+                                1,
+                                0
+                            );
                         } else {
                             $this->Cell($w[$j], 7, '', 0, 0);
                         }

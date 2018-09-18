@@ -14,21 +14,30 @@ class NieuwsberichtType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titel', TextType::class, array(
-                'attr' => array('style' => 'width:580px'),
-            ))
-            ->add('bericht', TextareaType::class, array(
-                'attr' => array('cols' => '80', 'rows' => '40'),
-            ))
-            ->add('Verstuur', SubmitType::class)
-        ;
+            ->add(
+                'titel',
+                TextType::class,
+                array(
+                    'attr' => array('style' => 'width:580px'),
+                )
+            )
+            ->add(
+                'bericht',
+                TextareaType::class,
+                array(
+                    'attr' => array('cols' => '80', 'rows' => '40'),
+                )
+            )
+            ->add('Verstuur', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Nieuwsbericht',
-        ));
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'AppBundle\Entity\Nieuwsbericht',
+            )
+        );
     }
 
     public function getName()

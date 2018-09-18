@@ -5,18 +5,16 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Instellingen;
 use AppBundle\Entity\ScoresRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 
 class ContentController extends BaseController
 {
 
     /**
-     * @Route("/", name="getIndexPage")
-     * @Method("GET")
+     * @Route("/", name="getIndexPage", methods={"GET"})
      */
     public function indexAction()
     {
@@ -24,8 +22,11 @@ class ContentController extends BaseController
     }
 
     /**
-     * @Route("/pagina/{page}", name="getContent")
-     * @Method("GET")
+     * @Route("/pagina/{page}", name="getContent", methods={"GET"})
+     * @param $page
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getContentAction($page)
     {
@@ -40,10 +41,13 @@ class ContentController extends BaseController
                 case 'Wedstrijdindeling':
                     return $this->getWedstrijdindelingPage();
                 case 'Sponsors':
-                    return $this->render('default/sponsors.html.twig', array(
-                        'menuItems' => $this->menuItems,
-                        'sponsors' => $this->sponsors,
-                    ));
+                    return $this->render(
+                        'default/sponsors.html.twig',
+                        array(
+                            'menuItems' => $this->menuItems,
+                            'sponsors'  => $this->sponsors,
+                        )
+                    );
                 default:
                     $result = $this->getDoctrine()
                         ->getRepository('AppBundle:Content')
@@ -59,23 +63,29 @@ class ContentController extends BaseController
                     if ($result) {
                         $content = $result->getContent();
                     }
-                    return $this->render('default/index.html.twig', array(
-                        'content' => $content,
-                        'menuItems' => $this->menuItems,
-                        'sponsors' => $this->sponsors,
-                    ));
+                    return $this->render(
+                        'default/index.html.twig',
+                        array(
+                            'content'   => $content,
+                            'menuItems' => $this->menuItems,
+                            'sponsors'  => $this->sponsors,
+                        )
+                    );
             }
         } else {
-            return $this->render('error/pageNotFound.html.twig', array(
-                'menuItems' => $this->menuItems,
-                'sponsors' => $this->sponsors,
-            ));
+            return $this->render(
+                'error/pageNotFound.html.twig',
+                array(
+                    'menuItems' => $this->menuItems,
+                    'sponsors'  => $this->sponsors,
+                )
+            );
         }
     }
 
     private function getInloggenPageAction()
     {
-        $user = $this->getUser();
+        $user     = $this->getUser();
         $roles[0] = "";
         if ($user) {
             $roles = $user->getRoles();
@@ -96,8 +106,8 @@ class ContentController extends BaseController
     }
 
     /**
-     * @Route("/getVrijePlekken/", name="aantalVrijePlekkenAjaxCall", options={"expose"=true})
-     * @Method("GET")
+     * @Route("/getVrijePlekken/", name="aantalVrijePlekkenAjaxCall", options={"expose"=true}, methods={"GET"})
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function aantalVrijePlekkenAjaxCall()
     {
@@ -105,12 +115,16 @@ class ContentController extends BaseController
         return new Response($this->getVrijePlekken());
     }
 
+    /**
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     private function getNieuwsIndexPage()
     {
         $aantalPlekken = -1;
-        $tijdVol = false;
-        $tijdTotVol = false;
-        $results = $this->getDoctrine()
+        $tijdVol       = false;
+        $tijdTotVol    = false;
+        $results       = $this->getDoctrine()
             ->getRepository('AppBundle:Nieuwsbericht')
             ->findBy(
                 array(),
@@ -120,32 +134,31 @@ class ContentController extends BaseController
         if ($this->verwijderenTurnsterToegestaan()) {
             if (!$this->inschrijvingToegestaan()) {
                 $aantalPlekken = 0;
-            }
-            else {
+            } else {
                 $aantalPlekken = $this->getVrijePlekken();
             }
             if ($aantalPlekken == 0) {
                 /** @var \DateTime $tijdVolObject */
-                $tijdVolObject = $this->getTijdVol();
+                $tijdVolObject    = $this->getTijdVol();
                 $tijdVol['datum'] = $tijdVolObject->format('d-m-Y');
-                $tijdVol['tijd'] = $tijdVolObject->format('H:i:s');
-                $result = $this->getDoctrine()
+                $tijdVol['tijd']  = $tijdVolObject->format('H:i:s');
+                $result           = $this->getDoctrine()
                     ->getRepository('AppBundle:Instellingen')
                     ->findBy(
                         array('instelling' => self::OPENING_INSCHRIJVING),
                         array('gewijzigd' => 'DESC')
                     );
-                $datumGeopend = 0;
+                $datumGeopend     = 0;
                 if (count($result) > 0) {
                     /** @var Instellingen[] $result */
                     /** @var \DateTime $datumGeopend */
                     $datumGeopend = $result[0]->getDatum();
                 }
-                $timestampVol = ($tijdVolObject->getTimestamp() - $datumGeopend->getTimestamp());
-                $tijdTotVolDate = date('H:i:s', $timestampVol);
-                $result = explode(':', $tijdTotVolDate);
-                $tijdTotVol['uur'] = $result[0] - 1;
-                $tijdTotVol['minuten'] = $result[1];
+                $timestampVol           = ($tijdVolObject->getTimestamp() - $datumGeopend->getTimestamp());
+                $tijdTotVolDate         = date('H:i:s', $timestampVol);
+                $result                 = explode(':', $tijdTotVolDate);
+                $tijdTotVol['uur']      = $result[0] - 1;
+                $tijdTotVol['minuten']  = $result[1];
                 $tijdTotVol['secondes'] = $result[2];
             }
         }
@@ -153,24 +166,27 @@ class ContentController extends BaseController
         foreach ($results as $result) {
             $nieuwsItems[] = $result->getAll();
         }
-        return $this->render('default/nieuws.html.twig', array(
-            'nieuwsItems'         => $nieuwsItems,
-            'menuItems'           => $this->menuItems,
-            'sponsors'            => $this->sponsors,
-            'aantalPlekken'       => $aantalPlekken,
-            'tijdVol'             => $tijdVol,
-            'tijdTotVol'          => $tijdTotVol,
-            'inschrijvingGeopend' => $this->isAfterOpeningInschrijving(),
-        ));
+        return $this->render(
+            'default/nieuws.html.twig',
+            array(
+                'nieuwsItems'         => $nieuwsItems,
+                'menuItems'           => $this->menuItems,
+                'sponsors'            => $this->sponsors,
+                'aantalPlekken'       => $aantalPlekken,
+                'tijdVol'             => $tijdVol,
+                'tijdTotVol'          => $tijdTotVol,
+                'inschrijvingGeopend' => $this->isAfterOpeningInschrijving(),
+            )
+        );
     }
 
     private function getWedstrijdindelingPage()
     {
         $juryIndeling = $this->getJuryIndeling();
-        $tijdSchema = $this->getTijdSchema();
+        $tijdSchema   = $this->getTijdSchema();
         /** @var ScoresRepository $repo */
-        $repo = $this->getDoctrine()->getRepository('AppBundle:Scores');
-        $dagen = $repo->getDagen();
+        $repo        = $this->getDoctrine()->getRepository('AppBundle:Scores');
+        $dagen       = $repo->getDagen();
         $sortedDagen = [];
         foreach ($dagen as $dag) {
             switch ($dag['wedstrijddag']) {
@@ -204,44 +220,53 @@ class ContentController extends BaseController
 //            }
 //            return ($a['wedstrijddag'] < $b['wedstrijddag']) ? -1 : 1;
 //        });
-        $banen = [];
+        $banen           = [];
         $wedstrijdrondes = [];
         $categorieNiveau = [];
         foreach ($sortedDagen as $dag) {
-            $banen[$dag['wedstrijddag']] = $repo->getBanenPerDag($dag['wedstrijddag']);
+            $banen[$dag['wedstrijddag']]           = $repo->getBanenPerDag($dag['wedstrijddag']);
             $wedstrijdrondes[$dag['wedstrijddag']] = $repo->getWedstrijdrondesPerDag($dag['wedstrijddag']);
             foreach ($banen[$dag['wedstrijddag']] as $baan) {
                 foreach ($wedstrijdrondes[$dag['wedstrijddag']] as $wedstrijdronde) {
-                    $categorieNiveau[$dag['wedstrijddag']][$wedstrijdronde['wedstrijdronde']][$baan['baan']] =
-                        $repo->getNiveausPerDagPerRondePerBaan
-                    ($dag['wedstrijddag'],
-                        $wedstrijdronde['wedstrijdronde'], $baan['baan']);
+                    $categorieNiveau[$dag['wedstrijddag']][$wedstrijdronde['wedstrijdronde']][$baan['baan']]
+                        = $repo->getNiveausPerDagPerRondePerBaan
+                    (
+                        $dag['wedstrijddag'],
+                        $wedstrijdronde['wedstrijdronde'],
+                        $baan['baan']
+                    );
 
                 }
             }
         }
-        return $this->render('default/wedstrijdIndeling.html.twig', array(
-            'menuItems' => $this->menuItems,
-            'sponsors' => $this->sponsors,
-            'dagen' => $sortedDagen,
-            'banen' => $banen,
-            'wedstrijdrondes' => $wedstrijdrondes,
-            'categorieNiveau' => $categorieNiveau,
-            'juryIndeling' => $juryIndeling,
-            'tijdSchema' => $tijdSchema,
-        ));
+        return $this->render(
+            'default/wedstrijdIndeling.html.twig',
+            array(
+                'menuItems'       => $this->menuItems,
+                'sponsors'        => $this->sponsors,
+                'dagen'           => $sortedDagen,
+                'banen'           => $banen,
+                'wedstrijdrondes' => $wedstrijdrondes,
+                'categorieNiveau' => $categorieNiveau,
+                'juryIndeling'    => $juryIndeling,
+                'tijdSchema'      => $tijdSchema,
+            )
+        );
     }
 
     /**
-     * @Route("/inloggen/new_pass/", name="getNewPassPage")
-     * @Method({"GET", "POST"})
+     * @Route("/inloggen/new_pass/", name="getNewPassPage", methods={"GET", "POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getNewPassPageAction(Request $request)
     {
         $this->setBasicPageData();
         if ($request->getMethod() == 'POST') {
-            $username = $this->get('request')->request->get('username');
-            $user = $this->getDoctrine()
+            $username = $request->request->get('username');
+            $user     = $this->getDoctrine()
                 ->getRepository('AppBundle:User')
                 ->loadUserByUsername($username);
             if (!$user) {
@@ -251,14 +276,14 @@ class ContentController extends BaseController
                 );
             } else {
                 $password = $this->generatePassword();
-                $encoder = $this->container
+                $encoder  = $this->container
                     ->get('security.encoder_factory')
                     ->getEncoder($user);
                 $user->setPassword($encoder->encodePassword($password, $user->getSalt()));
                 $this->addToDB($user);
-                $subject = 'Inloggegevens website Haagse Donar Cup';
-                $to = $user->getEmail();
-                $view = 'mails/new_password.txt.twig';
+                $subject        = 'Inloggegevens website Haagse Donar Cup';
+                $to             = $user->getEmail();
+                $view           = 'mails/new_password.txt.twig';
                 $mailParameters = array(
                     'username' => $user->getUsername(),
                     'password' => $password,
@@ -272,9 +297,12 @@ class ContentController extends BaseController
             }
         }
 
-        return $this->render('security/newPass.html.twig', array(
-            'menuItems' => $this->menuItems,
-            'sponsors' => $this->sponsors,
-        ));
+        return $this->render(
+            'security/newPass.html.twig',
+            array(
+                'menuItems' => $this->menuItems,
+                'sponsors'  => $this->sponsors,
+            )
+        );
     }
 }

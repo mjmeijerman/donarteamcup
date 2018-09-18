@@ -271,7 +271,7 @@ class Jurylid
      * @param \AppBundle\Entity\User $user
      * @return Jurylid
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 

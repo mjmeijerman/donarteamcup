@@ -2,11 +2,9 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\AppBundle;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Entity\Turnster;
 
 /**
  * @ORM\Entity
@@ -44,8 +42,8 @@ class Vloermuziek
 
     public function getAll()
     {
-        $items = new \stdClass();
-        $items->id = $this->id;
+        $items          = new \stdClass();
+        $items->id      = $this->id;
         $items->locatie = $this->locatie;
         return $items;
     }
@@ -76,9 +74,9 @@ class Vloermuziek
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
         return 'uploads/vloermuziek/' . $this->turnster->getScores()->getWedstrijddag() . '/wedstrijdronde_' .
-        $this->turnster->getScores()->getWedstrijdronde() . '/baan_' . $this->turnster->getScores()->getBaan() .
-        '/groep_' .
-        $this->getTurnster()->getScores()->getGroep();
+            $this->turnster->getScores()->getWedstrijdronde() . '/baan_' . $this->turnster->getScores()->getBaan() .
+            '/groep_' .
+            $this->getTurnster()->getScores()->getGroep();
     }
 
     /**
@@ -93,6 +91,7 @@ class Vloermuziek
 
     /**
      * @param $locatie
+     *
      * @return $this
      */
     public function setLocatie($locatie)
@@ -121,7 +120,7 @@ class Vloermuziek
     {
         $this->file = $file;
         if (isset($this->locatie)) {
-            $this->temp = $this->locatie;
+            $this->temp    = $this->locatie;
             $this->locatie = null;
         } else {
             $this->locatie = 'initial';
@@ -145,7 +144,8 @@ class Vloermuziek
     public function preUpload()
     {
         if (null !== $this->getFile()) {
-            $filename = $this->turnster->getScores()->getWedstrijdnummer() . '_' . $this->turnster->getVoornaam() . '_' .
+            $filename      = $this->turnster->getScores()->getWedstrijdnummer() . '_' . $this->turnster->getVoornaam(
+                ) . '_' .
                 $this->turnster->getAchternaam();
             $this->locatie = $filename . '.' . $this->getFile()->getClientOriginalExtension();
         }
@@ -189,10 +189,11 @@ class Vloermuziek
     /**
      * Set turnster
      *
-     * @param \AppBundle\Entity\Turnster $turnster
+     * @param Turnster $turnster
+     *
      * @return Vloermuziek
      */
-    public function setTurnster(\AppBundle\Entity\Turnster $turnster = null)
+    public function setTurnster(Turnster $turnster = null)
     {
         $this->turnster = $turnster;
 
@@ -202,7 +203,7 @@ class Vloermuziek
     /**
      * Get turnster
      *
-     * @return \AppBundle\Entity\Turnster 
+     * @return Turnster
      */
     public function getTurnster()
     {

@@ -2,18 +2,17 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Controller\BaseController;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SecurityController extends BaseController
 {
 
     /**
      * @Route("/login", name="login_route")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function loginAction(Request $request)
+    public function loginAction()
     {
         $this->setBasicPageData();
         $authenticationUtils = $this->get('security.authentication_utils');
@@ -30,8 +29,8 @@ class SecurityController extends BaseController
                 // last username entered by the user
                 'last_username' => $lastUsername,
                 'error'         => $error,
-                'menuItems' => $this->menuItems,
-                'sponsors' => $this->sponsors,
+                'menuItems'     => $this->menuItems,
+                'sponsors'      => $this->sponsors,
             )
         );
     }

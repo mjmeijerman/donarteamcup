@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * Class Instellingen
@@ -11,6 +11,12 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class InstellingenRepository extends EntityRepository
 {
+    /**
+     * @param \DateTime $datumGeopend
+     *
+     * @return Instellingen
+     * @throws NonUniqueResultException
+     */
     public function getTijdVol(\DateTime $datumGeopend)
     {
         $result = $this->createQueryBuilder('u')

@@ -102,13 +102,10 @@ class JuryIndeling
      * Set naam
      *
      * @param string $naam
-     * @return FileUpload
      */
     public function setNaam($naam)
     {
         $this->naam = $naam;
-
-        return $this;
     }
 
     /**
@@ -125,13 +122,10 @@ class JuryIndeling
      * Set locatie
      *
      * @param string $locatie
-     * @return FileUpload
      */
     public function setLocatie($locatie)
     {
         $this->locatie = $locatie;
-
-        return $this;
     }
 
     /**
@@ -221,13 +215,10 @@ class JuryIndeling
      * Set uploader
      *
      * @param string $uploader
-     * @return Reglementen
      */
     public function setUploader($uploader)
     {
         $this->uploader = $uploader;
-
-        return $this;
     }
 
     /**
@@ -244,13 +235,10 @@ class JuryIndeling
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return Reglementen
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     /**

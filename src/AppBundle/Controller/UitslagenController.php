@@ -2,38 +2,33 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Instellingen;
 use AppBundle\Entity\Jurylid;
 use AppBundle\Entity\Scores;
 use AppBundle\Entity\ScoresRepository;
 use AppBundle\Entity\Turnster;
 use AppBundle\Entity\TurnsterRepository;
-use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\Content;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpKernel\Exception;
-use AppBundle\Controller\BaseController;
+use Symfony\Component\Routing\Annotation\Route;
 
 
 class UitslagenController extends BaseController
 {
     private function formatScoresForPrijswinnaars($turnsters)
     {
-        $waardes = [];
+        $waardes    = [];
         $toestellen = ['Sprong', 'Brug', 'Balk', 'Vloer', ''];
-        $count = 0;
+        $count      = 0;
         foreach ($toestellen as $toestel) {
-            usort($turnsters, function ($a, $b) use ($toestel) {
-                if ($a['totaal' . $toestel] == $b['totaal' . $toestel]) {
-                    return 0;
+            usort(
+                $turnsters,
+                function ($a, $b) use ($toestel) {
+                    if ($a['totaal' . $toestel] == $b['totaal' . $toestel]) {
+                        return 0;
+                    }
+                    return ($a['totaal' . $toestel] > $b['totaal' . $toestel]) ? -1 : 1;
                 }
-                return ($a['totaal' . $toestel] > $b['totaal' . $toestel]) ? -1 : 1;
-            });
+            );
             foreach ($turnsters as $turnster) {
                 if ($turnster['rank' . $toestel] < 4) {
                     $waardes[$count][] = [
@@ -60,36 +55,46 @@ class UitslagenController extends BaseController
         $pdf->AliasNbPages();
         $pdf->AddPage();
         $pdf->Table($turnsters, $userId);
-        return new Response($pdf->Output(
-            $request->query->get('categorie') . "_" . $request->query->get('niveau') . ".pdf", "I"
-        ), 200, [
-            'Content-Type' => 'application/pdf'
-        ]);
+        return new Response(
+            $pdf->Output(
+                $request->query->get('categorie') . "_" . $request->query->get('niveau') . ".pdf",
+                "I"
+            ), 200, [
+                'Content-Type' => 'application/pdf'
+            ]
+        );
     }
 
     private function prijswinnaarsPdf(Request $request, $turnsters)
     {
         $waardes = $this->formatScoresForPrijswinnaars($turnsters);
-        $pdf = new PrijswinnaarsPdfController('L', 'mm', 'A4');
+        $pdf     = new PrijswinnaarsPdfController('L', 'mm', 'A4');
         $pdf->setCategorie($request->query->get('categorie'));
         $pdf->setNiveau($request->query->get('niveau'));
         $pdf->SetLeftMargin(7);
         $pdf->AliasNbPages();
         $pdf->AddPage();
         $pdf->Table($waardes);
-        return new Response($pdf->Output(), 200, [
-            'Content-Type' => 'application/pdf'
-        ]);
+        return new Response(
+            $pdf->Output(), 200, [
+                              'Content-Type' => 'application/pdf'
+                          ]
+        );
     }
 
     /**
-     * @Route("/uitslagen/", name="uitslagen")
-     * @Method("GET")
+     * @Route("/uitslagen/", name="uitslagen", methods={"GET"})
+     * @param Request $request
+     *
+     * @return Response
      */
     public function uitslagen(Request $request)
     {
         if ($request->query->get('categorie') && $request->query->get('niveau') && $this->checkIfNiveauToegestaan
-            ($request->query->get('categorie'), $request->query->get('niveau'))
+            (
+                $request->query->get('categorie'),
+                $request->query->get('niveau')
+            )
         ) {
             $userId = 0;
             if ($this->getUser()) {
@@ -100,7 +105,7 @@ class UitslagenController extends BaseController
                 $order = $request->query->get('order');
             }
             /** @var Turnster[] $results */
-            $results = $this->getDoctrine()->getRepository("AppBundle:Turnster")
+            $results   = $this->getDoctrine()->getRepository("AppBundle:Turnster")
                 ->getIngeschrevenTurnstersCatNiveau($request->query->get('categorie'), $request->query->get('niveau'));
             $turnsters = [];
             foreach ($results as $result) {
@@ -112,21 +117,27 @@ class UitslagenController extends BaseController
             } elseif ($request->query->get('pdf')) {
                 return $this->uitslagenPdf($request, $turnsters, $userId);
             }
-            return $this->render('uitslagen/showUitslag.html.twig', [
-                'order' => $order,
-                'turnsters' => $turnsters,
-                'userId' => $userId,
-            ]);
+            return $this->render(
+                'uitslagen/showUitslag.html.twig',
+                [
+                    'order'     => $order,
+                    'turnsters' => $turnsters,
+                    'userId'    => $userId,
+                ]
+            );
         }
         $niveaus = $this->getToegestaneNiveaus();
-        return $this->render('uitslagen/index.html.twig', array(
-            'toegestaneNiveaus' => $niveaus,
-        ));
+        return $this->render(
+            'uitslagen/index.html.twig',
+            array(
+                'toegestaneNiveaus' => $niveaus,
+            )
+        );
     }
 
     /**
-     * @Route("/diplomaWedstrijdnummerPdf/", name="diplomaWedstrijdnummerPdf")
-     * @Method("GET")
+     * @Route("/diplomaWedstrijdnummerPdf/", name="diplomaWedstrijdnummerPdf", methods={"GET"})
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function diplomaWedstrijdnummerPdf()
     {
@@ -139,15 +150,15 @@ class UitslagenController extends BaseController
 //                'wachtlijst' => 0,
 //                'afgemeld' => 0,
 //            ]);
-        $results = $turnsterRepository->getTurnstersOrderedByDayAndVereniging();
+        $results   = $turnsterRepository->getTurnstersOrderedByDayAndVereniging();
         $turnsters = [];
         foreach ($results as $result) {
             $turnsters[] = [
-                'id'  => $result['id'],
-                'categorie' => $result['categorie'],
-                'niveau' => $result['niveau'],
-                'naam' => $result['voornaam'] . ' ' . $result['achternaam'],
-                'vereniging' => $result['vereniging_naam'] . ' ' .$result['vereniging_plaats'],
+                'id'              => $result['id'],
+                'categorie'       => $result['categorie'],
+                'niveau'          => $result['niveau'],
+                'naam'            => $result['voornaam'] . ' ' . $result['achternaam'],
+                'vereniging'      => $result['vereniging_naam'] . ' ' . $result['vereniging_plaats'],
                 'wedstrijdnummer' => $result['wedstrijdnummer'],
             ];
         }
@@ -155,69 +166,74 @@ class UitslagenController extends BaseController
 //            return ($a['wedstrijdnummer'] < $b['wedstrijdnummer']) ? -1 : 1;
 //        });
         $pdf = new DiplomaPdfController('L', 'mm', 'A5');
-        $pdf->SetMargins(0,0);
-        $pdf->AddFont('Gotham','','Gotham-Light.php');
-        $pdf->AddFont('Franklin','','Frabk.php');
+        $pdf->SetMargins(0, 0);
+        $pdf->AddFont('Gotham', '', 'Gotham-Light.php');
+        $pdf->AddFont('Franklin', '', 'Frabk.php');
 
         foreach ($turnsters as $turnster) {
             $pdf->AddPage();
             $pdf->Wedstrijdnummer($turnster);
             $pdf->AddPage();
-            $pdf->SetFont('Gotham','',18);
+            $pdf->SetFont('Gotham', '', 18);
             $pdf->HeaderDiploma();
             $pdf->FooterDiploma(self::DATUM_HBC);
             $pdf->ContentDiploma($turnster);
         }
 
-        return new Response($pdf->Output(), 200, [
-            'Content-Type' => 'application/pdf'
-        ]);
+        return new Response(
+            $pdf->Output(), 200, [
+                              'Content-Type' => 'application/pdf'
+                          ]
+        );
     }
 
     /**
-     * @Route("/leegDiplomaPdf/", name="leegDiplomaPdf")
-     * @Method("GET")
+     * @Route("/leegDiplomaPdf/", name="leegDiplomaPdf", methods={"GET"})
      */
     public function emptyDiplomaPdf()
     {
         $pdf = new DiplomaPdfController('L', 'mm', 'A5');
-        $pdf->SetMargins(0,0);
-        $pdf->AddFont('Gotham','','Gotham-Light.php');
-        $pdf->AddFont('Franklin','','Frabk.php');
+        $pdf->SetMargins(0, 0);
+        $pdf->AddFont('Gotham', '', 'Gotham-Light.php');
+        $pdf->AddFont('Franklin', '', 'Frabk.php');
 
         $legeTurnster = [
-            'naam' => '',
+            'naam'       => '',
             'vereniging' => '',
-            'categorie' => '',
-            'niveau' => '',
+            'categorie'  => '',
+            'niveau'     => '',
         ];
 
         $pdf->AddPage();
-        $pdf->SetFont('Gotham','',18);
+        $pdf->SetFont('Gotham', '', 18);
         $pdf->HeaderDiploma();
         $pdf->FooterDiploma(self::DATUM_HBC);
         $pdf->ContentDiploma($legeTurnster);
 
-        return new Response($pdf->Output(), 200, [
-            'Content-Type' => 'application/pdf'
-        ]);
+        return new Response(
+            $pdf->Output(), 200, [
+                              'Content-Type' => 'application/pdf'
+                          ]
+        );
     }
 
     /**
-     * @Route("/scores/", name="scores")
-     * @Method("GET")
+     * @Route("/scores/", name="scores", methods={"GET"})
+     * @param Request $request
+     *
+     * @return Response
      */
     public function scores(Request $request)
     {
         $activeBaan = '';
-        $banen = $this->getDoctrine()->getRepository("AppBundle:Scores")
+        $banen      = $this->getDoctrine()->getRepository("AppBundle:Scores")
             ->getBanen();
-        $turnsters = [];
+        $turnsters  = [];
         foreach ($banen as $baan) {
             if ($baan['baan'] == $request->query->get('baan')) {
                 $activeBaan = $request->query->get('baan');
                 /** @var ScoresRepository $repo */
-                $repo = $this->getDoctrine()->getRepository("AppBundle:Scores");
+                $repo       = $this->getDoctrine()->getRepository("AppBundle:Scores");
                 $toestellen = ['Sprong', 'Brug', 'Balk', 'Vloer'];
                 foreach ($toestellen as $toestel) {
                     $turnsters[$toestel] = [];
@@ -230,16 +246,18 @@ class UitslagenController extends BaseController
                 break;
             }
         }
-        return $this->render('uitslagen/scores.html.twig', [
-            'banen' => $banen,
-            'activeBaan' => $activeBaan,
-            'turnsters' => $turnsters,
-        ]);
+        return $this->render(
+            'uitslagen/scores.html.twig',
+            [
+                'banen'      => $banen,
+                'activeBaan' => $activeBaan,
+                'turnsters'  => $turnsters,
+            ]
+        );
     }
 
     /**
-     * @Route("/organisatie/Juryzaken/juryBadges/", name="juryBadges")
-     * @Method("GET")
+     * @Route("/organisatie/Juryzaken/juryBadges/", name="juryBadges", methods={"GET"})
      */
     function juryBadges()
     {
@@ -251,21 +269,21 @@ class UitslagenController extends BaseController
             if ($result->getZaterdag()) {
                 $juryleden[] = [
                     'naam' => $result->getVoornaam() . ' ' . $result->getAchternaam(),
-                    'dag' => 'Zaterdag',
+                    'dag'  => 'Zaterdag',
                 ];
             }
             if ($result->getZondag()) {
                 $juryleden[] = [
                     'naam' => $result->getVoornaam() . ' ' . $result->getAchternaam(),
-                    'dag' => 'Zondag',
+                    'dag'  => 'Zondag',
                 ];
             }
         }
-        $pdf = new JurybadgePdfController('L','mm',[85.6,53.98]);
+        $pdf = new JurybadgePdfController('L', 'mm', [85.6, 53.98]);
         $pdf->setDatumHBC(self::DATUM_HBC);
-        $pdf->SetMargins(0,0);
-        $pdf->AddFont('Gotham','','Gotham-Light.php');
-        $pdf->AddFont('Franklin','','Frabk.php');
+        $pdf->SetMargins(0, 0);
+        $pdf->AddFont('Gotham', '', 'Gotham-Light.php');
+        $pdf->AddFont('Franklin', '', 'Frabk.php');
         foreach ($juryleden as $jurylid) {
             $pdf->AddPage();
             $pdf->badgeContent($jurylid);
@@ -274,34 +292,40 @@ class UitslagenController extends BaseController
     }
 
     /**
-     * @Route("/pagina/Wedstrijdindeling/indelingPdf/", name="wedstrijdindelingPdf")
-     * @Method("GET")
+     * @Route("/pagina/Wedstrijdindeling/indelingPdf/", name="wedstrijdindelingPdf", methods={"GET"})
+     * @param Request $request
+     *
+     * @return Response
      */
     function wedstrijdindelingPdf(Request $request)
     {
         $toestellen = ['Sprong', 'Brug', 'Balk', 'Vloer'];
-        $turnsters = [];
+        $turnsters  = [];
         foreach ($toestellen as $toestel) {
             $turnsters[$toestel] = [];
             /** @var Scores[] $results */
             $results = $this->getDoctrine()->getRepository('AppBundle:Scores')
-                ->findBy([
-                    'wedstrijddag' => $request->query->get('wedstrijddag'),
-                    'wedstrijdronde' => $request->query->get('wedstrijdronde'),
-                    'baan' => $request->query->get('baan'),
-                    'groep' => $toestel,
-                ], [
-                    'wedstrijdnummer' => 'ASC',
-                ]);
+                ->findBy(
+                    [
+                        'wedstrijddag'   => $request->query->get('wedstrijddag'),
+                        'wedstrijdronde' => $request->query->get('wedstrijdronde'),
+                        'baan'           => $request->query->get('baan'),
+                        'groep'          => $toestel,
+                    ],
+                    [
+                        'wedstrijdnummer' => 'ASC',
+                    ]
+                );
             foreach ($results as $result) {
                 $turnsters[$toestel][] = [
-                    'userId' => $result->getTurnster()->getUser()->getId(),
+                    'userId'          => $result->getTurnster()->getUser()->getId(),
                     'wedstrijdnummer' => $result->getWedstrijdnummer(),
-                    'naam' => $result->getTurnster()->getVoornaam() . ' ' . $result->getTurnster()->getAchternaam(),
-                    'vereniging' => $result->getTurnster()->getUser()->getVereniging()->getNaam() . ' ' .
+                    'naam'            => $result->getTurnster()->getVoornaam() . ' ' . $result->getTurnster()
+                            ->getAchternaam(),
+                    'vereniging'      => $result->getTurnster()->getUser()->getVereniging()->getNaam() . ' ' .
                         $result->getTurnster()->getUser()->getVereniging()->getPlaats(),
-                    'categorie' => $result->getTurnster()->getCategorie(),
-                    'niveau' => $result->getTurnster()->getNiveau(),
+                    'categorie'       => $result->getTurnster()->getCategorie(),
+                    'niveau'          => $result->getTurnster()->getNiveau(),
                 ];
             }
         }
@@ -314,18 +338,23 @@ class UitslagenController extends BaseController
         $pdf->setBaan($request->query->get('baan'));
         $pdf->setWedstrijddag($request->query->get('wedstrijddag'));
         $pdf->setWedstrijdronde($request->query->get('wedstrijdronde'));
-        $pdf->SetMargins(0,0);
-        $pdf->AddFont('Gotham','','Gotham-Light.php');
-        $pdf->AddFont('Franklin','','Frabk.php');
+        $pdf->SetMargins(0, 0);
+        $pdf->AddFont('Gotham', '', 'Gotham-Light.php');
+        $pdf->AddFont('Franklin', '', 'Frabk.php');
         $pdf->AddPage();
-        $pdf->SetFont('Gotham','',14);
+        $pdf->SetFont('Gotham', '', 14);
         $pdf->SetY(60);
         $pdf->wedstrijdIndelingContent($turnsters, $userId);
-        return new Response($pdf->Output(
-            'wedstrijdindeling HDC ' . self::DATUM_HBC . " " .$request->query->get('wedstrijddag') . " wedstrijdronde ".
-            $request->query->get('wedstrijdronde') . " baan " . $request->query->get('baan') . ".pdf", "I"
-        ), 200, [
-            'Content-Type' => 'application/pdf'
-        ]);
+        return new Response(
+            $pdf->Output(
+                'wedstrijdindeling HDC ' . self::DATUM_HBC . " " . $request->query->get(
+                    'wedstrijddag'
+                ) . " wedstrijdronde " .
+                $request->query->get('wedstrijdronde') . " baan " . $request->query->get('baan') . ".pdf",
+                "I"
+            ), 200, [
+                'Content-Type' => 'application/pdf'
+            ]
+        );
     }
 }

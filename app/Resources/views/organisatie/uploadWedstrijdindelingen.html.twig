@@ -1,0 +1,26 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1><a href="{{ path('organisatieGetContent', { 'page': app.request.get('page') }) }}">
+            <img src="{{ asset('images/back_arrow.png') }}"></a>
+            Wedstrijdindelingen uploaden
+    </h1>
+    Om de wedstrijdindelingen te uploaden volg je de volgende stappen:<br/>
+    Stap 1: Zorg ervoor dat in een excel bestand alle gegevens staan op dezelfde manier als in onderstaande
+    afbeelding, vooral de volgorde van de kolommen is erg belangrijk: <br/><br/>
+    <img src="{{ asset('images/voorbeeldImport.PNG') }}" width="900"/>
+    <br/>
+    <br/>
+    Stap 2:
+    Sla het bestand op als csv bestand. Open dit csv bestand vervolgens in kladblok en verwijder de eerste regel (met
+    ID, Naam, Vereniging etc.) en sla het vervolgens op. Dan ziet het bestand er als het goed is zo uit:<br />
+    <br/>
+    <img src="{{ asset('images/VoorbeeldImport2.PNG') }}" width="900"/>
+    <br/>
+    <br/>
+    Tot slot upload je het bestand hier:
+    <form enctype="multipart/form-data" action="" method="post">
+	<p>Selecteer een bestand: <input name="userfile" type="file"><br /></p>
+	<input type="submit" value="Upload bestand" /></form>
+
+{% endblock %}

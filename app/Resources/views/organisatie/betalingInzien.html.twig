@@ -1,0 +1,130 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1><a href="{{ path('organisatieGetContent', { 'page': app.request.get('page') }) }}">
+            <img src="{{ asset('images/back_arrow.png') }}"></a>
+            Betaling {{ factuurInformatie.vereniging }} inzien
+    </h1>
+<p>
+    <div class="titel">
+        <h2>
+            Contactgegevens
+        </h2>
+    </div>
+    <div class="bericht">
+        <table class="overzicht_factuur">
+            <tr>
+                <th>Contactpersoon</th>
+                <td>{{ factuurInformatie.contactpersoonNaam }}</td>
+            </tr>
+            <tr>
+                <th>Emailadres</th>
+                <td>{{ factuurInformatie.contactpersoonEmail }}</td>
+            </tr>
+            <tr>
+                <th>Telefoonnummer</th>
+                <td>{{ factuurInformatie.contactpersoonTel }}</td>
+            </tr>
+        </table>
+    </div>
+</p>
+<p>
+    <div class="titel">
+        <h2>
+            Factuur informatie
+        </h2>
+    </div>
+    <div class="bericht">
+        <table class="overzicht_factuur">
+            <tr>
+                <th>Factuur nummer</th>
+                <td>{{ factuurInformatie.factuurNr}}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ factuurInformatie.status }}</td>
+            </tr>
+            <tr>
+                <th>Te betalen bedrag</th>
+                <td>&#8364;{{ factuurInformatie.bedrag }}</td>
+            </tr>
+            <tr>
+                <th>Betaald bedrag</th>
+                <td>&#8364;{{ factuurInformatie.betaaldBedrag }}</td>
+            </tr>
+            <tr>
+                <th>Openstaand bedrag</th>
+                <td>&#8364;{{ factuurInformatie.openstaandBedrag }}</td>
+            </tr>
+            <tr>
+                <th>Aantal turnsters</th>
+                <td>{{ factuurInformatie.aantalTurnsters }}</td>
+            </tr>
+            <tr>
+                <th>Aantal afgemelde turnsters</th>
+                <td>{{ factuurInformatie.aantalAfgemeld }}</td>
+            </tr>
+            <tr>
+                <th>Aantal juryleden tekort</th>
+                <td>{{ factuurInformatie.juryTekort }}</td>
+            </tr>
+            <tr>
+                <th>Factuur</th>
+                <td><a href="{{ path('organisatieGetFacturen', { 'userId': factuurInformatie.userId, 'page': app
+                .request.get('page') }) }}"
+                    target="_blank">Inzien</a></td>
+            </tr>
+        </table>
+    </div>
+</p>
+<p>
+    <div class="titel">
+        <h2 class="betaling">
+            Betalingen <a href="{{ path('addBetaling', { 'userId': factuurInformatie.userId, 'page': app.request.get
+                              ('page') }) }}">
+                <img src="{{ asset('images/add.png') }}" width="20" style="opacity:0;"/>
+            </a>
+        </h2>
+    </div>
+    <div class="bericht">
+        <table class="overzicht">
+            <tr>
+                <th>Datum</th>
+                <th>Bedrag</th>
+                <th></th>
+            </tr>
+            {% for betaling in betalingen %}
+                <tr>
+                    <td>{{ betaling.datum }}</td>
+                    <td>&#8364;{{ betaling.bedrag }}</td>
+                    <td class="img">
+                        <form method="post" name="remove_betaling_{{ betaling.id }}"
+                              action="{{ path('removeBetaling', { 'userId': factuurInformatie.userId, 'page': app.request.get
+                              ('page') }) }}"
+                              style="display: inline;">
+                            <div class="fake_link" onclick="remove_betaling('{{ betaling.id }}',
+                                    '{{ betaling.datum }}', '{{ betaling.bedrag }}')"
+                                 style="display: inline">
+                                <img src="{{ asset('images/remove.png') }}" width="20" style="cursor: pointer;"/>
+                                <input type="hidden" name="betaling" value="{{ betaling.id }}"/>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</p>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+    <script>
+        function remove_betaling(id, datum, bedrag) {
+            if (confirm(datum + ": E" + bedrag + "\nWeet je zeker dat je deze betaling wilt verwijderen?")) {
+                document.forms["remove_betaling_" + id].submit();
+            }
+        }
+
+    </script>
+{% endblock %}

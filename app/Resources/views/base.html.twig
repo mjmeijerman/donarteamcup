@@ -1,13 +1,142 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Under construction{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>Donar Team Cup</title>
+    {% block stylesheets %}
+        <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
+    {% endblock %}
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/favicon.png') }}"/>
+</head>
+<body>
+<center>
+    <div id="error_container">
+        {% if app.session.flashbag.get('error') is defined %}
+            {% for flash_message in app.session.flashbag.get('error') %}
+                <div id="error">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div id="error_success_container">
+        {% if app.session.flashbag.get('success') is defined %}
+            {% for flash_message in app.session.flashbag.get('success') %}
+                <div id="error_success">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% if timeToExpiration is defined %}
+        <div id="countdown">
+            <div id="countdown">
+                <div id="countdown_inner">
+                    <div>
+                        <span class="hours"></span>
+                        <div class="smalltext">Uur</div>
+                    </div>
+                    <div>
+                        <span class="minutes"></span>
+                        <div class="smalltext">Minuten</div>
+                    </div>
+                    <div>
+                        <span class="seconds"></span>
+                        <div class="smalltext">Seconden</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div id="container">
+        <div id="header">
+            <a href="{{ path('getIndexPage') }}">
+                <img src="{{ asset('images/header.png') }}" alt="" />
+            </a>
+        </div>
+
+        <div id="fill">.</div>
+        <nav id="primary_nav_wrap">
+            <ul>
+                {% for menuItem in menuItems %}
+                    <li>
+                        {% if menuItem.submenuItems %}
+                            <a href="#">{{ menuItem.naam }}</a>
+                            <ul>
+                                {% for submenuItem in menuItem.submenuItems %}
+                                    <li {% if loop.index == menuItem.submenuItems|length %}id="last"{% endif %}>
+                                        {% if submenuItem.naam == 'Uitslagen' %}
+                                            <a href="{{ path('uitslagen') }}" target="_blank">{{ submenuItem.naam }}</a>
+                                        {% else %}
+                                            <a href="{{ path('getContent', { 'page': submenuItem.naam }) }}">{{ submenuItem.naam }}</a>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <a href="{{ path('getContent', { 'page': menuItem.naam }) }}">{{ menuItem.naam }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+        {% if app.user %}
+            <div id="logout">
+                {% if is_granted('ROLE_PREVIOUS_ADMIN') or is_granted('ROLE_PREVIOUS_ORGANISATIE') %}
+                    <a href="{{ path('getContent', {'_switch_user': '_exit', 'page': 'Inloggen'}) }}">Uitloggen</a>
+                {% else %}
+                    <a href="{{ path('logout') }}">Uitloggen</a>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div id="l">
+            <div class="locatie">
+                <h2>Locatie</h2>
+                <hr>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2452.939070444615!2d4.24481031570471!3d52.062633077775324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5b105e3805a29%3A0x510650291e057370!2sTurnhal+Den+Haag!5e0!3m2!1snl!2snl!4v1536157523360"
+                        width="200" frameborder="0"
+                        style="border:0;margin-left:10px;margin-right:10px;margin-bottom:5px;"></iframe>
+                <br/>
+                Sporthal Overbosch<br/>
+                Vlaskamp 3, Den Haag
+            </div>
+        </div>
+
+        <div id="c">
+            <div class="content">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+
+        <div id="s">
+            <div class="sponsor">
+                Sponsors
+                <hr />
+                {% for sponsor in sponsors %}
+                {% if sponsor.website %}
+                    <a href="{{ sponsor.website }}" target="_blank" style="text-decoration: none;">
+                {% endif %}
+                    <img src="/uploads/sponsors/{{ sponsor.locatie }}" />
+                {% if sponsor.website %}
+                    </a>
+                {% endif %}
+                <br />
+                    {% if loop.index != sponsors|length %}<br />{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="social">
+            <a href="https://www.facebook.com/donarteamcup" target="_blank"><img src="{{ asset('images/facebook.png') }}" width="30" /></a>
+        </div>
+
+        {% block javascripts %}
+
+        {% endblock %}
+    </div>
+</center>
+</body>
 </html>

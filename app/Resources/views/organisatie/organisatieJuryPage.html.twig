@@ -1,0 +1,271 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <div class="jurybadges_button"><a href="{{ path('juryBadges') }}" target="_blank">Jurybadges downloaden</a></div><h1>Juryzaken</h1>
+    <p>
+    <div class="titel">
+        <h2>Jurylid toevoegen</h2>
+    </div>
+    <div class="bericht">
+        <form method="post">
+            <table>
+                <tr>
+                    <td>Voornaam</td>
+                    <td><input type="text" name="juryVoornaam" required /></td>
+                </tr>
+                <tr>
+                    <td>Achternaam</td>
+                    <td><input type="text" name="juryAchternaam" required /></td>
+                </tr>
+                <tr>
+                    <td>Email adres</td>
+                    <td><input type="email" name="juryEmail" required /></td>
+                </tr>
+                <tr>
+                    <td>Vereniging</td>
+                    <td>
+                        <select name="userId" required>
+                            <option selected value="">Selecteer vereniging</option>
+                            {% for user in users %}
+                                <option value="{{ user.id }}">
+                                    {{ user.vereniging.naam }}, {{ user.vereniging.plaats }}: {{ user.voornaam }} {{ user.achternaam }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Brevet</td>
+                    <td>
+                        <select name="brevet" required>
+                            <option selected value="">Selecteer brevet</option>
+                            <option value="TD1">TD1</option>
+                            <option value="TD2">TD2</option>
+                            <option value="TD3">TD3</option>
+                            <option value="TD4">TD4</option>
+                            <option value="TD5">TD5</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Dag</td>
+                    <td>
+                        <select name="dag" required>
+                            <option selected value="">Selecteer beschikbare dag</option>
+                            <option value="za">Zaterdag</option>
+                            <option value="zo">Zondag</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Jurylid toevoegen" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="titel">
+            <h2>Juryindeling</h2>
+        </div>
+        <div class="bericht">
+            <table id="uploads" border="1" class="instellingen">
+            <col width="15%"/>
+            <col width="66.5%"/>
+            <col width="18.5%"/>
+            <col width="3.5%"/>
+            <tr>
+                <th>Naam</th>
+                <th>Locatie</th>
+                <th>Datum</th>
+                <th></th>
+            </tr>
+            {% if juryIndeling %}
+                <tr>
+                    <td>{{ juryIndeling.naam }}</td>
+                    <td>/uploads/juryIndeling/{{ juryIndeling.locatie }}</td>
+                    <td>{{ juryIndeling.createdAt }}</td>
+                    <td><a href="{{ path('addjuryIndeling', { 'page': app.request.get('page') }) }}">
+                            <img src="{{ asset('images/refresh.png') }}" width="18px"/>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="{{ path('addjuryIndeling', { 'page': app.request.get('page') }) }}">
+                            <img src="{{ asset('images/add.png') }}" width="18px"/>
+                        </a>
+                    </td>
+                </tr>
+            {% endif %}
+        </table>
+        </div>
+    </p>
+
+			<p>
+				<div class="titel">
+					<h2>Juryleden geleverd door verenigingen met geplaatste turnsters (<span
+					id="juryleden_aantal">{{ juryleden|length }}</span>)</h2>
+				</div>
+				<div class="bericht">
+					<table class="overzicht" style="font-size:8pt">
+						<tr>
+							<th>Naam</th>
+							<th>Vereniging</th>
+							<th>Brevet</th>
+							<th>Dag</th>
+							<th>Opmerking</th>
+							<th>Email</th>
+							<th></th>
+						</tr>
+						{% for jurylid in juryleden %}
+                            <tr id="jurylid_row_{{ jurylid.id }}">
+                                <td>{{ jurylid.naam }}</td>
+                                <td>{{ jurylid.vereniging }}</td>
+                                <td>{{ jurylid.brevet }}</td>
+                                <td>
+                                    <select id="selectDag_{{ jurylid.id }}" onchange="changeDag('{{ jurylid.id }}');">
+                                        <option value="Geen"
+                                                {% if jurylid.dag == 'Geen' %}
+                                                    selected
+                                                {% endif %}
+                                        >Geen</option>
+                                        <option value="Za"
+                                                {% if jurylid.dag == 'Za' %}
+                                                    selected
+                                                {% endif %}
+                                        >Zaterdag</option>
+                                        <option value="Zo"
+                                                {% if jurylid.dag == 'Zo' %}
+                                                    selected
+                                                {% endif %}
+                                        >Zondag</option>
+                                        <option value="ZaZo"
+                                                {% if jurylid.dag == 'ZaZo' %}
+                                        selected
+                                                {% endif %}>Zaterdag en Zondag</option>
+                                    </select>
+                                </td>
+                                <td>{{ jurylid.opmerking }}</td>
+                                <td>{{ jurylid.email }}</td>
+                                <td>
+                                    <div onclick="remove_jurylid('{{ jurylid.id }}',
+                                        '{{ jurylid.naam }}', '{{ jurylid.vereniging }}')"
+                                         style="display: inline">
+                                        <img src="{{ asset('images/remove.png') }}" width="20" style="cursor: pointer;">
+		            				</div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+					</table>
+				</div>
+			</p>
+
+			<p>
+				<div class="titel">
+					<h2>Emailadressen (van juryleden geleverd door verenigingen met geplaatste turnsters)</h2>
+				</div>
+				<div class="bericht">
+					<textarea cols="50" rows="15">{% for jurylid in juryleden %}{% if jurylid.email is not empty %}{{ jurylid.email}};{% endif %}{% endfor %}</textarea>
+				</div>
+			</p>
+
+			<p>
+				<div class="titel">
+					<h2>Juryleden geleverd door verenigingen zonder geplaatste turnsters (<span
+					id="juryleden_aantal_niet">{{ juryledenNiet|length }}</span>)</h2>
+				</div>
+				<div class="bericht">
+					<table class="overzicht" style="font-size:8pt">
+						<tr>
+							<th>Naam</th>
+							<th>Vereniging</th>
+							<th>Brevet</th>
+							<th>Dag</th>
+							<th>Opmerking</th>
+							<th>Email</th>
+							<th></th>
+						</tr>
+						{% for jurylid in juryledenNiet %}
+                            <tr id="jurylid_row_{{ jurylid.id }}">
+                                <td>{{ jurylid.naam }}</td>
+                                <td>{{ jurylid.vereniging }}</td>
+                                <td>{{ jurylid.brevet }}</td>
+                                <td>
+                                    <select id="selectDag_{{ jurylid.id }}" onchange="changeDag('{{ jurylid.id }}');">
+                                        <option value="Geen"
+                                        {% if jurylid.dag == 'Geen' %}
+                                            selected
+                                        {% endif %}
+                                        >Geen</option>
+                                        <option value="Za"
+                                        {% if jurylid.dag == 'Za' %}
+                                            selected
+                                        {% endif %}
+                                        >Zaterdag</option>
+                                        <option value="Zo"
+                                        {% if jurylid.dag == 'Zo' %}
+                                            selected
+                                        {% endif %}
+                                        >Zondag</option>
+                                        <option value="ZaZo"
+                                        {% if jurylid.dag == 'ZaZo' %}
+                                            selected
+                                        {% endif %}>Zaterdag en Zondag</option>
+                                    </select>
+                                </td>
+                                <td>{{ jurylid.opmerking }}</td>
+                                <td>{{ jurylid.email }}</td>
+                                <td>
+                                    <div onclick="remove_jurylid_niet('{{ jurylid.id }}',
+                                        '{{ jurylid.naam }}', '{{ jurylid.vereniging }}')"
+                                         style="display: inline">
+                                        <img src="{{ asset('images/remove.png') }}" width="20" style="cursor: pointer;">
+		            				</div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+					</table>
+				</div>
+			</p>
+
+			<p>
+				<div class="titel">
+					<h2>Emailadressen (van juryleden geleverd door verenigingen zonder geplaatste turnsters)</h2>
+				</div>
+				<div class="bericht">
+					<textarea cols="50" rows="15">{% for jurylid in juryledenNiet %}{{ jurylid.email}};{% endfor %}</textarea>
+				</div>
+			</p>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/wachtlijst_remove_etc.js') }}"></script>
+    <script src="{{ asset('js/EditFieldByClicking.js') }}"></script>
+    <script>
+        $('.edit').click(function () {
+            var data = $(this).text();
+            var fieldName = this.id;
+            onClickJurydag(data, fieldName, 'number');
+        });
+        $(document).on('blur keypress', '.txt_edit', function (e) {
+            if (e.type === 'keypress' && e.keyCode !== 13) return;
+            var data = $(this).val();
+            var fieldName = this.id.replace('txt_', '');
+            //onChange(data, fieldName, 'editJurydag');
+        });
+
+        function changeDag(id) {
+            var select = document.getElementById('selectDag_' + id);
+            var dag = select.options[select.selectedIndex].value;
+            $.ajax({
+                type: 'get',
+                url: Routing.generate('changeJuryDagAjaxCall', {id: id, dag: dag})
+            });
+        }
+    </script>
+{% endblock %}

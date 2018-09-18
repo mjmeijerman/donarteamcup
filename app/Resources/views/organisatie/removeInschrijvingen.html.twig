@@ -1,0 +1,15 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1><a href="{{ path('organisatieGetContent', { 'page': app.request.get('page') }) }}">
+            <img src="{{ asset('images/back_arrow.png') }}"></a>
+        Alle inschrijvingen verwijderen
+    </h1>
+    <p>
+        <span style="color: red; font-weight: bold">Weet je zeker dat je alle inschrijvingen wilt verwijderen???</span>
+    </p>
+    <form method="post">
+        <input type="submit" name="confirmRemoveInschrijvingen" value="JAZEKER"/>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <div class="indelingen_button">
+		<a href="{{ path('uploadWedstrijdindelingen', { 'page': app.request.get('page'), }) }}">
+			Wedstrijdindelingen uploaden
+		</a>
+	</div><br/><br/>
+	<div class="indelingen_button">
+		<a href="{{ path('addtijdSchema', { 'page': app.request.get('page'), }) }}">
+			Tijdschema uploaden
+		</a>
+
+	</div>
+	<h1>Inschrijvingen</h1>
+
+			<p>
+				<div class="titel">
+					<h2>Status (geplaatst/wachtlijst)</h2>
+				</div>
+				<div class="bericht">
+					<table class="inschrijvingen_status">
+						{% for groep, waardes in groepen %}
+							<tr>
+								<td class="cat">{{ groep }}</td>
+								{% set geplaatstCounter = 0 %}
+								{% set wachtlijstCounter = 0 %}
+									{% for waarde in waardes %}
+										<td class="niv">
+										<a href="{{ path('bekijkInschrijvingenPerNiveau', { 'page': app.request.get
+										('page'), 'categorie': groep, 'niveau': waarde }) }}">
+										{{ waarde }} ({{ aantallenPerNiveau
+										.geplaatst[groep][waarde] }}/{{ aantallenPerNiveau
+										.wachtlijst[groep][waarde] }})</a></td>
+										{% set geplaatstCounter = geplaatstCounter + aantallenPerNiveau
+										.geplaatst[groep][waarde] %}
+										{% set wachtlijstCounter = wachtlijstCounter + aantallenPerNiveau
+										.wachtlijst[groep][waarde] %}
+									{% endfor %}
+								<td> | {{ geplaatstCounter }}/{{ wachtlijstCounter }}</td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</p>
+
+			<p>
+				<div class="titel">
+					<h2>Contactpersonen</h2>
+				</div>
+				<div class="bericht">
+					<table class="overzicht">
+						<tr>
+							<th>Naam</th>
+							<th>Vereniging</th>
+							<th>Geplaatst</th>
+							<th>Wachtlijst</th>
+							<th>Juryleden</th>
+							<th></th>
+                            {% if not is_granted('ROLE_PREVIOUS_ADMIN') %}
+								<th></th>
+							{% endif %}
+						</tr>
+						{% for contactpersoon in contactpersonen %}
+						<tr>
+							<td><a href="{{ path('bekijkInschrijvingenPerContactpersoon', { 'userId': contactpersoon.id,
+							'page': app.request.get('page') }) }}">{{ contactpersoon.naam }}</a></td>
+							<td>{{ contactpersoon.vereniging }}</td>
+							<td>{{ contactpersoon.turnstersGeplaatst }}</td>
+							<td>{{ contactpersoon.turnstersWachtlijst }}</td>
+							<td>{{ contactpersoon.aantalJuryleden }}</td>
+							<td>
+								<a href="{{ path('removeContactpersoon', { 'id': contactpersoon.id }) }}">
+									<img src="{{ asset('images/remove.png') }}" width="15"/>
+								</a>
+							</td>
+
+                            {% if not is_granted('ROLE_PREVIOUS_ADMIN') %}
+							<td>
+								<a href="{{ path('getContent', {'_switch_user': contactpersoon.username, 'page': 'Inloggen'}) }}">
+									<img src="{{ asset('images/login_as.png') }}" width="18px"/>
+								</a>
+							</td>
+                            {% endif %}
+						</tr>
+						{% endfor %}
+					</table>
+					<br />
+				</div>
+			</p>
+
+			<p>
+				<div class="titel">
+					<h2>Email adressen (verenigingen met geplaatste turntsters)</h2>
+				</div>
+				<div class="bericht">
+					<textarea cols="50" rows="15">{% for contactpersoon in contactpersonen %}{% if contactpersoon.turnstersGeplaatst > 0 %}{{ contactpersoon.email}};{% endif %}{% endfor %}</textarea>
+				</div>
+			</p>
+
+			<p>
+				<div class="titel">
+					<h2>Email adressen (verenigingen zonder geplaatste turntsters)</h2>
+				</div>
+				<div class="bericht">
+					<textarea cols="50" rows="15">{% for contactpersoon in contactpersonen %}{% if contactpersoon.turnstersGeplaatst == 0 %}{{ contactpersoon.email}};{% endif %}{% endfor %}</textarea>
+				</div>
+			</p>
+{% endblock %}

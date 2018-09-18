@@ -22,9 +22,8 @@ framework:
     default_locale: '%locale%'
     trusted_hosts: ~
     session:
-        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-        handler_id: session.handler.native_file
-        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+        # handler_id set to null will use default session handler from php.ini
+        handler_id:  ~
     fragments: ~
     http_method_override: true
     assets: ~
@@ -57,6 +56,13 @@ doctrine:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
+    organize_migrations: false
 
 # Swiftmailer Configuration
 swiftmailer:

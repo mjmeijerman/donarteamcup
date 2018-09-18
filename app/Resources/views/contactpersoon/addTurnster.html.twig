@@ -1,0 +1,87 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/inschrijf_check.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+    <div id="inschrijven_controle">
+        <h1><a href="{{ path('getContactpersoonIndexPage') }}">
+                <img src="{{ asset('images/back_arrow.png') }}"></a>
+            Turnster toevoegen</h1>
+        Via deze pagina kun je een extra turnster toevoegen. Op dit moment zijn er <b>{{ vrijePlekken }}</b> plekken
+                vrij.
+        {% if vrijePlekken == 0 %}
+            Je inschrijving zal dus op de wachtlijst worden geplaatst!
+        {% endif %}
+
+        <h4>&#187; Gegevens</h4>
+        <form method="post" action="" name="turnsters">
+        <table class="aanpas_tabel">
+            <tr>
+                <td>
+                    Voornaam turnster:
+                </td>
+                <td>
+                    <input type="text" class="{{ classNames.voornaam }}" placeholder="Voornaam" value="{{ turnster
+                    .voornaam
+                    }}" name="voornaam" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Achternaam turnster:
+                </td>
+                <td>
+                    <input type="text" class="{{ classNames.achternaam }}" placeholder="Achternaam" value="{{ turnster
+                    .achternaam
+                    }}" name="achternaam" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Geboortejaar:
+                </td>
+                <td>
+                    <select class="{{ classNames.geboortejaar }}" id="geboorteJaar" name="geboorteJaar"
+                            onchange="get_niveaus(false)">
+                        <option value="" selected>Geboortejaar</option>
+                        {% for geboorteJaar in geboorteJaren %}
+                            <option value="{{ geboorteJaar }}"
+                                    {% if geboorteJaar == turnster.geboortejaar %}selected
+                                    {% endif %}
+                                    >{{ geboorteJaar }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Niveau:
+                </td>
+                <td>
+                    <select class="{{ classNames.niveau }}" id="mogelijke_niveaus" name="niveau">
+                        <option value="" selected>Niveau</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Opmerking:
+                </td>
+                <td>
+                    <input type="text" class="{{ classNames.opmerking }}" placeholder="Opmerking"
+                           value="{{ turnster.opmerking }}" name="opmerking" />
+                </td>
+            </tr>
+        </table>
+            <br/>
+            <center>
+                <a href="#" id="reserveer_button" onclick="post_turnsters()">Gegevens opslaan</a>
+            </center>
+            <input type="hidden" name="csrfToken" value="{{ csrfToken }}"/>
+        </form>
+    </div>
+    <script>get_niveaus(false, '{{ turnster.niveau }}')</script>
+{% endblock %}

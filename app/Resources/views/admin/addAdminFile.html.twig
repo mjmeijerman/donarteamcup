@@ -1,0 +1,29 @@
+{% extends 'admin/adminIndex.html.twig' %}
+
+{% block body %}
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <h1>Bestand uploaden</h1>
+        <a href="{{ path('getAdminIndexPage') }}">Annuleer</a>
+        <p>Let op: het bestand mag maximaal 5 Mb zijn!</p>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <table>
+            <tr>
+                <td colspan="2">{{ form_errors(form.file) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.file) }}</td>
+                <td>{{ form_widget(form.file) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ form_errors(form.naam) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.naam) }}</td>
+                <td>{{ form_widget(form.naam) }}</td>
+            </tr>
+        </table>
+        {{ form_widget(form.uploadBestand) }}
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

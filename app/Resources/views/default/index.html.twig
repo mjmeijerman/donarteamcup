@@ -1,5 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends 'default/base.html.twig' %}
 
 {% block body %}
-    Under Construction
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('editDefaultPage', { 'page': app.request.get('page') }) }}"><img src="{{ asset('images/edit.png') }}" width="18px" /></a>
+    {% endif %}
+
+    {% if app.request.get('page') == 'Inschrijvingsinformatie' %}
+        <div id="inschrijven"><a href="{{ path('inschrijven') }}">Turnsters inschrijven &#187;</a></div>
+    {% endif %}
+
+
+    {{ content|raw }}
 {% endblock %}

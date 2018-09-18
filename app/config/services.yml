@@ -33,3 +33,7 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    helper.imageresizer:
+        class: AppBundle\Helper\ImageResizer
+        public: true

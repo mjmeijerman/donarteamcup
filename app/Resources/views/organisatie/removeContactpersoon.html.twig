@@ -1,0 +1,18 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <p>
+    <a href="{{ path('organisatieGetContent', { 'page': 'Inschrijvingen' }) }}">Annuleer!</a>
+		<div class="titel">
+			<h2>Contactpersoon verwijderen</h2>
+		</div>
+		<div class="bericht">
+			Weet je zeker dat je {{ contactpersoon.naam }} van {{ contactpersoon.vereniging }} wilt verwijderen?
+			<p><form method="post" action="">
+        	    <input type="submit" name="bevestig" value="Bevestig"/>
+            </form></p>
+		</div>
+	</p>
+
+
+{% endblock %}

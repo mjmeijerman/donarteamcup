@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>HDC - Scores en Uitslagen</title>
+    <meta charset="UTF-8" />
+    {% block styles %}<link href="{{ asset('css/Uitslagen.css') }}" rel="stylesheet"/>{% endblock %}
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/favicon.png') }}"/>
+</head>
+
+<body>
+<center>
+    <div id="container">
+        <div id="header">
+            {% block header %}<img src="{{ asset('images/header.png') }}" alt="" />{% endblock %}
+        </div>
+        {% block body %}
+
+        {% endblock %}
+
+        {% block javascripts %}
+
+        {% endblock %}
+    </div>
+</center>
+</body>
+
+</html>

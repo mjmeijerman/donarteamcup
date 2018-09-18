@@ -1,0 +1,94 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1><a href="{{ path('organisatieGetContent', { 'page': app.request.get('page') }) }}">
+            <img src="{{ asset('images/back_arrow.png') }}"></a>
+            Inschrijvingen {{ categorie }} {{ niveau }} inzien
+    </h1>
+<p>
+    <div class="titel">
+        <h2>
+            Deelnemers {{ categorie }} {{ niveau }} (<span id="turnsters_aantal">{{ turnsters|length }}</span>)
+        </h2>
+    </div>
+    <div class="bericht">
+		<table class="overzicht" id="turnster_table">
+			<tr>
+				<th>ID</th>
+				<th>Naam</th>
+				<th>Vereniging</th>
+				<th>Opmerking</th>
+				<th>Naar wachtlijst</th>
+				<th>Verwijderen</th>
+			</tr>
+			{% for turnster in turnsters %}
+				<tr id="turnster_row_{{ turnster.id }}">
+					<td>{{ turnster.id }}</td>
+					<td>{{ turnster.naam }}</td>
+					<td>{{ turnster.vereniging }}</td>
+					<td>{{ turnster.opmerking }}</td>
+					<td class="img">
+					    <div onclick="naar_wachtlijst('{{ turnster.id }}')"
+							 style="display: inline">
+    					    <img src="{{ asset('images/down.png') }}" width="20" style="cursor: pointer;">
+                        </div>
+                    </td>
+					<td class="img">
+						<div onclick="remove_turnster('{{ turnster.id }}',
+								'{{ turnster.naam }}', '{{ turnster.vereniging }}')"
+							 style="display: inline">
+							<img src="{{ asset('images/remove.png') }}" width="20" style="cursor: pointer;">
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+    </div>
+</p>
+<p>
+    <div class="titel">
+        <h2>
+            Wachtlijst {{ categorie }} {{ niveau }} (<span id="wachtlijst_aantal">{{ wachtlijst|length }}</span>)
+        </h2>
+    </div>
+    <div class="bericht">
+		<table class="overzicht" id="wachtlijst_table">
+			<tr>
+				<th>ID</th>
+				<th>Naam</th>
+				<th>Vereniging</th>
+				<th>Opmerking</th>
+				<th>Van wachtlijst</th>
+				<th>Verwijderen</th>
+			</tr>
+			{% for turnster in wachtlijst %}
+				<tr id="turnster_row_{{ turnster.id }}">
+					<td>{{ turnster.id }}</td>
+					<td>{{ turnster.naam }}</td>
+					<td>{{ turnster.vereniging }}</td>
+					<td>{{ turnster.opmerking }}</td>
+					<td class="img" id="turnster_up">
+					    <div onclick="van_wachtlijst('{{ turnster.id }}')"
+							 style="display: inline">
+    					    <img src="{{ asset('images/up.png') }}" width="20" style="cursor: pointer;">
+                        </div>
+                    </td>
+					<td class="img">
+						<div onclick="remove_turnster_wachtlijst('{{ turnster.id }}',
+								'{{ turnster.naam }}', '{{ turnster.vereniging }}')"
+							 style="display: inline">
+							<img src="{{ asset('images/remove.png') }}" width="20" style="cursor: pointer;">
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+    </div>
+</p>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/wachtlijst_remove_etc.js') }}"></script>
+{% endblock %}

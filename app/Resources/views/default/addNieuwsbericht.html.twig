@@ -1,0 +1,21 @@
+{% extends 'default/base.html.twig' %}
+
+{% block body %}
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <h1>Nieuwsbericht plaatsen/Activiteit wijzigen</h1>
+        <a href="{{ path('getContent', { 'page': 'Laatste nieuws' }) }}">Annuleer</a>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_errors(form.titel) }}<br>
+        <b>{{ form_label(form.titel) }}</b><br>
+        {{ form_widget(form.titel) }}<br>
+
+        {{ form_errors(form.bericht) }}<br>
+        <b>{{ form_label(form.bericht) }}</b><br>
+        {{ form_widget(form.bericht) }}<br>
+
+        {{ form_widget(form.Verstuur) }}
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

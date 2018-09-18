@@ -1,0 +1,21 @@
+{% extends 'inloggen/base.html.twig' %}
+
+{% block body %}
+<div id="inloggen">
+    <h1>Nieuw wachtwoord</h1>
+    Wachtwoord vergeten?<br />
+	Vraag een nieuw wachtwoord aan door hieronder je gebruikersnaam in te vullen. Je nieuwe wachtwoord wordt dan verstuurd naar het e-mailadres wat je hebt opgegeven bij het inschrijven.
+	<br />
+	<br />
+
+    <form action="{{ path('getNewPassPage') }}" method="post">
+        <table class="login_tabel" align="center">
+            <tr>
+                <td><input type="text" name="username" placeholder="Gebruikersnaam" class="username" /></td>
+            </tr>
+        </table>
+		<br />
+        <p><button type="submit" class="button">Verstuur</button></p>
+    </form>
+</div>
+{% endblock %}

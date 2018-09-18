@@ -1,0 +1,18 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1>Verstuur voorinschrijvingslink</h1>
+    <a href="{{ path('organisatieGetContent', { 'page': app.request.get('page') }) }}">Annuleer wijzigingen</a>
+    <form method="post" action="">
+        <table>
+            <tr>
+                <td>Emailadres</td>
+                <td>
+                    <input type="email" name="email" placeholder="test@test.nl" required/>
+                </td>
+            </tr>
+        </table>
+
+        <input type="submit" value="Verstuur"/>
+    </form>
+{% endblock %}

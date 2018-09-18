@@ -1,0 +1,49 @@
+{% extends 'admin/adminIndex.html.twig' %}
+
+{% block body %}
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <h1>Organisatielid toevoegen/wijzigen</h1>
+        <a href="{{ path('getAdminIndexPage') }}">Annuleer</a>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <table>
+            <tr>
+                <td colspan="2">{{ form_errors(form.username) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.username) }}</td>
+                <td>{{ form_widget(form.username) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ form_errors(form.voornaam) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.voornaam) }}</td>
+                <td>{{ form_widget(form.voornaam) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ form_errors(form.achternaam) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.achternaam) }}</td>
+                <td>{{ form_widget(form.achternaam) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ form_errors(form.email) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.email) }}</td>
+                <td>{{ form_widget(form.email) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ form_errors(form.verantwoordelijkheid) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.verantwoordelijkheid) }}</td>
+                <td>{{ form_widget(form.verantwoordelijkheid) }}</td>
+            </tr>
+        </table>
+        {{ form_widget(form.Verstuur) }}
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

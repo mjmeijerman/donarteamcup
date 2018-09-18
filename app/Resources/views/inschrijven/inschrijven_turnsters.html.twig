@@ -1,0 +1,191 @@
+{% extends 'inschrijven/base.html.twig' %}
+
+{% block body %}
+
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ asset('js/inschrijf_check.js') }}"></script>
+    <script src="{{ asset('js/countdown_clock.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+    <h1>Inschrijven</h1>
+    <i>Bij problemen en paniek kun je bellen met: 06-55726426</i>
+    <div id="inschrijven_deelnemers">
+        <h4>&#187; Details deelnemers</h4>
+        {% if turnsterFields|length == 1 %}
+            Er is 1 plek gereserveerd!
+        {% else %}
+            Er zijn {{ turnsterFields|length }} plekken gereserveerd!
+        {% endif %}
+        {% if vrijePlekken == 0 %}
+            {% if turnsterFields|length == 1 %}
+                <b> Dit is helaas wel een plek op de wachtlijst!</b>
+            {% else %}
+                <b> Dit zijn helaas wel plekken op de wachtlijst!</b>
+            {% endif %}
+        {% elseif vrijePlekken < turnsterFields|length %}
+            <b> Helaas is een deel van deze plekken op de wachtlijst!</b>
+        {% endif %}
+        <br/><br/>
+        Nu kun je in alle rust de details van je turnsters invoeren. Je hebt
+        tot {{ tijdTot }} voor de niet-ingevulde plekken worden vrijgegeven. <br/><br/>
+        <b>Let op: Turnsters in rood zullen op de wachtlijst geplaatst worden!</b><br><br/>
+        Mocht je bij turnsters een opmerking willen plaatsen (bijvoorbeeld i.v.m. turnen op zondag), dan kan dit na het
+        voltooien van de inschrijvingen in het inloggedeelte van de website.
+        <br>
+        <br>
+        We hebben ook een mooie klok voor je
+        aangezet die
+        aftelt (rechts bovenin). <br><br>
+
+        Tip: als de tijd bijna om is en je hebt nog niet alle gegevens ingevoerd kun je op opslaan klikken om alle
+        ingevoerde turnsters alvast op te slaan. De ingevoerde turnsters zullen dan verdwijnen van het
+        inschrijfformulier en kun je later via het inloggedeelte nog wijzigen. Ook het toevoegen van extra turnsters
+        kan via het inloggedeelte.
+        <br/>
+        <br/>
+
+        <form method="post" action="" name="turnsters">
+            <input type="hidden" name="ids" value="
+            {% for key, turnster in turnsterFields %}
+                {{ key }}.
+            {% endfor %}
+            "/>
+            {% for key, turnster in turnsterFields %}
+            {% if turnster %}
+            <div class="row_turnster_wachtlijst">
+                {% else %}
+                <div class="row_turnster">
+                    {% endif %}
+                    {{ loop.index }} |
+                    <input type="text" class="turnster_voornaam" id="voornaam_{{ key }}" name="voornaam_{{ key }}"
+                           placeholder="Voornaam"/> <!--
+                vergeet de
+            spatie niet -->
+                    <input type="text" class="turnster_achternaam" id="achternaam_{{ key }}" name="achternaam_{{ key }}"
+                           placeholder="Achternaam"/> <!-- vergeet de spatie niet -->
+                    <select class="turnster_niveau" id="geboorteJaar_{{ key }}" name="geboorteJaar_{{ key }}"
+                            onchange="get_niveaus
+                                    ({{ key }})">
+                        <option value="" selected>Geboortejaar</option>
+                        {% for geboorteJaar in geboorteJaren %}
+                            <option value="{{ geboorteJaar }}">{{ geboorteJaar }}</option>
+                        {% endfor %}
+                    </select>
+                    <select class="turnster_niveau" id="mogelijke_niveaus_{{ key }}" name="niveau_{{ key }}">
+                        <option value="" selected>Niveau</option>
+                    </select>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <div id="inschrijven_jury">
+                <h4>&#187; Juryleden</h4>
+                Er dient een totaal van <b>{{ optegevenJury }}</b> juryleden aangeleverd te worden.<br/>
+                Het opgeven van deze juryleden kan ook op een latere datum, mits voor de uiterlijke inschrijfdatum.<br/>
+                Bij het te laat opgeven van juryleden vervalt de inschrijving. De opgegeven juryleden dienen de gehele
+                dag beschikbaar te zijn.<br/>
+                <br/>
+                Het opgeven van de juryleden kan je ook overslaan, en op een ander moment doen.<br/>
+                <br/>
+
+                {% if aantalJury > 0 %}
+                    {% for i in 1..aantalJury %}
+                        <div class="row_turnster">{{ i }} |
+                            <input type="text" class="turnster_voornaam" id="voornaam" placeholder="Voornaam"
+                                   name="jury_voornaam_{{ i }}"/>
+                            <!-- vergeet de spatie niet -->
+                            <input type="text" class="turnster_achternaam" id="achternaam" placeholder="Achternaam"
+                                   name="jury_achternaam_{{ i }}"/>
+                            <!-- vergeet de spatie niet -->
+                            <input type="text" class="turnster_achternaam" id="email" placeholder="jurylid@email.com"
+                                   name="jury_email_{{ i }}"/>
+                            <!-- vergeet de spatie niet -->
+                            <br/>
+                            <select class="jury_brevet" name="jury_brevet_{{ i }}">
+                                <option value="" selected>Brevet</option>
+                                <option value="TD1">TD1</option>
+                                <option value="TD2">TD2</option>
+                                <option value="TD3">TD3</option>
+                                <option value="TD4">TD4</option>
+                                <option value="TD5">TD5</option>
+                            </select> <!-- vergeet de spatie niet -->
+                            <select class="jury_dag" name="jury_dag_{{ i }}">
+                                <option value="" selected>Beschikbare dag</option>
+                                <option value="za">Zaterdag</option>
+                                <option value="zo">Zondag</option>
+                                <option value="zazo">Zaterdag en Zondag</option>
+                            </select> <!-- vergeet de spatie niet -->
+                            <input type="text" class="jury_opmerking" id="juryopmerking"
+                                   placeholder="Evt. opmerkingen." name="jury_opmerking_{{ i }}"></textarea>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <br/>
+                <br/>
+                Door turnsters op te slaan geef je aan dat je kennis hebt genomen van de <a
+                        href="/uploads/reglementen/Reglementen.pdf" target="_blank">Reglementen</a>
+                en hiermee akkoord gaat!
+                <input type="hidden" name="csrfToken" value="{{ csrfToken }}"/>
+                <br/><br/>
+                <center>
+                    <div id="controle_button" onclick="post_turnsters()">Ingevoerde turnsters en juryleden
+                        opslaan
+                    </div>
+                </center>
+                <br>
+                <center>
+                    <div id="controle_button" onclick="afsluiten()">Ik ben klaar met inschrijven!</div>
+                </center>
+                <input type="hidden" id="remove_session" name="remove_session"/>
+        </form>
+
+
+        <h4>&#187; Opgeslagen deelnemers</h4>
+        De volgende turnsters zijn succesvol opgeslagen (als de achtergrond rood is staan de turnsters op de
+        wachtlijst):
+        <table class="controle_tabel">
+            {% for turnster in opgeslagenTurnsters %}
+                {% if turnster.wachtlijst %}
+                    <tr class="controle_wachtlijst">
+                {% else %}
+                    <tr>
+                {% endif %}
+                <td class="controle_nummer">{{ loop.index }}</td>
+                <td class="controle_voornaam">{{ turnster.voornaam }}</td>
+                <td class="controle_achternaam">{{ turnster.achternaam }}</td>
+                <td class="controle_geboortejaar">{{ turnster.geboortejaar }}</td>
+                <td class="controle_niveau">{{ turnster.niveau }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+
+        <h4>&#187; Opgeslagen juryleden</h4>
+        De volgende juryleden zijn succesvol opgeslagen:
+        <table class="controle_tabel">
+            {% for jurylid in opgeslagenJuryleden %}
+                <tr>
+                    <td class="controle_nummer">{{ loop.index }}</td>
+                    <td class="controle_voornaam">{{ jurylid.voornaam }}</td>
+                    <td class="controle_achternaam">{{ jurylid.achternaam }}</td>
+                    <td class="controle_achternaam">{{ jurylid.email }}</td>
+                    <td class="controle_niveau">{{ jurylid.brevet }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        {% if timeToExpiration == 0 %}
+        var deadline = new Date(Date.parse(new Date()) + 1 * 1 * 1 * 1 * 1000);
+        initializeClock('countdown_inner', deadline);
+        {% else %}
+        var deadline = new Date(Date.parse(new Date()) + 1 * 1 * {{ timeToExpiration }} * 60 * 1000);
+        initializeClock('countdown_inner', deadline);
+        {% endif %}
+    </script>
+{% endblock %}

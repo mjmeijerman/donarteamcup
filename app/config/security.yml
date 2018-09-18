@@ -1,24 +1,42 @@
-# To get started with security, check out the documentation:
-# https://symfony.com/doc/current/security.html
 security:
-
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
     providers:
-        in_memory:
-            memory: ~
+        db_provider:
+            entity:
+                class: AppBundle:User
+
+    role_hierarchy:
+        ROLE_INGELOGD:    [ROLE_USER]
+        ROLE_CONTACT:     [ROLE_INGELOGD]
+        ROLE_ADMIN:       [ROLE_INGELOGD, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ORGANISATIE: [ROLE_INGELOGD, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_JURY:        [ROLE_INGELOGD]
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
         main:
-            anonymous: ~
-            # activate different ways to authenticate
+            pattern: ^/
+            http_basic: ~
+            provider: db_provider
+            anonymous:  true
+            form_login:
+                login_path: /login
+                check_path: /login_check
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path: /pagina/Inloggen
+            switch_user: true
+            logout_on_user_change: true
 
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+            logout:
+                path:   /logout
+                target: /pagina/Inloggen
 
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+            remember_me:
+                secret:   "%secret%"
+                lifetime: 2419200 # 4 weeks in seconds
+                path:     /

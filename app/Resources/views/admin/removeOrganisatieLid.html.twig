@@ -1,0 +1,20 @@
+{% extends 'admin/adminIndex.html.twig' %}
+
+{% block body %}
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <h1>Organisatielid verwijderen</h1>
+        Weet u zeker dat u <span style="color:red; font-weight: bold;">"{{ organisatieLid.voornaam }} {{ organisatieLid.achternaam }}"</span> wilt verwijderen?
+        <table>
+            <tr>
+                <td>
+                    <form method="post" action="{{ path('removeOrganisatieLid', { username: app.request.get('username') }) }}">
+                        <input name="bevestig" type="submit" value="Bevestig">
+                    </form>
+                </td>
+                <td>
+                    <a href="{{ path('getAdminIndexPage') }}"><input type="button" value="Annuleren"></a>
+                </td>
+            </tr>
+        </table>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1>Financiele zaken</h1>
+<p>
+<div class="titel">
+    <h2>Overzicht facturen</h2>
+</div>
+<div class="bericht">
+    <table class="facturen">
+        <tr>
+            <th>Vereniging</th>
+            <th>Factuur Nr.</th>
+            <th>Totaal</th>
+            <th>Status</th>
+            <th>Openstaand</th>
+            <th>Turnsters</th>
+            <th>Afgemeld</th>
+            <th>Jury tekort</th>
+            <th></th>
+        </tr>
+        {% for factuur in factuurInformatie %}
+            <tr class="{{ factuur.voldaanClass }}">
+                <td>{{ factuur.vereniging }}</td>
+                <td>{{ factuur.factuurNr }}</td>
+                <td>&#8364;{{ factuur.bedrag }}</td>
+                <td>{{ factuur.status }}</td>
+                <td>&#8364;{{ factuur.openstaandBedrag }}</td>
+                <td>{{ factuur.aantalTurnsters }}</td>
+                <td>{{ factuur.aantalAfgemeld }}</td>
+                <td>{{ factuur.juryTekort }}</td>
+                <td>{#<a href="{{ path('organisatieGetFacturen', { 'userId': factuur.userId }) }}"#}
+                <a href="{{ path('betalingInzien', { 'userId': factuur.userId, 'page': app.request.get('page') }) }}">Inzien</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+</p>
+{% endblock %}

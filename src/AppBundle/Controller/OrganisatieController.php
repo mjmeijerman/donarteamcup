@@ -901,7 +901,7 @@ class OrganisatieController extends BaseController
         if ($result) {
             $this->removeFromDB($result);
         }
-        return new Response('true');
+        return new JsonResponse('true');
     }
 
     /**
@@ -1150,7 +1150,7 @@ class OrganisatieController extends BaseController
         if ($result) {
             $this->removeFromDB($result);
         }
-        return new Response('true');
+        return new JsonResponse('true');
     }
 
     /**
@@ -1169,7 +1169,7 @@ class OrganisatieController extends BaseController
             $result->setUitslagGepubliceerd(1);
             $this->addToDB($result);
         }
-        return new Response('true');
+        return new JsonResponse('true');
     }
 
     /**
@@ -1188,7 +1188,7 @@ class OrganisatieController extends BaseController
             $result->setUitslagGepubliceerd(0);
             $this->addToDB($result);
         }
-        return new Response('true');
+        return new JsonResponse('true');
     }
 
     /**
@@ -1210,7 +1210,7 @@ class OrganisatieController extends BaseController
             $this->setJurylidBeschikbareDagenFromPostData($dag, $result);
             $this->addToDB($result);
         }
-        return new Response('true');
+        return new JsonResponse('true');
     }
 
     /**
@@ -1227,7 +1227,7 @@ class OrganisatieController extends BaseController
         if ($result) {
             $this->removeFromDB($result);
         }
-        return new Response('true');
+        return new JsonResponse('true');
     }
 
     /**
@@ -1246,7 +1246,7 @@ class OrganisatieController extends BaseController
             $result->setWachtlijst(true);
             $this->addToDB($result);
         }
-        return new Response('true');
+        return new JsonResponse('true');
     }
 
     /**
@@ -1265,7 +1265,7 @@ class OrganisatieController extends BaseController
             $result->setWachtlijst(false);
             $this->addToDB($result);
         }
-        return new Response('true');
+        return new JsonResponse('true');
     }
 
     /**

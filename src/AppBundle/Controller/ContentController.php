@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Instellingen;
 use AppBundle\Entity\ScoresRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -112,7 +113,7 @@ class ContentController extends BaseController
     public function aantalVrijePlekkenAjaxCall()
     {
         $this->updateGereserveerdePlekken();
-        return new Response($this->getVrijePlekken());
+        return new JsonResponse($this->getVrijePlekken());
     }
 
     /**

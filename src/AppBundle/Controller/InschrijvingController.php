@@ -574,7 +574,7 @@ class InschrijvingController extends BaseController
      */
     public function checkUsernameAvailabilityAjaxCall($username)
     {
-        return new Response($this->checkUsernameAvailability($username));
+        return new JsonResponse($this->checkUsernameAvailability($username));
     }
 
     /**

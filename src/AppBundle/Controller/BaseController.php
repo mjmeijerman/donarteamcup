@@ -328,7 +328,12 @@ class BaseController extends Controller
      */
     protected function getCategorie($geboorteJaar)
     {
-        $leeftijd = (date('Y', time()) - $geboorteJaar);
+        if (date('n') >= 8 ) {
+            $leeftijd = (date('Y', time()) - $geboorteJaar) + 1;
+        } else {
+            $leeftijd = (date('Y', time()) - $geboorteJaar);
+        }
+
         if ($leeftijd < 8) {
             return '';
         } elseif ($leeftijd == 8) {

@@ -108,7 +108,7 @@ class InschrijvingController extends BaseController
                                 $user->addJurylid($jurylid);
                                 $this->addToDB($user);
 
-                                $subject    = 'Aanmelding Haagse Donar Cup';
+                                $subject    = 'Aanmelding Donar Team Cup';
                                 $to         = $jurylid->getEmail();
                                 $view       = 'mails/inschrijven_jurylid.html.twig';
                                 $parameters = [
@@ -517,7 +517,7 @@ class InschrijvingController extends BaseController
                             }
                             $session->set('vrijePlekken', $this->getVrijePlekken());
                             $this->addToDB($contactpersoon);
-                            $subject        = 'Inloggegevens Haagse Donar Cup';
+                            $subject        = 'Inloggegevens Donar Team Cup';
                             $to             = $contactpersoon->getEmail();
                             $view           = 'mails/inschrijven_contactpersoon.html.twig';
                             $inschrijvenTot = $this->getOrganisatieInstellingen(self::SLUITING_INSCHRIJVING_TURNSTERS);

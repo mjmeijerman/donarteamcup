@@ -1045,7 +1045,7 @@ class BaseController extends Controller
         $pdf->SetTextColor(0);
 
         //REKENINGNUMMER DETAILS
-        $pdf->Text(3, 290, 'Haagse Donar Cup - ' . $datumHBC . ', ' . $locatieHBC);
+        $pdf->Text(3, 290, 'Donar Team Cup - ' . $datumHBC . ', ' . $locatieHBC);
         $pdf->Text(3, 294, $rekeningNummer . ' - T.n.v. ' . $rekeningTNV . ' o.v.v. ' . $factuurNummer);
 
         //LOGO DONAR

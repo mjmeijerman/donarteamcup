@@ -296,7 +296,6 @@ class BaseController extends Controller
     protected function getCategorien()
     {
         return [
-            'Voorinstap',
             'Instap',
             'Pupil 1',
             'Pupil 2',
@@ -310,8 +309,7 @@ class BaseController extends Controller
     protected function getGroepen()
     {
         return [
-            'Voorinstap' => ['N2', 'N3', 'D1', 'D2'],
-            'Instap'     => ['N2', 'N3', 'D1', 'D2'],
+            'Instap'     => ['N3', 'D1', 'D2'],
             'Pupil 1'    => ['N3', 'D1', 'D2'],
             'Pupil 2'    => ['N3', 'D1', 'D2'],
             'Jeugd 1'    => ['N4', 'D1', 'D2'],
@@ -334,10 +332,8 @@ class BaseController extends Controller
             $leeftijd = (date('Y', time()) - $geboorteJaar);
         }
 
-        if ($leeftijd < 8) {
+        if ($leeftijd <= 8) {
             return '';
-        } elseif ($leeftijd == 8) {
-            return 'Voorinstap';
         } elseif ($leeftijd == 9) {
             return 'Instap';
         } elseif ($leeftijd == 10) {
@@ -363,25 +359,28 @@ class BaseController extends Controller
      */
     protected function getGeboortejaarFromCategorie($categorie)
     {
+        $extraYear = 0;
+        if (date('n') >= 8 ) {
+            $extraYear = 1;
+        }
+
         switch ($categorie) {
-            case 'Voorinstap':
-                return date('Y', time()) - 8;
             case 'Instap':
-                return date('Y', time()) - 9;
+                return date('Y', time()) - 9 + $extraYear;
             case 'Pupil 1':
-                return date('Y', time()) - 10;
+                return date('Y', time()) - 10 + $extraYear;
             case 'Pupil 2':
-                return date('Y', time()) - 11;
+                return date('Y', time()) - 11 + $extraYear;
             case 'Jeugd 1':
-                return date('Y', time()) - 12;
+                return date('Y', time()) - 12 + $extraYear;
             case 'Jeugd 2':
-                return date('Y', time()) - 13;
+                return date('Y', time()) - 13 + $extraYear;
             case 'Junior':
-                return [date('Y', time()) - 14, date('Y', time()) - 15];
+                return [date('Y', time()) - 14 + $extraYear, date('Y', time()) - 15 + $extraYear];
             case 'Senior':
                 $geboortejaren = [];
                 for ($i = 16; $i < 60; $i++) {
-                    $geboortejaren[] = date('Y', time()) - $i;
+                    $geboortejaren[] = date('Y', time()) - $i  + $extraYear;
                 }
                 return $geboortejaren;
             default:
@@ -396,11 +395,16 @@ class BaseController extends Controller
      */
     protected function getAvailableNiveaus($geboorteJaar)
     {
-        $leeftijd = (date('Y', time()) - $geboorteJaar);
-        if ($leeftijd < 8) {
+        if (date('n') >= 8 ) {
+            $leeftijd = (date('Y', time()) - $geboorteJaar) + 1;
+        } else {
+            $leeftijd = (date('Y', time()) - $geboorteJaar);
+        }
+
+        if ($leeftijd <= 8) {
             return [];
-        } elseif ($leeftijd == 8 || $leeftijd == 9) {
-            return ['N2', 'N3', 'D1', 'D2'];
+        } elseif ($leeftijd == 9) {
+            return ['N3', 'D1', 'D2'];
         } elseif ($leeftijd == 10 || $leeftijd == 11) {
             return ['N3', 'D1', 'D2'];
         } elseif ($leeftijd == 12) {

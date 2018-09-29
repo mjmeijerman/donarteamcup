@@ -34,7 +34,7 @@ class BaseController extends Controller
     const SLUITING_UPLOADEN_VLOERMUZIEK   = 'Sluiting uploaden vloermuziek';
     const FACTUUR_BEKIJKEN_TOEGESTAAN     = 'Factuur publiceren';
     const UITERLIJKE_BETAALDATUM_FACTUUR  = 'Uiterlijke betaaldatum';
-    const MAX_AANTAL_TURNSTERS            = 'Max aantal turnsters';
+    const MAX_AANTAL_TEAMS                = 'Max aantal teams';
     const EMPTY_RESULT                    = 'Klik om te wijzigen';
     const BEDRAG_PER_TURNSTER             = 16.50;
     const JURY_BOETE_BEDRAG               = 50;
@@ -115,7 +115,7 @@ class BaseController extends Controller
                 self::SLUITING_UPLOADEN_VLOERMUZIEK,
                 self::FACTUUR_BEKIJKEN_TOEGESTAAN,
                 self::UITERLIJKE_BETAALDATUM_FACTUUR,
-                self::MAX_AANTAL_TURNSTERS,
+                self::MAX_AANTAL_TEAMS,
             );
         } else {
             $instellingKeys = array($fieldname);
@@ -131,7 +131,7 @@ class BaseController extends Controller
                 /** @var Instellingen $result */
                 $result = $result[0];
             }
-            if ($key == self::MAX_AANTAL_TURNSTERS) {
+            if ($key == self::MAX_AANTAL_TEAMS) {
                 $instellingen[$key] = ($result) ? $result->getAantal() : self::EMPTY_RESULT;
             } else {
                 $instellingen[$key] = ($result) ? $result->getDatum() : self::EMPTY_RESULT;
@@ -432,14 +432,15 @@ class BaseController extends Controller
      */
     protected function getVrijePlekken()
     {
+        // todo: deze functie aanpassen (of weghalen?)
         $result     = $this->getDoctrine()
             ->getRepository('AppBundle:Turnster')
             ->getBezettePlekken();
-        $maxPlekken = $this->getOrganisatieInstellingen(self::MAX_AANTAL_TURNSTERS);
-        if ($maxPlekken[self::MAX_AANTAL_TURNSTERS] - $result < 0) {
+        $maxPlekken = $this->getOrganisatieInstellingen(self::MAX_AANTAL_TEAMS);
+        if ($maxPlekken[self::MAX_AANTAL_TEAMS] - $result < 0) {
             return 0;
         }
-        return ($maxPlekken[self::MAX_AANTAL_TURNSTERS] - $result);
+        return ($maxPlekken[self::MAX_AANTAL_TEAMS] - $result);
     }
 
     /**
@@ -519,14 +520,9 @@ class BaseController extends Controller
      */
     protected function wijzigTurnsterToegestaan()
     {
-        $instellingGeopend  = $this->getOrganisatieInstellingen(self::OPENING_INSCHRIJVING);
         $instellingGesloten = $this->getOrganisatieInstellingen(self::SLUITING_INSCHRIJVING_TURNSTERS);
-        if ((time() > strtotime($instellingGeopend[self::OPENING_INSCHRIJVING]) &&
-            time() < strtotime($instellingGesloten[self::SLUITING_INSCHRIJVING_TURNSTERS]))
-        ) {
-            return true;
-        }
-        return false;
+
+        return (time() < strtotime($instellingGesloten[self::SLUITING_INSCHRIJVING_TURNSTERS]));
     }
 
     protected function getJuryIndeling()

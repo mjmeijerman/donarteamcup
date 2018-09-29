@@ -455,7 +455,7 @@ class OrganisatieController extends BaseController
         }
         $instellingen = new Instellingen();
         switch ($fieldName) {
-            case self::MAX_AANTAL_TURNSTERS:
+            case self::MAX_AANTAL_TEAMS:
                 try {
                     $instellingen->setInstelling($fieldName);
                     $instellingen->setGewijzigd(new \DateTime('now'));

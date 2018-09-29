@@ -196,7 +196,7 @@ class ContactpersoonController extends BaseController
         return new Response(
             $pdf->Output(
                 'Uitslagen ' . $this->getUser()->getVereniging()->getNaam() . ' ' . $this->getUser()->getVereniging()
-                    ->getPlaats() . ' HDC ' . self::DATUM_HBC . ".pdf",
+                    ->getPlaats() . ' HDC ' . self::DATUM_DTC . ".pdf",
                 "I"
             ), 200, [
                 'Content-Type' => 'application/pdf'

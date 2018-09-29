@@ -176,7 +176,7 @@ class UitslagenController extends BaseController
             $pdf->AddPage();
             $pdf->SetFont('Gotham', '', 18);
             $pdf->HeaderDiploma();
-            $pdf->FooterDiploma(self::DATUM_HBC);
+            $pdf->FooterDiploma(self::DATUM_DTC);
             $pdf->ContentDiploma($turnster);
         }
 
@@ -207,7 +207,7 @@ class UitslagenController extends BaseController
         $pdf->AddPage();
         $pdf->SetFont('Gotham', '', 18);
         $pdf->HeaderDiploma();
-        $pdf->FooterDiploma(self::DATUM_HBC);
+        $pdf->FooterDiploma(self::DATUM_DTC);
         $pdf->ContentDiploma($legeTurnster);
 
         return new Response(
@@ -280,7 +280,7 @@ class UitslagenController extends BaseController
             }
         }
         $pdf = new JurybadgePdfController('L', 'mm', [85.6, 53.98]);
-        $pdf->setDatumHBC(self::DATUM_HBC);
+        $pdf->setDatumHBC(self::DATUM_DTC);
         $pdf->SetMargins(0, 0);
         $pdf->AddFont('Gotham', '', 'Gotham-Light.php');
         $pdf->AddFont('Franklin', '', 'Frabk.php');
@@ -334,7 +334,7 @@ class UitslagenController extends BaseController
             $userId = $this->getUser()->getId();
         }
         $pdf = new WedstrijdIndelingPdfController();
-        $pdf->setDatumHBC(self::DATUM_HBC);
+        $pdf->setDatumHBC(self::DATUM_DTC);
         $pdf->setBaan($request->query->get('baan'));
         $pdf->setWedstrijddag($request->query->get('wedstrijddag'));
         $pdf->setWedstrijdronde($request->query->get('wedstrijdronde'));
@@ -347,7 +347,7 @@ class UitslagenController extends BaseController
         $pdf->wedstrijdIndelingContent($turnsters, $userId);
         return new Response(
             $pdf->Output(
-                'wedstrijdindeling HDC ' . self::DATUM_HBC . " " . $request->query->get(
+                'wedstrijdindeling HDC ' . self::DATUM_DTC . " " . $request->query->get(
                     'wedstrijddag'
                 ) . " wedstrijdronde " .
                 $request->query->get('wedstrijdronde') . " baan " . $request->query->get('baan') . ".pdf",

@@ -21,8 +21,7 @@ class PrijswinnaarsPdfController extends AlphaPDFController
     {
         $this->SetFillColor(127);
         $this->Rect(0, 0, 297, 32, 'F');
-        $this->Image('images/pdf_background_landscape.png', 0, 0);
-        $this->Image('images/HDCFactuurHeader.png', 30, -1);
+        $this->Image('images/header_uitslagen.png', 30, -1);
         $this->Ln(40);
         $this->SetTextColor(0, 0, 0);
         $this->SetFont('Helvetica', 'B', 20);

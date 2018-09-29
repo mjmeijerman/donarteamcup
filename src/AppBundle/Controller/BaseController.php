@@ -36,10 +36,11 @@ class BaseController extends Controller
     const UITERLIJKE_BETAALDATUM_FACTUUR  = 'Uiterlijke betaaldatum';
     const MAX_AANTAL_TEAMS                = 'Max aantal teams';
     const EMPTY_RESULT                    = 'Klik om te wijzigen';
-    const BEDRAG_PER_TEAM                 = 16.50;
+    const BEDRAG_PER_TEAM                 = 50;
     const JURY_BOETE_BEDRAG               = 50;
     const AANTAL_TEAMS_PER_JURY           = 10;
     const DATUM_DTC                       = '26 & 27 januari 2019';
+    const YEAR_DTC                        = 2019;
     const LOCATIE_DTC                     = 'Turnhal GVP Den Haag';
     const REKENINGNUMMER                  = 'NL81 INGB 000 007 81 99';
     const REKENING_TNV                    = 'Gymnastiekver. Donar';
@@ -58,7 +59,7 @@ class BaseController extends Controller
      */
     protected function getFactuurNummer(User $user)
     {
-        return ('HDC' . date('Y', time()) . '-' . $user->getId());
+        return ('DTC' . self::YEAR_DTC . '-' . $user->getId());
     }
 
     /**
@@ -309,13 +310,13 @@ class BaseController extends Controller
     protected function getGroepen()
     {
         return [
-            'Instap'     => ['N3', 'D1', 'D2'],
-            'Pupil 1'    => ['N3', 'D1', 'D2'],
-            'Pupil 2'    => ['N3', 'D1', 'D2'],
-            'Jeugd 1'    => ['N4', 'D1', 'D2'],
-            'Jeugd 2'    => ['Div. 3', 'Div. 4', 'Div. 5'],
-            'Junior'     => ['Div. 3', 'Div. 4', 'Div. 5'],
-            'Senior'     => ['Div. 3', 'Div. 4', 'Div. 5'],
+            'Instap'  => ['N3', 'D1', 'D2'],
+            'Pupil 1' => ['N3', 'D1', 'D2'],
+            'Pupil 2' => ['N3', 'D1', 'D2'],
+            'Jeugd 1' => ['N4', 'D1', 'D2'],
+            'Jeugd 2' => ['Div. 3', 'Div. 4', 'Div. 5'],
+            'Junior'  => ['Div. 3', 'Div. 4', 'Div. 5'],
+            'Senior'  => ['Div. 3', 'Div. 4', 'Div. 5'],
         ];
     }
 
@@ -326,7 +327,7 @@ class BaseController extends Controller
      */
     protected function getCategorie($geboorteJaar)
     {
-        if (date('n') >= 8 ) {
+        if (date('n') >= 8) {
             $leeftijd = (date('Y', time()) - $geboorteJaar) + 1;
         } else {
             $leeftijd = (date('Y', time()) - $geboorteJaar);
@@ -360,7 +361,7 @@ class BaseController extends Controller
     protected function getGeboortejaarFromCategorie($categorie)
     {
         $extraYear = 0;
-        if (date('n') >= 8 ) {
+        if (date('n') >= 8) {
             $extraYear = 1;
         }
 
@@ -380,7 +381,7 @@ class BaseController extends Controller
             case 'Senior':
                 $geboortejaren = [];
                 for ($i = 16; $i < 60; $i++) {
-                    $geboortejaren[] = date('Y', time()) - $i  + $extraYear;
+                    $geboortejaren[] = date('Y', time()) - $i + $extraYear;
                 }
                 return $geboortejaren;
             default:
@@ -395,7 +396,7 @@ class BaseController extends Controller
      */
     protected function getAvailableNiveaus($geboorteJaar)
     {
-        if (date('n') >= 8 ) {
+        if (date('n') >= 8) {
             $leeftijd = (date('Y', time()) - $geboorteJaar) + 1;
         } else {
             $leeftijd = (date('Y', time()) - $geboorteJaar);
@@ -1015,13 +1016,10 @@ class BaseController extends Controller
 
     private function factuurHeader(AlphaPDFController $pdf, $factuurNummer)
     {
-        //BACKGROUND
-        $pdf->Image('images/background4.png', 0, 0);    //BACKGROUND2: 0,45		BACKGROUND3: 17,77
-
         //LOGO
         $pdf->SetFillColor(127);
         $pdf->Rect(0, 0, 210, 35, 'F');
-        $pdf->Image('images/HDCFactuurHeader.png');
+        $pdf->Image('images/header_uitslagen.png', 40, null, 170);
 
         //FACTUUR, NUMMER EN DATUM
         $pdf->SetFont('Franklin', '', 16);
@@ -1056,13 +1054,13 @@ class BaseController extends Controller
         //LOGO DONAR
         $pdf->Image('images/logodonarPNG.png', 188, 268);
 
-        //LOGO HDC
-        $pdf->Image('images/logohbcPNG.png', 8, 268);
+        //LOGO DTC
+        $pdf->Image('images/logodtcPNG_small.png', 8, 268, 13);
 
         //DONAR SITE
         $pdf->Text(180, 290, 'www.donargym.nl');
 
-        //HBC SITE
+        //DTC SITE
         $pdf->Text(171, 294, 'www.donarteamcup.nl');
         return $pdf;
     }
@@ -1161,7 +1159,7 @@ class BaseController extends Controller
                         ->findOneBy(['id' => $userId]);
                 }
                 $factuurNummer             = $this->getFactuurNummer($user);
-                $bedragPerTurnster
+                $bedragPerTeam
                                            = self::BEDRAG_PER_TEAM; //todo: bedrag per turnster toevoegen aan instellingen
                 $juryBoeteBedrag
                                            = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
@@ -1184,7 +1182,7 @@ class BaseController extends Controller
                 if (($juryTekort = $teLeverenJuryleden - $juryledenAantal) < 0) {
                     $juryTekort = 0;
                 }
-                $teBetalenBedrag = ($turnstersAantal + $turnstersAfgemeldAantal) * $bedragPerTurnster + $juryTekort *
+                $teBetalenBedrag = ($turnstersAantal + $turnstersAfgemeldAantal) * $bedragPerTeam + $juryTekort *
                     $juryBoeteBedrag;
 
                 /** @var User $user */
@@ -1231,24 +1229,23 @@ class BaseController extends Controller
                 $pdf->Ln(8);
                 //EURO-TEKENS
                 $pdf->SetFont('Courier', '', 14);
-                $pdf->Text(161, 89.9, EURO);
                 $pdf->Text(161, 96.9, EURO);
                 $pdf->Text(161, 103.9, EURO);
                 $pdf->Text(161, 110.9, '');
                 $pdf->SetFont('Gotham', '', 12);
-                //TWEEDE RIJ - TURNSTERS
+                //TWEEDE RIJ - LEEG
                 $pdf->Cell(22, 0);        //Blank space
-                $pdf->Cell(95, 0, 'Deelnemende turnsters');
+                $pdf->Cell(95, 0);
+                $pdf->Cell(26, 0);
+                $pdf->Cell(17, 0);        //Blank space
+                $pdf->Cell(25, 0);
+                $pdf->Ln(7);
+                //DERDE RIJ - TURNSTERS
+                $pdf->Cell(22, 0);        //Blank space
+                $pdf->Cell(95, 0, 'Deelnemende teams');
                 $pdf->Cell(26, 0, $turnstersAantal, 0, 0, 'C');
                 $pdf->Cell(17, 0);        //Blank space
-                $pdf->Cell(25, 0, ($turnstersAantal * $bedragPerTurnster), 0, 0, 'R');
-                $pdf->Ln(7);
-                //DERDE RIJ - AFGEMELDE TURNSTERS
-                $pdf->Cell(22, 0);        //Blank space
-                $pdf->Cell(95, 0, 'Afgemelde turnsters (na sluiting inschrijving)');
-                $pdf->Cell(26, 0, $turnstersAfgemeldAantal, 0, 0, 'C');
-                $pdf->Cell(17, 0);        //Blank space
-                $pdf->Cell(25, 0, ($turnstersAfgemeldAantal * $bedragPerTurnster), 0, 0, 'R');
+                $pdf->Cell(25, 0, ($turnstersAantal * $bedragPerTeam), 0, 0, 'R');
                 $pdf->Ln(7);
                 //VIERDE RIJ - JURYLEDEN TEKORT
                 $pdf->Cell(22, 0);        //Blank space

@@ -29,7 +29,7 @@ class PrijswinnaarsPdfController extends AlphaPDFController
         $this->Cell(
             277,
             10,
-            "Haagse Donar Cup " . date('Y', time()) . ": Prijswinnaars " . $this->categorie . " " .
+            "Donar Team Cup " . date('Y', time()) . ": Prijswinnaars " . $this->categorie . " " .
             $this->niveau,
             0,
             1,

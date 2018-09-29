@@ -34,7 +34,7 @@ class BaseController extends Controller
     const SLUITING_UPLOADEN_VLOERMUZIEK   = 'Sluiting uploaden vloermuziek';
     const FACTUUR_BEKIJKEN_TOEGESTAAN     = 'Factuur publiceren';
     const UITERLIJKE_BETAALDATUM_FACTUUR  = 'Uiterlijke betaaldatum';
-    const MAX_AANTAL_TURNSTERS            = 'Max aantal turnsters';
+    const MAX_AANTAL_TEAMS                = 'Max aantal teams';
     const EMPTY_RESULT                    = 'Klik om te wijzigen';
     const BEDRAG_PER_TURNSTER             = 16.50;
     const JURY_BOETE_BEDRAG               = 50;
@@ -115,7 +115,7 @@ class BaseController extends Controller
                 self::SLUITING_UPLOADEN_VLOERMUZIEK,
                 self::FACTUUR_BEKIJKEN_TOEGESTAAN,
                 self::UITERLIJKE_BETAALDATUM_FACTUUR,
-                self::MAX_AANTAL_TURNSTERS,
+                self::MAX_AANTAL_TEAMS,
             );
         } else {
             $instellingKeys = array($fieldname);
@@ -131,7 +131,7 @@ class BaseController extends Controller
                 /** @var Instellingen $result */
                 $result = $result[0];
             }
-            if ($key == self::MAX_AANTAL_TURNSTERS) {
+            if ($key == self::MAX_AANTAL_TEAMS) {
                 $instellingen[$key] = ($result) ? $result->getAantal() : self::EMPTY_RESULT;
             } else {
                 $instellingen[$key] = ($result) ? $result->getDatum() : self::EMPTY_RESULT;
@@ -296,7 +296,6 @@ class BaseController extends Controller
     protected function getCategorien()
     {
         return [
-            'Voorinstap',
             'Instap',
             'Pupil 1',
             'Pupil 2',
@@ -310,8 +309,7 @@ class BaseController extends Controller
     protected function getGroepen()
     {
         return [
-            'Voorinstap' => ['N2', 'N3', 'D1', 'D2'],
-            'Instap'     => ['N2', 'N3', 'D1', 'D2'],
+            'Instap'     => ['N3', 'D1', 'D2'],
             'Pupil 1'    => ['N3', 'D1', 'D2'],
             'Pupil 2'    => ['N3', 'D1', 'D2'],
             'Jeugd 1'    => ['N4', 'D1', 'D2'],
@@ -328,11 +326,14 @@ class BaseController extends Controller
      */
     protected function getCategorie($geboorteJaar)
     {
-        $leeftijd = (date('Y', time()) - $geboorteJaar);
-        if ($leeftijd < 8) {
+        if (date('n') >= 8 ) {
+            $leeftijd = (date('Y', time()) - $geboorteJaar) + 1;
+        } else {
+            $leeftijd = (date('Y', time()) - $geboorteJaar);
+        }
+
+        if ($leeftijd <= 8) {
             return '';
-        } elseif ($leeftijd == 8) {
-            return 'Voorinstap';
         } elseif ($leeftijd == 9) {
             return 'Instap';
         } elseif ($leeftijd == 10) {
@@ -358,25 +359,28 @@ class BaseController extends Controller
      */
     protected function getGeboortejaarFromCategorie($categorie)
     {
+        $extraYear = 0;
+        if (date('n') >= 8 ) {
+            $extraYear = 1;
+        }
+
         switch ($categorie) {
-            case 'Voorinstap':
-                return date('Y', time()) - 8;
             case 'Instap':
-                return date('Y', time()) - 9;
+                return date('Y', time()) - 9 + $extraYear;
             case 'Pupil 1':
-                return date('Y', time()) - 10;
+                return date('Y', time()) - 10 + $extraYear;
             case 'Pupil 2':
-                return date('Y', time()) - 11;
+                return date('Y', time()) - 11 + $extraYear;
             case 'Jeugd 1':
-                return date('Y', time()) - 12;
+                return date('Y', time()) - 12 + $extraYear;
             case 'Jeugd 2':
-                return date('Y', time()) - 13;
+                return date('Y', time()) - 13 + $extraYear;
             case 'Junior':
-                return [date('Y', time()) - 14, date('Y', time()) - 15];
+                return [date('Y', time()) - 14 + $extraYear, date('Y', time()) - 15 + $extraYear];
             case 'Senior':
                 $geboortejaren = [];
                 for ($i = 16; $i < 60; $i++) {
-                    $geboortejaren[] = date('Y', time()) - $i;
+                    $geboortejaren[] = date('Y', time()) - $i  + $extraYear;
                 }
                 return $geboortejaren;
             default:
@@ -391,11 +395,16 @@ class BaseController extends Controller
      */
     protected function getAvailableNiveaus($geboorteJaar)
     {
-        $leeftijd = (date('Y', time()) - $geboorteJaar);
-        if ($leeftijd < 8) {
+        if (date('n') >= 8 ) {
+            $leeftijd = (date('Y', time()) - $geboorteJaar) + 1;
+        } else {
+            $leeftijd = (date('Y', time()) - $geboorteJaar);
+        }
+
+        if ($leeftijd <= 8) {
             return [];
-        } elseif ($leeftijd == 8 || $leeftijd == 9) {
-            return ['N2', 'N3', 'D1', 'D2'];
+        } elseif ($leeftijd == 9) {
+            return ['N3', 'D1', 'D2'];
         } elseif ($leeftijd == 10 || $leeftijd == 11) {
             return ['N3', 'D1', 'D2'];
         } elseif ($leeftijd == 12) {
@@ -423,14 +432,15 @@ class BaseController extends Controller
      */
     protected function getVrijePlekken()
     {
+        // todo: deze functie aanpassen (of weghalen?)
         $result     = $this->getDoctrine()
             ->getRepository('AppBundle:Turnster')
             ->getBezettePlekken();
-        $maxPlekken = $this->getOrganisatieInstellingen(self::MAX_AANTAL_TURNSTERS);
-        if ($maxPlekken[self::MAX_AANTAL_TURNSTERS] - $result < 0) {
+        $maxPlekken = $this->getOrganisatieInstellingen(self::MAX_AANTAL_TEAMS);
+        if ($maxPlekken[self::MAX_AANTAL_TEAMS] - $result < 0) {
             return 0;
         }
-        return ($maxPlekken[self::MAX_AANTAL_TURNSTERS] - $result);
+        return ($maxPlekken[self::MAX_AANTAL_TEAMS] - $result);
     }
 
     /**
@@ -510,14 +520,9 @@ class BaseController extends Controller
      */
     protected function wijzigTurnsterToegestaan()
     {
-        $instellingGeopend  = $this->getOrganisatieInstellingen(self::OPENING_INSCHRIJVING);
         $instellingGesloten = $this->getOrganisatieInstellingen(self::SLUITING_INSCHRIJVING_TURNSTERS);
-        if ((time() > strtotime($instellingGeopend[self::OPENING_INSCHRIJVING]) &&
-            time() < strtotime($instellingGesloten[self::SLUITING_INSCHRIJVING_TURNSTERS]))
-        ) {
-            return true;
-        }
-        return false;
+
+        return (time() < strtotime($instellingGesloten[self::SLUITING_INSCHRIJVING_TURNSTERS]));
     }
 
     protected function getJuryIndeling()
@@ -1045,7 +1050,7 @@ class BaseController extends Controller
         $pdf->SetTextColor(0);
 
         //REKENINGNUMMER DETAILS
-        $pdf->Text(3, 290, 'Haagse Donar Cup - ' . $datumHBC . ', ' . $locatieHBC);
+        $pdf->Text(3, 290, 'Donar Team Cup - ' . $datumHBC . ', ' . $locatieHBC);
         $pdf->Text(3, 294, $rekeningNummer . ' - T.n.v. ' . $rekeningTNV . ' o.v.v. ' . $factuurNummer);
 
         //LOGO DONAR

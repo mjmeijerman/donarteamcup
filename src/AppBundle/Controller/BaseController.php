@@ -36,11 +36,11 @@ class BaseController extends Controller
     const UITERLIJKE_BETAALDATUM_FACTUUR  = 'Uiterlijke betaaldatum';
     const MAX_AANTAL_TEAMS                = 'Max aantal teams';
     const EMPTY_RESULT                    = 'Klik om te wijzigen';
-    const BEDRAG_PER_TURNSTER             = 16.50;
+    const BEDRAG_PER_TEAM                 = 16.50;
     const JURY_BOETE_BEDRAG               = 50;
-    const AANTAL_TURNSTERS_PER_JURY       = 10;
-    const DATUM_HBC                       = '9 & 10 juni 2018';
-    const LOCATIE_HBC                     = 'Sporthal Overbosch';
+    const AANTAL_TEAMS_PER_JURY           = 10;
+    const DATUM_DTC                       = '26 & 27 januari 2019';
+    const LOCATIE_DTC                     = 'Turnhal GVP Den Haag';
     const REKENINGNUMMER                  = 'NL81 INGB 000 007 81 99';
     const REKENING_TNV                    = 'Gymnastiekver. Donar';
 
@@ -1162,14 +1162,14 @@ class BaseController extends Controller
                 }
                 $factuurNummer             = $this->getFactuurNummer($user);
                 $bedragPerTurnster
-                                           = self::BEDRAG_PER_TURNSTER; //todo: bedrag per turnster toevoegen aan instellingen
+                                           = self::BEDRAG_PER_TEAM; //todo: bedrag per turnster toevoegen aan instellingen
                 $juryBoeteBedrag
                                            = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
-                $datumHBC                  = self::DATUM_HBC; // todo: datum toernooi toevoegen aan instellingen
-                $locatieHBC                = self::LOCATIE_HBC; //todo: locatie toernooi toevoegen aan instellingen
+                $datumHBC                  = self::DATUM_DTC; // todo: datum toernooi toevoegen aan instellingen
+                $locatieHBC                = self::LOCATIE_DTC; //todo: locatie toernooi toevoegen aan instellingen
                 $rekeningNummer            = self::REKENINGNUMMER; // todo: rekeningnummer toevoegen aan instellingen
                 $rekeningTNV               = self::REKENING_TNV; // todo: TNV toevoegen aan instellingen
-                $jurylidPerAantalTurnsters = self::AANTAL_TURNSTERS_PER_JURY; //todo: toevoegen als instelling
+                $jurylidPerAantalTurnsters = self::AANTAL_TEAMS_PER_JURY; //todo: toevoegen als instelling
                 $juryledenAantal           = $this->getDoctrine()
                     ->getRepository('AppBundle:Jurylid')
                     ->getIngeschrevenJuryleden($user);

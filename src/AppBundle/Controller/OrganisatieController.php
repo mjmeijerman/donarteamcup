@@ -780,10 +780,10 @@ class OrganisatieController extends BaseController
         foreach ($results as $result) {
             $factuurNummer             = $this->getFactuurNummer($result);
             $bedragPerTurnster
-                                       = self::BEDRAG_PER_TURNSTER; //todo: bedrag per turnster toevoegen aan instellingen
+                                       = self::BEDRAG_PER_TEAM; //todo: bedrag per turnster toevoegen aan instellingen
             $juryBoeteBedrag
                                        = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
-            $jurylidPerAantalTurnsters = self::AANTAL_TURNSTERS_PER_JURY; //todo: toevoegen als instelling
+            $jurylidPerAantalTurnsters = self::AANTAL_TEAMS_PER_JURY; //todo: toevoegen als instelling
             $juryledenAantal           = $this->getDoctrine()
                 ->getRepository('AppBundle:Jurylid')
                 ->getIngeschrevenJuryleden($result);
@@ -919,10 +919,10 @@ class OrganisatieController extends BaseController
             ->getRepository('AppBundle:User')
             ->findOneBy(['id' => $userId]);
         $factuurNummer             = $this->getFactuurNummer($result);
-        $bedragPerTurnster         = self::BEDRAG_PER_TURNSTER; //todo: bedrag per turnster toevoegen aan instellingen
+        $bedragPerTurnster         = self::BEDRAG_PER_TEAM; //todo: bedrag per turnster toevoegen aan instellingen
         $juryBoeteBedrag
                                    = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
-        $jurylidPerAantalTurnsters = self::AANTAL_TURNSTERS_PER_JURY; //todo: toevoegen als instelling
+        $jurylidPerAantalTurnsters = self::AANTAL_TEAMS_PER_JURY; //todo: toevoegen als instelling
         $juryledenAantal           = $this->getDoctrine()
             ->getRepository('AppBundle:Jurylid')
             ->getIngeschrevenJuryleden($result);

@@ -295,6 +295,26 @@ class BaseController extends Controller
         return false;
     }
 
+    protected function getTeamCategorien()
+    {
+        return [
+            'Onderbouw',
+            'Bovenbouw',
+        ];
+    }
+
+    protected function getTeamNiveaus()
+    {
+        return [
+            'N',
+            'D1',
+            'D2',
+            '3e divisie',
+            '4e divisie',
+            '5e divisie',
+        ];
+    }
+
     protected function getCategorien()
     {
         return [

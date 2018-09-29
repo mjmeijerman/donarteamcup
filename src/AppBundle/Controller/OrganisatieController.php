@@ -7,6 +7,7 @@ use AppBundle\Entity\Instellingen;
 use AppBundle\Entity\JuryIndeling;
 use AppBundle\Entity\Jurylid;
 use AppBundle\Entity\Reglementen;
+use AppBundle\Entity\TeamSoort;
 use AppBundle\Entity\TijdSchema;
 use AppBundle\Entity\ToegestaneNiveaus;
 use AppBundle\Entity\Turnster;
@@ -636,6 +637,7 @@ class OrganisatieController extends BaseController
                 'totaalAantalTurnstersWachtlijst'   => $this->aantalWachtlijst,
                 'totaalAantalJuryleden'             => $this->aantalJury,
                 'toegestaneNiveaus'                 => $toegestaneNiveaus,
+                'teamSoorten'                       => $this->getDoctrine()->getRepository(TeamSoort::class)->findAll(),
                 'disableRemoveInschrijvingenButton' => $disableRemoveInschrijvingenButton,
             )
         );
@@ -888,6 +890,60 @@ class OrganisatieController extends BaseController
     }
 
     /**
+     * @Route("/organisatie/{page}/teamSoortToevoegen/", name="teamSoortToevoegen", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function teamSoortToevoegen(Request $request, $page)
+    {
+        if ($request->getMethod() == "POST") {
+            if ($request->request->get('categorie') && $request->request->get('team_niveau')) {
+
+                $niveaus = $this->getDoctrine()->getManager()->getRepository(ToegestaneNiveaus::class)->findAll();
+
+                $teamSoort = new TeamSoort();
+                $teamSoort->setCategorie($request->request->get('categorie'));
+                $teamSoort->setNiveau($request->request->get('team_niveau'));
+
+                foreach ($niveaus as $niveau) {
+                    if ($request->request->get('niveau_' . $niveau->getId())) {
+                        $teamSoort->addNiveau($niveau);
+                        $niveau->setTeamSoort($teamSoort);
+                    }
+                }
+
+                $this->addToDB($teamSoort);
+                return $this->redirectToRoute(
+                    'organisatieGetContent',
+                    array(
+                        'page' => $page,
+                    )
+                );
+            }
+        }
+
+        $this->setBasicPageData('Organisatie');
+        return $this->render(
+            'organisatie/teamSoortToevoegen.html.twig',
+            [
+                'menuItems'                       => $this->menuItems,
+                'totaalAantalVerenigingen'        => $this->aantalVerenigingen,
+                'totaalAantalTurnsters'           => $this->aantalTurnsters,
+                'totaalAantalTurnstersWachtlijst' => $this->aantalWachtlijst,
+                'totaalAantalJuryleden'           => $this->aantalJury,
+                'categorien'                      => $this->getTeamCategorien(),
+                'teamNiveaus'                     => $this->getTeamNiveaus(),
+                'niveaus'                         => $this->getDoctrine()->getManager()->getRepository(
+                    ToegestaneNiveaus::class
+                )->findAll(),
+            ]
+        );
+    }
+
+    /**
      * @Route("/organisatie/{page}/niveauVerwijderen/{id}/",
      * name="niveauVerwijderenAjaxCall", options={"expose"=true}, methods={"GET"})
      * @param $id
@@ -897,6 +953,23 @@ class OrganisatieController extends BaseController
     public function niveauVerwijderenAjaxCall($id)
     {
         $result = $this->getDoctrine()->getRepository('AppBundle:ToegestaneNiveaus')
+            ->findOneBy(['id' => $id]);
+        if ($result) {
+            $this->removeFromDB($result);
+        }
+        return new JsonResponse('true');
+    }
+
+    /**
+     * @Route("/organisatie/{page}/teamSoortVerwijderen/{id}/",
+     * name="teamSoortVerwijderenAjaxCall", options={"expose"=true}, methods={"GET"})
+     * @param $id
+     *
+     * @return Response
+     */
+    public function teamSoortVerwijderenAjaxCall($id)
+    {
+        $result = $this->getDoctrine()->getRepository(TeamSoort::class)
             ->findOneBy(['id' => $id]);
         if ($result) {
             $this->removeFromDB($result);

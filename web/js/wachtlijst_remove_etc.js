@@ -48,6 +48,17 @@ function remove_niveau(id, categorie, niveau, page) {
 	}
 }
 
+function remove_team(id, categorie, niveau, page) {
+    if (confirm("Weet je zeker dat je team soort " + categorie + ": " + niveau + " wilt verwijderen?")) {
+        var row = document.getElementById('team_soort_row_' + id);
+        row.innerHTML = '';
+        $.ajax({
+            type: 'get',
+            url: Routing.generate('teamSoortVerwijderenAjaxCall', {id: id, page: page})
+        });
+    }
+}
+
 function remove_jurylid(id, naam, vereniging) {
     if (confirm("Weet je zeker dat je " + naam + " van " + vereniging + " wilt verwijderen?")) {
         var row = document.getElementById('jurylid_row_' + id);

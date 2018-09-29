@@ -2,13 +2,14 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="toegestane_niveaus")
+ * @ORM\Table(name="team_soort")
  */
-class ToegestaneNiveaus
+class TeamSoort
 {
     /**
      * @ORM\Column(type="integer")
@@ -33,10 +34,14 @@ class ToegestaneNiveaus
     private $uitslagGepubliceerd = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TeamSoort", inversedBy="niveaus")
-     * @ORM\JoinColumn(name="team_soort", referencedColumnName="id", nullable=true)
+     * @ORM\OneToMany(targetEntity="ToegestaneNiveaus", mappedBy="teamSoort", cascade={"persist"}, orphanRemoval=TRUE)
      */
-    private $teamSoort;
+    private $niveaus;
+
+    public function __construct()
+    {
+        $this->niveaus = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -52,13 +57,10 @@ class ToegestaneNiveaus
      * Set categorie
      *
      * @param string $categorie
-     * @return ToegestaneNiveaus
      */
     public function setCategorie($categorie)
     {
         $this->categorie = $categorie;
-
-        return $this;
     }
 
     /**
@@ -75,13 +77,10 @@ class ToegestaneNiveaus
      * Set niveau
      *
      * @param string $niveau
-     * @return ToegestaneNiveaus
      */
     public function setNiveau($niveau)
     {
         $this->niveau = $niveau;
-
-        return $this;
     }
 
     /**
@@ -98,13 +97,10 @@ class ToegestaneNiveaus
      * Set uitslagGepubliceerd
      *
      * @param integer $uitslagGepubliceerd
-     * @return ToegestaneNiveaus
      */
     public function setUitslagGepubliceerd($uitslagGepubliceerd)
     {
         $this->uitslagGepubliceerd = $uitslagGepubliceerd;
-
-        return $this;
     }
 
     /**
@@ -117,13 +113,18 @@ class ToegestaneNiveaus
         return $this->uitslagGepubliceerd;
     }
 
-    public function getTeamSoort()
+    public function addNiveau(ToegestaneNiveaus $niveau)
     {
-        return $this->teamSoort;
+        $this->niveaus[] = $niveau;
     }
 
-    public function setTeamSoort(TeamSoort $teamSoort)
+    public function removeNiveau(ToegestaneNiveaus $niveau)
     {
-        $this->teamSoort = $teamSoort;
+        $this->niveaus->removeElement($niveau);
+    }
+
+    public function getNiveaus()
+    {
+        return $this->niveaus;
     }
 }

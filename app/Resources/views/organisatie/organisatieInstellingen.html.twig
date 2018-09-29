@@ -74,6 +74,44 @@
 
     <p>
     <div class="titel">
+        <h2>Toegestane teams</h2>
+    </div>
+    <div class="bericht">
+        <a href="{{ path('teamSoortToevoegen', { 'page': app.request.get('page') }) }}">
+            <img src="{{ asset('images/add.png') }}" width="20" /> Team soort toevoegen
+        </a>
+        <table class="instellingen_overzicht">
+            <tr>
+                <th width="15%">Categorie</th>
+                <th width="15%">Niveau</th>
+                <th width="65%">categorien</th>
+                <th width="5%"></th>
+            </tr>
+            {% for teamSoort in teamSoorten %}
+                <tr id="team_soort_row_{{ teamSoort.id }}">
+                    <td>{{ teamSoort.categorie }}</td>
+                    <td>{{ teamSoort.niveau }}</td>
+                    <td>
+                        {% for niveau in teamSoort.niveaus %}
+                            {{ niveau.categorie }} {{ niveau.niveau }},
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <div onclick="remove_team(
+                            '{{ teamSoort.id }}','{{ teamSoort.categorie }}', '{{ teamSoort.niveau }}'
+                                )"
+                             style="display: inline">
+                            <img src="{{ asset('images/remove.png') }}" width="20" style="cursor: pointer;">
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    </p>
+
+    <p>
+    <div class="titel">
         <h2>Voorinschrijvingen</h2>
     </div>
     <div class="bericht">

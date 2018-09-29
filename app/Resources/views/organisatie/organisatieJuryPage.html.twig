@@ -24,7 +24,7 @@
                 <tr>
                     <td>Vereniging</td>
                     <td>
-                        <select name="userId" required>
+                        <select name="userId" class="input_select" required>
                             <option selected value="">Selecteer vereniging</option>
                             {% for user in users %}
                                 <option value="{{ user.id }}">
@@ -37,7 +37,7 @@
                 <tr>
                     <td>Brevet</td>
                     <td>
-                        <select name="brevet" required>
+                        <select name="brevet" class="input_select" required>
                             <option selected value="">Selecteer brevet</option>
                             <option value="TD1">TD1</option>
                             <option value="TD2">TD2</option>
@@ -50,7 +50,7 @@
                 <tr>
                     <td>Dag</td>
                     <td>
-                        <select name="dag" required>
+                        <select name="dag" class="input_select" required>
                             <option selected value="">Selecteer beschikbare dag</option>
                             <option value="za">Zaterdag</option>
                             <option value="zo">Zondag</option>

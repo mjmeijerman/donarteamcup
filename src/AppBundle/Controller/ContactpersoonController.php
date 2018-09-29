@@ -12,6 +12,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Vloermuziek;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -193,7 +194,7 @@ class ContactpersoonController extends BaseController
                 $pdf->Table($turnsters, $this->getUser()->getId());
             }
         }
-        return new Response(
+        return new BinaryFileResponse(
             $pdf->Output(
                 'Uitslagen ' . $this->getUser()->getVereniging()->getNaam() . ' ' . $this->getUser()->getVereniging()
                     ->getPlaats() . ' HDC ' . self::DATUM_DTC . ".pdf",

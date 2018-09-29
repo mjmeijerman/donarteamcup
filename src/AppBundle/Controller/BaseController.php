@@ -14,6 +14,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Vereniging;
 use AppBundle\Entity\Voorinschrijving;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
@@ -1367,7 +1368,7 @@ class BaseController extends Controller
                     209,
                     'Mochten er zich problemen voordoen, neemt u dan alstublieft contact op via info@donarteamcup.nl'
                 );
-                return new Response(
+                return new BinaryFileResponse(
                     $pdf->Output(), 200, array(
                                       'Content-Type' => 'application/pdf'
                                   )

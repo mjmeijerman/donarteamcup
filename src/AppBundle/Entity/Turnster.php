@@ -100,6 +100,12 @@ class Turnster
      **/
     private $scores;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="turnsters")
+     * @ORM\JoinColumn(name="team", referencedColumnName="id", nullable=true)
+     */
+    private $team;
+
     public function getUitslagenLijst()
     {
         $totaalBrug = (floatval($this->getScores()->getTotaalBrug()));
@@ -463,5 +469,15 @@ class Turnster
     public function getCategorie()
     {
         return $this->categorie;
+    }
+
+    public function setTeam(Team $team)
+    {
+        $this->team = $team;
+    }
+
+    public function getTeam()
+    {
+        return $this->team;
     }
 }

@@ -32,7 +32,7 @@
                 <td>
                     {% for niveau in niveaus %}
                         <input type="checkbox" name="niveau_{{ niveau.id }}" id="{{ niveau.id }}">
-                        <label for="{{ niveau.id }}">{{ niveau.categorie }} {{ niveau.niveau }}</label>
+                        <label for="{{ niveau.id }}">{{ niveau.categorie }} {{ niveau.niveau }}</label><br />
                     {% endfor %}
                 </td>
             </tr>

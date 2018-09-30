@@ -972,6 +972,12 @@ class OrganisatieController extends BaseController
         $result = $this->getDoctrine()->getRepository(TeamSoort::class)
             ->findOneBy(['id' => $id]);
         if ($result) {
+            foreach ($result->getNiveaus() as $niveau) {
+                $result->removeNiveau($niveau);
+                /** @var ToegestaneNiveaus $niveau */
+                $niveau->setTeamSoort(null);
+                $this->addToDB($niveau);
+            };
             $this->removeFromDB($result);
         }
         return new JsonResponse('true');

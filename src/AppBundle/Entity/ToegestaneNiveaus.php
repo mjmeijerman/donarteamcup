@@ -122,7 +122,7 @@ class ToegestaneNiveaus
         return $this->teamSoort;
     }
 
-    public function setTeamSoort(TeamSoort $teamSoort)
+    public function setTeamSoort(?TeamSoort $teamSoort)
     {
         $this->teamSoort = $teamSoort;
     }

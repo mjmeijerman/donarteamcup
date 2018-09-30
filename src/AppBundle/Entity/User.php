@@ -114,6 +114,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $betaling;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Team", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $teams;
+
     public function getAll()
     {
         $user = [
@@ -412,6 +417,7 @@ class User implements AdvancedUserInterface, \Serializable
         $this->jurylid  = new ArrayCollection();
         $this->turnster = new ArrayCollection();
         $this->betaling = new ArrayCollection();
+        $this->teams    = new ArrayCollection();
     }
 
     /**
@@ -610,5 +616,20 @@ class User implements AdvancedUserInterface, \Serializable
     public function getBetaling()
     {
         return $this->betaling;
+    }
+
+    public function addTeam(Team $team)
+    {
+        $this->teams[] = $team;
+    }
+
+    public function removeTeam(Team $team)
+    {
+        $this->teams->removeElement($team);
+    }
+
+    public function getTeams()
+    {
+        return $this->teams;
     }
 }

@@ -34,19 +34,30 @@ class TeamSoort
     private $uitslagGepubliceerd = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="ToegestaneNiveaus", mappedBy="teamSoort", cascade={"persist"}, orphanRemoval=TRUE)
+     * @ORM\OneToMany(targetEntity="ToegestaneNiveaus", mappedBy="teamSoort", cascade={"persist"})
      */
     private $niveaus;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Team", mappedBy="teamSoort", cascade={"persist"})
+     */
+    private $teams;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WedstrijdRonde", inversedBy="teamSoorten")
+     */
+    private $wedstrijdRonde;
 
     public function __construct()
     {
         $this->niveaus = new ArrayCollection();
+        $this->teams   = new ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -66,7 +77,7 @@ class TeamSoort
     /**
      * Get categorie
      *
-     * @return string 
+     * @return string
      */
     public function getCategorie()
     {
@@ -86,7 +97,7 @@ class TeamSoort
     /**
      * Get niveau
      *
-     * @return string 
+     * @return string
      */
     public function getNiveau()
     {
@@ -106,7 +117,7 @@ class TeamSoort
     /**
      * Get uitslagGepubliceerd
      *
-     * @return integer 
+     * @return integer
      */
     public function getUitslagGepubliceerd()
     {
@@ -126,5 +137,36 @@ class TeamSoort
     public function getNiveaus()
     {
         return $this->niveaus;
+    }
+
+    public function addTeam(Team $team)
+    {
+        $this->teams[] = $team;
+    }
+
+    public function removeTeam(Team $team)
+    {
+        $this->teams->removeElement($team);
+    }
+
+    public function getTeams()
+    {
+        return $this->teams;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWedstrijdRonde()
+    {
+        return $this->wedstrijdRonde;
+    }
+
+    /**
+     * @param mixed $wedstrijdRonde
+     */
+    public function setWedstrijdRonde($wedstrijdRonde): void
+    {
+        $this->wedstrijdRonde = $wedstrijdRonde;
     }
 }

@@ -48,7 +48,7 @@ function remove_niveau(id, categorie, niveau, page) {
 	}
 }
 
-function remove_team(id, categorie, niveau, page) {
+function remove_team_soort(id, categorie, niveau, page) {
     if (confirm("Weet je zeker dat je team soort " + categorie + ": " + niveau + " wilt verwijderen?")) {
         var row = document.getElementById('team_soort_row_' + id);
         row.innerHTML = '';

@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="221375e8-7e4c-4103-9c31-f15aa3c39b7e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdRonde.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdRonde.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/css/organisatie.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/css/organisatie.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,8 +19,8 @@
       <file leaf-file-name="OrganisatieController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="632" column="8" selection-start-line="632" selection-start-column="8" selection-end-line="632" selection-end-column="8" />
+            <state relative-caret-position="112">
+              <caret line="628" column="72" selection-start-line="628" selection-start-column="72" selection-end-line="628" selection-end-column="72" />
               <folding>
                 <element signature="e#40#70#0#PHP" expanded="true" />
               </folding>
@@ -30,10 +28,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WedstrijdRonde.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WedstrijdRonde.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdRonde.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
+            <state relative-caret-position="440">
               <caret line="53" column="16" selection-start-line="53" selection-start-column="16" selection-end-line="53" selection-end-column="16" />
               <folding>
                 <element signature="e#36#84#0#PHP" expanded="true" />
@@ -45,12 +43,26 @@
       <file leaf-file-name="organisatieInstellingen.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/organisatieInstellingen.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="137" column="20" selection-start-line="137" selection-start-column="20" selection-end-line="137" selection-end-column="20" />
+            <state relative-caret-position="153">
+              <caret line="121" column="36" selection-start-line="121" selection-start-column="22" selection-end-line="121" selection-end-column="44" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#td#3;n#tr#1;n#table#0;n#div#5;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#td#6;n#tr#1;n#table#0;n#div#7;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/css/main.css">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="organisatie.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/css/organisatie.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="414" column="12" selection-start-line="414" selection-start-column="12" selection-end-line="414" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -60,26 +72,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="406">
               <caret line="401" column="23" selection-start-line="401" selection-start-column="23" selection-end-line="401" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="89" selection-start-line="8" selection-start-column="89" selection-end-line="8" selection-end-column="89" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/inloggen/base.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -130,7 +122,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>back</find>
       <find>factuurfooter</find>
       <find>HBC</find>
       <find>deelnemenr</find>
@@ -160,6 +151,7 @@
       <find>favi</find>
       <find>wedstrijdronde</find>
       <find>wedstrijdRonde</find>
+      <find>instellingen_overzicht</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -182,7 +174,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/OrganisatiemenuItemRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Reglementen.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Scores.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/SponsorRepository.php" />
@@ -230,9 +221,10 @@
         <option value="$PROJECT_DIR$/web/js/wachtlijst_remove_etc.js" />
         <option value="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/TeamSoort.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdRonde.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieInstellingen.html.twig" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdRonde.php" />
+        <option value="$PROJECT_DIR$/web/css/organisatie.css" />
       </list>
     </option>
   </component>
@@ -419,7 +411,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="TeamSoo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;Orga&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Organisa&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Soo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;instell&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/app/Resources/views/organisatie/organisatieInstellingen.html.twig&#10;OrganisatieContro&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Uitslagen&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/UitslagenController.php&#10;compos&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/composer.json&#10;makefo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/MakeFont/makefont.php&#10;makefont&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/MakeFont/makefont.php" />
+    <property name="SearchEverywhereHistoryKey" value=".css&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/web/css/organisatie.css&#10;TeamSoo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;Orga&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Organisa&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Soo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;instell&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/app/Resources/views/organisatie/organisatieInstellingen.html.twig&#10;OrganisatieContro&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Uitslagen&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/UitslagenController.php&#10;compos&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/composer.json&#10;makefo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/MakeFont/makefont.php&#10;makefont&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/MakeFont/makefont.php" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
@@ -469,12 +461,12 @@
       <workItem from="1538224152015" duration="16007000" />
       <workItem from="1538578744078" duration="731000" />
       <workItem from="1538761984806" duration="5561000" />
-      <workItem from="1539193220405" duration="4629000" />
+      <workItem from="1539193220405" duration="5533000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50831000" />
+    <option name="totallyTimeSpent" value="51735000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -508,20 +500,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/WedstrijdIndelingPdfController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="196" column="37" selection-start-line="196" selection-start-column="37" selection-end-line="196" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
@@ -772,27 +750,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="632" column="8" selection-start-line="632" selection-start-column="8" selection-end-line="632" selection-end-column="8" />
-          <folding>
-            <element signature="e#40#70#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/organisatieInstellingen.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="137" column="20" selection-start-line="137" selection-start-column="20" selection-end-line="137" selection-end-column="20" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#td#3;n#tr#1;n#table#0;n#div#5;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#td#6;n#tr#1;n#table#0;n#div#7;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Scores.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="406">
@@ -812,11 +769,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdRonde.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
+        <state relative-caret-position="440">
           <caret line="53" column="16" selection-start-line="53" selection-start-column="16" selection-end-line="53" selection-end-column="16" />
           <folding>
             <element signature="e#36#84#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="628" column="72" selection-start-line="628" selection-start-column="72" selection-end-line="628" selection-end-column="72" />
+          <folding>
+            <element signature="e#40#70#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/organisatieInstellingen.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="121" column="36" selection-start-line="121" selection-start-column="22" selection-end-line="121" selection-end-column="44" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#td#3;n#tr#1;n#table#0;n#div#5;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#td#6;n#tr#1;n#table#0;n#div#7;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/main.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/organisatie.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="414" column="12" selection-start-line="414" selection-start-column="12" selection-end-line="414" selection-end-column="12" />
         </state>
       </provider>
     </entry>

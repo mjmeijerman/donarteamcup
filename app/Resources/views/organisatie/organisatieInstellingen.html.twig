@@ -132,7 +132,7 @@
         {% for wedstrijdRonde in wedstrijdRondes %}
             <tr id="wedstrijd_ronde_row_{{ wedstrijdRonde.id }}">
                 <td>{{ wedstrijdRonde.ronde }}</td>
-                <td>{{ wedstrijdRonde.dag }}</td>
+                <td>{{ wedstrijdRonde.dag }} {{ wedstrijdRonde.startTijd | date('d-m-Y') }}</td>
                 <td>{{ wedstrijdRonde.startTijd | date('H:i') }} - {{ wedstrijdRonde.eindTijd | date('H:i') }}</td>
                 <td>{{ wedstrijdRonde.baan }}</td>
                 <td>

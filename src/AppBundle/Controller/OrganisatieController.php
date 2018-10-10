@@ -619,10 +619,6 @@ class OrganisatieController extends BaseController
 
     private function getOrganisatieInstellingenPage($successMessage = false)
     {
-//        $rondes = $this->getDoctrine()->getRepository(WedstrijdRonde::class)->findAll();
-//        foreach ($rondes as $ronde) {
-//            $this->removeFromDB($ronde);
-//        }
         $instellingen       = $this->getOrganisatieInstellingen();
         $voorinschrijvingen = $this->getVoorinschrijvingen();
         $reglementen        = $this->getReglementen();
@@ -630,11 +626,8 @@ class OrganisatieController extends BaseController
 
         $repository = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde');
         /** @var WedstrijdRonde[] $wedstrijdRondes */
-        $wedstrijdRondes = $repository->findBy([], ['ronde' => 'asc', 'baan' => 'asc']);
+        $wedstrijdRondes = $repository->findBy([], ['startTijd' => 'asc', 'ronde' => 'asc', 'baan' => 'asc']);
 
-//        foreach ($wedstrijdRondes as $wedstrijdRonde) {
-//            var_dump($wedstrijdRonde->getTeamSoorten());die;
-//        }
 
         $disableRemoveInschrijvingenButton = $this->shouldRemoveInschrijvingenBeDisabled($instellingen);
 

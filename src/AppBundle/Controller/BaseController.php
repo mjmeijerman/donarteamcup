@@ -269,6 +269,18 @@ class BaseController extends Controller
         return $toegestaneNiveaus;
     }
 
+    protected function getWedstrijdDagen()
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde');
+        return $repository->getDistinctDays();
+    }
+
+    protected function getBanen()
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde');
+        return $repository->getDistinctBanen();
+    }
+
     /**
      * @param $categorie
      * @param $niveau
@@ -1654,5 +1666,27 @@ class BaseController extends Controller
             }
         );
         return $scores;
+    }
+
+    protected function dayToDutch(string $day)
+    {
+        switch (strtolower($day)) {
+            case 'mon':
+                return 'Maandag';
+            case 'tue':
+                return 'Dinsdag';
+            case 'wed':
+                return 'Woensdag';
+            case 'thu':
+                return 'Donderdag';
+            case 'fri':
+                return 'Vrijdag';
+            case 'sat':
+                return 'Zaterdag';
+            case 'sun':
+                return 'Zondag';
+            default:
+                return 'this is crazy';
+        }
     }
 }

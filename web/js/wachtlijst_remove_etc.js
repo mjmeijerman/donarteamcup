@@ -59,6 +59,17 @@ function remove_team_soort(id, categorie, niveau, page) {
     }
 }
 
+function remove_wedstrijd_ronde(id, dag, ronde, page) {
+    if (confirm("Weet je zeker dat je " + dag + ": ronde " + ronde + " wilt verwijderen?")) {
+        var row = document.getElementById('wedstrijd_ronde_row_' + id);
+        row.innerHTML = '';
+        $.ajax({
+            type: 'get',
+            url: Routing.generate('wedstrijdRondeVerwijderenAjaxCall', {id: id, page: page})
+        });
+    }
+}
+
 function remove_jurylid(id, naam, vereniging) {
     if (confirm("Weet je zeker dat je " + naam + " van " + vereniging + " wilt verwijderen?")) {
         var row = document.getElementById('jurylid_row_' + id);

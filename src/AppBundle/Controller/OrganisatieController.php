@@ -7,6 +7,7 @@ use AppBundle\Entity\Instellingen;
 use AppBundle\Entity\JuryIndeling;
 use AppBundle\Entity\Jurylid;
 use AppBundle\Entity\Reglementen;
+use AppBundle\Entity\Team;
 use AppBundle\Entity\TeamSoort;
 use AppBundle\Entity\TijdSchema;
 use AppBundle\Entity\ToegestaneNiveaus;
@@ -14,6 +15,7 @@ use AppBundle\Entity\Turnster;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserRepository;
 use AppBundle\Entity\Voorinschrijving;
+use AppBundle\Entity\WedstrijdRonde;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -622,6 +624,10 @@ class OrganisatieController extends BaseController
         $reglementen        = $this->getReglementen();
         $toegestaneNiveaus  = $this->getToegestaneNiveaus();
 
+        $repository = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde');
+        /** @var WedstrijdRonde[] $wedstrijdRondes */
+        $wedstrijdRondes = $repository->findBy([], ['ronde' => 'asc', 'baan' => 'asc']);
+
         $disableRemoveInschrijvingenButton = $this->shouldRemoveInschrijvingenBeDisabled($instellingen);
 
         return $this->render(
@@ -639,6 +645,7 @@ class OrganisatieController extends BaseController
                 'toegestaneNiveaus'                 => $toegestaneNiveaus,
                 'teamSoorten'                       => $this->getDoctrine()->getRepository(TeamSoort::class)->findAll(),
                 'disableRemoveInschrijvingenButton' => $disableRemoveInschrijvingenButton,
+                'wedstrijdRondes'                   => $wedstrijdRondes,
             )
         );
     }
@@ -944,6 +951,70 @@ class OrganisatieController extends BaseController
     }
 
     /**
+     * @Route("/organisatie/{page}/wedstrijdrondeToevoegen/", name="wedstrijdrondeToevoegen", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function wedstrijdrondeToevoegen(Request $request, $page)
+    {
+        if ($request->getMethod() == "POST") {
+            if ($request->request->get('ronde')
+                && $request->request->get('baan')
+                && $request->request->get('startTijd')
+                && $request->request->get('eindTijd')
+                && $request->request->get('maxTeams')
+            ) {
+
+                $teamSoorten = $this->getDoctrine()->getManager()->getRepository(TeamSoort::class)->findAll();
+
+                $wedstrijdronde = new WedstrijdRonde();
+                $startDateTime = new \DateTime($request->request->get('startTijd'));
+                $endDateTime = new \DateTime($request->request->get('eindTijd'));
+                $dag = $this->dayToDutch($startDateTime->format('D'));
+                $wedstrijdronde->setDag($dag);
+                $wedstrijdronde->setBaan($request->request->get('baan'));
+                $wedstrijdronde->setMaxTeams($request->request->get('maxTeams'));
+                $wedstrijdronde->setRonde($request->request->get('ronde'));
+                $wedstrijdronde->setStartTijd($startDateTime);
+                $wedstrijdronde->setEindTijd($endDateTime);
+
+                foreach ($teamSoorten as $teamSoort) {
+                    if ($request->request->get('teamSoort_' . $teamSoort->getId())) {
+                        $wedstrijdronde->addTeamSoort($teamSoort);
+                        $teamSoort->setWedstrijdRonde($wedstrijdronde);
+                    }
+                }
+
+                $this->addToDB($wedstrijdronde);
+                return $this->redirectToRoute(
+                    'organisatieGetContent',
+                    array(
+                        'page' => $page,
+                    )
+                );
+            }
+        }
+
+        $this->setBasicPageData('Organisatie');
+        return $this->render(
+            'organisatie/wedstrijdrondeToevoegen.html.twig',
+            [
+                'menuItems'                       => $this->menuItems,
+                'totaalAantalVerenigingen'        => $this->aantalVerenigingen,
+                'totaalAantalTurnsters'           => $this->aantalTurnsters,
+                'totaalAantalTurnstersWachtlijst' => $this->aantalWachtlijst,
+                'totaalAantalJuryleden'           => $this->aantalJury,
+                'teamSoorten'                     => $this->getDoctrine()->getManager()->getRepository(
+                    TeamSoort::class
+                )->findAll(),
+            ]
+        );
+    }
+
+    /**
      * @Route("/organisatie/{page}/niveauVerwijderen/{id}/",
      * name="niveauVerwijderenAjaxCall", options={"expose"=true}, methods={"GET"})
      * @param $id
@@ -978,6 +1049,46 @@ class OrganisatieController extends BaseController
                 $niveau->setTeamSoort(null);
                 $this->addToDB($niveau);
             };
+
+            foreach ($result->getTeams() as $team) {
+                $result->removeTeam($team);
+                /** @var ToegestaneNiveaus $team */
+                $team->setTeamSoort(null);
+                $this->addToDB($team);
+            };
+
+            $this->removeFromDB($result);
+        }
+        return new JsonResponse('true');
+    }
+
+    /**
+     * @Route("/organisatie/{page}/wedstrijdRondeVerwijderenAjaxCall/{id}/",
+     * name="wedstrijdRondeVerwijderenAjaxCall", options={"expose"=true}, methods={"GET"})
+     * @param $id
+     *
+     * @return Response
+     */
+    public function wedstrijdRondeVerwijderenAjaxCall($id)
+    {
+        /** @var WedstrijdRonde $result */
+        $result = $this->getDoctrine()->getRepository(WedstrijdRonde::class)
+            ->findOneBy(['id' => $id]);
+        if ($result) {
+            foreach ($result->getTeamSoorten() as $teamSoort) {
+                $result->removeTeamSoort($teamSoort);
+                /** @var TeamSoort $teamSoort */
+                $teamSoort->setWedstrijdRonde(null);
+                $this->addToDB($teamSoort);
+            };
+
+            foreach ($result->getTeams() as $team) {
+                $result->removeTeam($team);
+                /** @var Team $team */
+                $team->setWedstrijdRonde(null);
+                $this->addToDB($team);
+            };
+
             $this->removeFromDB($result);
         }
         return new JsonResponse('true');

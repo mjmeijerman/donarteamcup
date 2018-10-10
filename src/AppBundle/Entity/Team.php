@@ -44,6 +44,13 @@ class Team
      */
     private $user;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $wachtlijst;
+
     public function __construct()
     {
         $this->turnsters = new ArrayCollection();
@@ -130,4 +137,19 @@ class Team
         $this->user = $user;
     }
 
+    /**
+     * @param boolean $wachtlijst
+     */
+    public function setWachtlijst($wachtlijst)
+    {
+        $this->wachtlijst = $wachtlijst;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getWachtlijst()
+    {
+        return $this->wachtlijst;
+    }
 }

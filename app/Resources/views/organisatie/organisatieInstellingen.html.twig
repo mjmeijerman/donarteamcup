@@ -112,6 +112,51 @@
 
     <p>
     <div class="titel">
+        <h2>Wedstrijdrondes</h2>
+    </div>
+    <div class="bericht">
+        <a href="{{ path('wedstrijdrondeToevoegen', { 'page': app.request.get('page') }) }}">
+            <img src="{{ asset('images/add.png') }}" width="20" /> Wedstrijdronde toevoegen
+        </a>
+
+        <table class="instellingen_overzicht">
+            <tr>
+                <th>#</th>
+                <th>Dag</th>
+                <th>tijd</th>
+                <th>Baan</th>
+                <th>Soort teams</th>
+                <th>Max</th>
+                <th></th>
+            </tr>
+        {% for wedstrijdRonde in wedstrijdRondes %}
+            <tr id="wedstrijd_ronde_row_{{ wedstrijdRonde.id }}">
+                <td>{{ wedstrijdRonde.ronde }}</td>
+                <td>{{ wedstrijdRonde.dag }}</td>
+                <td>{{ wedstrijdRonde.startTijd | date('H:i') }} - {{ wedstrijdRonde.eindTijd | date('H:i') }}</td>
+                <td>{{ wedstrijdRonde.baan }}</td>
+                <td>
+                    {% for soortTeam in wedstrijdRonde.teamSoorten %}
+                        {{ soortTeam.categorie }} {{ soortTeam.niveau }},
+                    {% endfor %}
+                </td>
+                <td>{{ wedstrijdRonde.maxTeams }}</td>
+                <td>
+                    <div onclick="remove_wedstrijd_ronde(
+                            '{{ wedstrijdRonde.id }}','{{ wedstrijdRonde.dag }}', '{{ wedstrijdRonde.ronde }}'
+                            )"
+                         style="display: inline">
+                        <img src="{{ asset('images/remove.png') }}" width="20" style="cursor: pointer;">
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+    </p>
+
+    <p>
+    <div class="titel">
         <h2>Voorinschrijvingen</h2>
     </div>
     <div class="bericht">

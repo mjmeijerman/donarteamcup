@@ -1,0 +1,57 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1><a href="{{ path('organisatieGetContent', { 'page': app.request.get('page') }) }}">
+            <img src="{{ asset('images/back_arrow.png') }}"></a>
+            Wedstrijdronde Toevoegen
+    </h1>
+
+    <form method="post">
+        <table>
+            <tr>
+                <td>
+                    <label for="ronde">Ronde</label>
+                    <input type="number" name="ronde" id="ronde">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="baan">Baan</label>
+                    <input type="number" name="baan" id="baan">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="startTijd">Starttijd</label>
+                    <input type="datetime-local" name="startTijd" id="startTijd" placeholder="dd-mm-yyyy hh:mm">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="eindTijd">Eindtijd</label>
+                    <input type="datetime-local" name="eindTijd" id="eindTijd" placeholder="dd-mm-yyyy hh:mm">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% for teamSoort in teamSoorten %}
+                        <input type="checkbox" name="teamSoort_{{ teamSoort.id }}" id="{{ teamSoort.id }}">
+                        <label for="{{ teamSoort.id }}">{{ teamSoort.categorie }} {{ teamSoort.niveau }}</label><br />
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="maxTeams">Max aantal teams</label>
+                    <input type="text" name="maxTeams" id="maxTeams" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Opslaan"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+{% endblock %}

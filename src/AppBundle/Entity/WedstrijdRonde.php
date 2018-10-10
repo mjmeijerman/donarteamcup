@@ -24,9 +24,14 @@ class WedstrijdRonde
     private $dag;
 
     /**
-     * @ORM\Column(type="integer", unique=true)
+     * @ORM\Column(type="integer")
      */
     private $ronde;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $baan;
 
     /**
      * @ORM\Column(type="datetime")
@@ -41,7 +46,7 @@ class WedstrijdRonde
     private $eindTijd;
 
     /**
-     * @ORM\OneToMany(targetEntity="Team", mappedBy="wedstrijdRonde", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Team", mappedBy="wedstrijdRonde", cascade={"persist"})
      */
     private $teams;
 
@@ -176,5 +181,21 @@ class WedstrijdRonde
     public function setRonde($ronde): void
     {
         $this->ronde = $ronde;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBaan()
+    {
+        return $this->baan;
+    }
+
+    /**
+     * @param int $baan
+     */
+    public function setBaan($baan): void
+    {
+        $this->baan = $baan;
     }
 }

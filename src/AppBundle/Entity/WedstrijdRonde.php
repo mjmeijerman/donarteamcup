@@ -51,7 +51,7 @@ class WedstrijdRonde
     private $teams;
 
     /**
-     * @ORM\OneToMany(targetEntity="TeamSoort", mappedBy="wedstrijdRonde")
+     * @ORM\ManyToMany(targetEntity="TeamSoort", mappedBy="wedstrijdRondes")
      */
     private $teamSoorten;
 

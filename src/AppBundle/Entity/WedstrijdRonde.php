@@ -51,7 +51,7 @@ class WedstrijdRonde
     private $teams;
 
     /**
-     * @ORM\OneToMany(targetEntity="TeamSoort", mappedBy="wedstrijdRonde", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="TeamSoort", mappedBy="wedstrijdRonde")
      */
     private $teamSoorten;
 

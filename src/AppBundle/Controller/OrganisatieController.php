@@ -984,7 +984,7 @@ class OrganisatieController extends BaseController
                 foreach ($teamSoorten as $teamSoort) {
                     if ($request->request->get('teamSoort_' . $teamSoort->getId())) {
                         $wedstrijdronde->addTeamSoort($teamSoort);
-                        $teamSoort->setWedstrijdRonde($wedstrijdronde);
+                        $teamSoort->addWedstrijdRonde($wedstrijdronde);
                     }
                 }
 
@@ -1078,7 +1078,7 @@ class OrganisatieController extends BaseController
             foreach ($result->getTeamSoorten() as $teamSoort) {
                 $result->removeTeamSoort($teamSoort);
                 /** @var TeamSoort $teamSoort */
-                $teamSoort->setWedstrijdRonde(null);
+                $teamSoort->removeWedstrijdRonde($result);
                 $this->addToDB($teamSoort);
             };
 

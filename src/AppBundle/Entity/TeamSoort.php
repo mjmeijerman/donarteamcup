@@ -44,14 +44,15 @@ class TeamSoort
     private $teams;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WedstrijdRonde", inversedBy="teamSoorten")
+     * @ORM\ManyToMany(targetEntity="WedstrijdRonde", inversedBy="teamSoorten")
      */
-    private $wedstrijdRonde;
+    private $wedstrijdRondes;
 
     public function __construct()
     {
         $this->niveaus = new ArrayCollection();
         $this->teams   = new ArrayCollection();
+        $this->wedstrijdRondes = new ArrayCollection();
     }
 
     /**
@@ -157,16 +158,24 @@ class TeamSoort
     /**
      * @return mixed
      */
-    public function getWedstrijdRonde()
+    public function getWedstrijdRondes()
     {
-        return $this->wedstrijdRonde;
+        return $this->wedstrijdRondes;
     }
 
     /**
      * @param mixed $wedstrijdRonde
      */
-    public function setWedstrijdRonde($wedstrijdRonde): void
+    public function addWedstrijdRonde($wedstrijdRonde): void
     {
-        $this->wedstrijdRonde = $wedstrijdRonde;
+        $this->wedstrijdRondes[] = $wedstrijdRonde;
+    }
+
+    /**
+     * @param mixed $wedstrijdRonde
+     */
+    public function removeWedstrijdRonde($wedstrijdRonde): void
+    {
+        $this->wedstrijdRondes->removeElement($wedstrijdRonde);
     }
 }

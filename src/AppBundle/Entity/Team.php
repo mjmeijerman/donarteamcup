@@ -20,7 +20,7 @@ class Team
 
     /**
      * @var string
-     * @ORM\Column(name="email", type="string", length=190, unique=true)
+     * @ORM\Column(name="team_name", type="string", length=190, unique=true, nullable=true)
      */
     private $name;
 
@@ -35,7 +35,7 @@ class Team
     private $turnsters;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WedstrijdRonde", inversedBy="teams")
+     * @ORM\ManyToOne(targetEntity="WedstrijdRonde", inversedBy="teams", cascade={"persist"})
      */
     private $wedstrijdRonde;
 
@@ -88,13 +88,13 @@ class Team
         return $this->teamSoort;
     }
 
-    public function setTeamSoort(TeamSoort $teamSoort): void
+    public function setTeamSoort(?TeamSoort $teamSoort): void
     {
         $this->teamSoort = $teamSoort;
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|Turnster[]
      */
     public function getTurnsters()
     {

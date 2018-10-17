@@ -7,6 +7,7 @@ use AppBundle\Entity\JuryIndeling;
 use AppBundle\Entity\Jurylid;
 use AppBundle\Entity\Scores;
 use AppBundle\Entity\SendMail;
+use AppBundle\Entity\TeamSoort;
 use AppBundle\Entity\TijdSchema;
 use AppBundle\Entity\ToegestaneNiveaus;
 use AppBundle\Entity\Turnster;
@@ -206,6 +207,7 @@ class BaseController extends Controller
      */
     protected function updateGereserveerdePlekken()
     {
+        return;
         /** @var Turnster[] $gereserveerdePlekken */
         $gereserveerdePlekken = $this->getDoctrine()->getRepository('AppBundle:Turnster')
             ->getGereserveerdePlekken();
@@ -423,29 +425,44 @@ class BaseController extends Controller
     }
 
     /**
+     * @param $teamSoortId
      * @param $geboorteJaar
      *
      * @return array
      */
-    protected function getAvailableNiveaus($geboorteJaar)
+    protected function getAvailableNiveaus($teamSoortId, $geboorteJaar)
     {
-        if (date('n') >= 8) {
-            $leeftijd = (date('Y', time()) - $geboorteJaar) + 1;
-        } else {
-            $leeftijd = (date('Y', time()) - $geboorteJaar);
+        /** @var TeamSoort $teamSoort */
+        $teamSoort = $this->getDoctrine()->getRepository('AppBundle:TeamSoort')->find($teamSoortId);
+        $categorie = $this->getCategorie($geboorteJaar);
+
+        $niveaus = [];
+        foreach ($teamSoort->getNiveaus() as $niveau) {
+            if ($niveau->getCategorie() === $categorie) {
+                $niveaus[] = $niveau->getNiveau();
+            }
         }
 
-        if ($leeftijd <= 8) {
-            return [];
-        } elseif ($leeftijd == 9) {
-            return ['N3', 'D1', 'D2'];
-        } elseif ($leeftijd == 10 || $leeftijd == 11) {
-            return ['N3', 'D1', 'D2'];
-        } elseif ($leeftijd == 12) {
-            return ['N4', 'D1', 'D2'];
-        } else {
-            return ['Div. 3', 'Div. 4', 'Div. 5'];
+        return $niveaus;
+    }
+
+    protected function getAvailableGeboortejaren($teamSoortId)
+    {
+        /** @var TeamSoort $teamSoort */
+        $teamSoort = $this->getDoctrine()->getRepository('AppBundle:TeamSoort')->find($teamSoortId);
+        $geboorteJaren = [];
+        foreach ($teamSoort->getNiveaus() as $niveau) {
+            $opties = $this->getGeboortejaarFromCategorie($niveau->getCategorie());
+            if (is_array($opties)) {
+                foreach ($opties as $optie) {
+                    $geboorteJaren[] = $optie;
+                }
+            } else {
+                $geboorteJaren[] = $opties;
+            }
         }
+
+        return $geboorteJaren;
     }
 
     /**
@@ -475,6 +492,15 @@ class BaseController extends Controller
             return 0;
         }
         return ($maxPlekken[self::MAX_AANTAL_TEAMS] - $result);
+    }
+
+    protected function getVrijePlekkenPerWedstrijdRonde($rondeId)
+    {
+        $result     = $this->getDoctrine()
+            ->getRepository('AppBundle:WedstrijdRonde')
+            ->find($rondeId);
+
+        return $result->getMaxTeams() - $result->getTeams()->count();
     }
 
     /**

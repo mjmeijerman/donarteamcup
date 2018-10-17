@@ -131,6 +131,9 @@ class WedstrijdRonde
         $this->teams->removeElement($team);
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getTeams()
     {
         return $this->teams;

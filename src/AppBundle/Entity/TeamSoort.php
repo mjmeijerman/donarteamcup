@@ -135,6 +135,9 @@ class TeamSoort
         $this->niveaus->removeElement($niveau);
     }
 
+    /**
+     * @return ToegestaneNiveaus[]
+     */
     public function getNiveaus()
     {
         return $this->niveaus;

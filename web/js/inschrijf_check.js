@@ -8,6 +8,16 @@ function aantal_plekken() {
     });
 }
 
+function aantal_plekken_per_ronde(rondeId) {
+    $.ajax({
+        type: 'get',
+        url: Routing.generate('aantalVrijePlekkenPerRondeAjaxCall', {rondeId: rondeId}),
+        success: function (data) {
+            this.innerHTML = data;
+        }
+    });
+}
+
 // FUNCTIE: IF VERENIGING SELECTED AND CHECKBOX CHECKED -> FOUTMELDING
 
 function vereniging_bestaat_niet() {
@@ -496,46 +506,11 @@ function show_reserveren() {
 
 // FUNCTIES VOOR HET RESERVEREN
 
-function update_reserveer_display() {
-    aantal_plekken();
-    if (document.getElementById('reserveer_aantal_invoer').value < 1) {
-        document.getElementById("error_container").innerHTML = '<div id="error"><span' +
-            ' id="aantal_error"><b>FOUTMELDING:</b> Het aantal turnsters moet groter zijn dan 0!</span></div>';
-        document.getElementById('reserveer_aantal_invoer').className = 'error';
-        document.getElementById('aantal_plekken_header').className = '';
-        document.getElementById('reserveer_aantal').innerHTML = '0 plekken reserveren!';
-    } else {
-        var z = document.getElementById('reserveer_aantal_invoer').value;
-        if (z !== '') {
-            if (z == 1) {
-                document.getElementById('reserveer_aantal').innerHTML = '1 plek reserveren!';
-            }
-            else {
-                document.getElementById('reserveer_aantal').innerHTML = z + ' plekken reserveren!';
-            }
-            document.getElementById("error_container").innerHTML = '';
-            document.getElementById('reserveer_aantal_invoer').className = 'numberIngevuld';
-            document.getElementById('aantal_plekken_header').className = 'success';
-        }
-        else {
-            document.getElementById('reserveer_aantal').innerHTML = '0 plekken reserveren!';
-            document.getElementById('reserveer_aantal_invoer').className = 'number';
-            document.getElementById('aantal_plekken_header').className = '';
-        }
-    }
-}
-
 function post_turnsters() {
     document.forms["turnsters"].submit();
 }
 
 function post_gegevens() {
-    if (document.getElementById('reserveer_aantal_invoer').value < 1) {
-        document.getElementById("error_container").innerHTML = '<div id="error"><span' +
-            ' id="aantal_error"><b>FOUTMELDING:</b> Het aantal turnsters moet groter zijn dan 0!</span></div>';
-        document.getElementById('reserveer_aantal_invoer').className = 'error';
-        return;
-    }
     document.getElementById('reserveer_button').style.pointerEvents = 'none';
     document.getElementById('post_verenigingsnaam').value = document.getElementById('verenigingsnaam').value;
     document.getElementById('post_verenigingsplaats').value = document.getElementById('verenigingsplaats').value;
@@ -547,29 +522,74 @@ function post_gegevens() {
     document.getElementById('post_username').value = document.getElementById('username').value;
     document.getElementById('post_wachtwoord').value = document.getElementById('wachtwoord').value;
     document.getElementById('post_wachtwoord2').value = document.getElementById('wachtwoord2').value;
-    document.getElementById('post_aantalturnsters').value = document.getElementById('reserveer_aantal_invoer').value;
     document.forms["post_form"].submit();
 }
 
-function get_niveaus(key, turnsterNiveau) {
-    if (!key) {
-        var geboorteJaar = document.getElementById('geboorteJaar').value;
-        var niveau = document.getElementById('mogelijke_niveaus');
-    } else {
-        var geboorteJaar = document.getElementById('geboorteJaar_' + key).value;
-        var niveau = document.getElementById('mogelijke_niveaus_' + key);
-    }
+function get_niveaus(teamId, turnsterId, loopIndex, turnsterNiveau) {
+    var teamSoort = document.getElementById('team_soort_' + teamId).value;
+    var geboorteJaar = document.getElementById('geboorteJaar_' + teamId + '_' + loopIndex).value;
+    var niveauVeld = document.getElementById('mogelijke_niveaus_' + turnsterId);
+
     $.ajax({
         type: 'get',
-        url: Routing.generate('getAvailableNiveausAjaxCall', {geboorteJaar: geboorteJaar}),
+        url: Routing.generate('getAvailableNiveausAjaxCall', {teamSoortId: teamSoort, geboorteJaar: geboorteJaar}),
         success: function (data) {
-            niveau.innerHTML = '<option value="" selected>Niveau</option>';
+            niveauVeld.innerHTML = '<option value="" selected>Niveau</option>';
             for (var field in data) {
                 var selected = '';
                 if (turnsterNiveau == data[field]) {
                     selected = 'selected';
                 }
-                niveau.innerHTML += '<option value="' + data[field] + '" ' + selected + '>' + data[field] + '</option>';
+                niveauVeld.innerHTML += '<option value="' + data[field] + '" ' + selected + '>' + data[field] + '</option>';
+            }
+        }
+    });
+}
+
+function get_geboortejaren(teamId, geboortejaren) {
+    var teamSoort = document.getElementById('team_soort_' + teamId).value;
+    var geboortejaarVeld1 = document.getElementById('geboorteJaar_' + teamId + '_1');
+    var geboortejaarVeld2 = document.getElementById('geboorteJaar_' + teamId + '_2');
+    var geboortejaarVeld3 = document.getElementById('geboorteJaar_' + teamId + '_3');
+    var geboortejaarVeld4 = document.getElementById('geboorteJaar_' + teamId + '_4');
+    $.ajax({
+        type: 'get',
+        url: Routing.generate('getAvailableGeboorteJarenAjaxCall', {teamSoortId: teamSoort}),
+        success: function (data) {
+            geboortejaarVeld1.innerHTML = '<option value="" selected>Geboortejaar</option>';
+            for (var field in data) {
+                var selected = '';
+                if (geboortejaren == data[field]) {
+                    selected = 'selected';
+                }
+                geboortejaarVeld1.innerHTML += '<option value="' + data[field] + '" ' + selected + '>' + data[field] + '</option>';
+            }
+
+            geboortejaarVeld2.innerHTML = '<option value="" selected>Geboortejaar</option>';
+            for (var field in data) {
+                var selected = '';
+                if (geboortejaren == data[field]) {
+                    selected = 'selected';
+                }
+                geboortejaarVeld2.innerHTML += '<option value="' + data[field] + '" ' + selected + '>' + data[field] + '</option>';
+            }
+
+            geboortejaarVeld3.innerHTML = '<option value="" selected>Geboortejaar</option>';
+            for (var field in data) {
+                var selected = '';
+                if (geboortejaren == data[field]) {
+                    selected = 'selected';
+                }
+                geboortejaarVeld3.innerHTML += '<option value="' + data[field] + '" ' + selected + '>' + data[field] + '</option>';
+            }
+
+            geboortejaarVeld4.innerHTML = '<option value="" selected>Geboortejaar</option>';
+            for (var field in data) {
+                var selected = '';
+                if (geboortejaren == data[field]) {
+                    selected = 'selected';
+                }
+                geboortejaarVeld4.innerHTML += '<option value="' + data[field] + '" ' + selected + '>' + data[field] + '</option>';
             }
         }
     });
@@ -578,5 +598,5 @@ function get_niveaus(key, turnsterNiveau) {
 function afsluiten()
 {
     document.getElementById('remove_session').value = true;
-    document.forms["turnsters"].submit();
+    document.forms["teams"].submit();
 }

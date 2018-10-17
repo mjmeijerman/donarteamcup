@@ -7,15 +7,6 @@
     {% endif %}
     <div id="inschrijven"><a href="{{ path('inschrijven') }}" target="_blank">Inschrijven &#187;</a></div>
     <h1>Laatste nieuws</h1>
-    {% if aantalPlekken > -1 and inschrijvingGeopend %}
-        <p>Op dit moment zijn er nog <b>{{ aantalPlekken }}</b> plekken beschikbaar!</p>
-        {% if aantalPlekken == 0 %}
-            Het toernooi is dus helemaal vol, nieuwe turnsters worden op de wachtlijst geplaatst!<br/>
-            Dit jaar zat het toernooi op <b>{{ tijdVol.datum }}</b> om <b>{{ tijdVol.tijd }}</b> vol, dat is dus binnen
-            <b>{{ tijdTotVol.uur }}</b> uur,
-            <b>{{ tijdTotVol.minuten }}</b> minuten en <b>{{ tijdTotVol.secondes }}</b> seconden!
-        {% endif %}
-    {% endif %}
     {% for item in nieuwsItems %}
         <div class="date">{{ item.datumtijd }}</div>
         <hr>

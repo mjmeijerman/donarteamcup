@@ -12,73 +12,91 @@
     <i>Bij problemen en paniek kun je bellen met: 06-55726426</i>
     <div id="inschrijven_deelnemers">
         <h4>&#187; Details deelnemers</h4>
-        {% if turnsterFields|length == 1 %}
-            Er is 1 plek gereserveerd!
-        {% else %}
-            Er zijn {{ turnsterFields|length }} plekken gereserveerd!
-        {% endif %}
-        {% if vrijePlekken == 0 %}
-            {% if turnsterFields|length == 1 %}
-                <b> Dit is helaas wel een plek op de wachtlijst!</b>
-            {% else %}
-                <b> Dit zijn helaas wel plekken op de wachtlijst!</b>
-            {% endif %}
-        {% elseif vrijePlekken < turnsterFields|length %}
-            <b> Helaas is een deel van deze plekken op de wachtlijst!</b>
-        {% endif %}
+        Er is/zijn {{ user.teams.count }} plekken voor teams gereserveerd!
         <br/><br/>
         Nu kun je in alle rust de details van je turnsters invoeren. Je hebt
         tot {{ tijdTot }} voor de niet-ingevulde plekken worden vrijgegeven. <br/><br/>
         <b>Let op: Turnsters in rood zullen op de wachtlijst geplaatst worden!</b><br><br/>
-        Mocht je bij turnsters een opmerking willen plaatsen (bijvoorbeeld i.v.m. turnen op zondag), dan kan dit na het
-        voltooien van de inschrijvingen in het inloggedeelte van de website.
         <br>
         <br>
         We hebben ook een mooie klok voor je
         aangezet die
         aftelt (rechts bovenin). <br><br>
-
-        Tip: als de tijd bijna om is en je hebt nog niet alle gegevens ingevoerd kun je op opslaan klikken om alle
-        ingevoerde turnsters alvast op te slaan. De ingevoerde turnsters zullen dan verdwijnen van het
-        inschrijfformulier en kun je later via het inloggedeelte nog wijzigen. Ook het toevoegen van extra turnsters
-        kan via het inloggedeelte.
         <br/>
         <br/>
 
-        <form method="post" action="" name="turnsters">
+        <form method="post" action="" name="teams">
             <input type="hidden" name="ids" value="
-            {% for key, turnster in turnsterFields %}
-                {{ key }}.
-            {% endfor %}
+            {%- for team in user.teams -%}
+                {{ team.id }}.
+            {%- endfor -%}
             "/>
-            {% for key, turnster in turnsterFields %}
-            {% if turnster %}
-            <div class="row_turnster_wachtlijst">
-                {% else %}
-                <div class="row_turnster">
+            {% for team in user.teams %}
+                <p>
+                <h3>{{ team.wedstrijdRonde.dag }} {{ team.wedstrijdRonde.startTijd | date('d-m-Y') }},
+                    {{ team.wedstrijdRonde.startTijd | date('H:i') }}
+                    - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}</h3>
+                <div class="
+                        {% if team.wachtlijst %}
+                            row_turnster_wachtlijst
+                        {% else %}
+                            row_turnster
+                        {% endif %}
+                        ">
+                    Verzin een leuke naam voor je team:
+                    <input type="text" class="turnster_voornaam" name="team_name_{{ team.id }}"
+                           id="team_name_{{ team.id }}" placeholder="Team naam"/>
+                </div>
+                <div class="
+                    {% if team.wachtlijst %}
+                        row_turnster_wachtlijst
+                    {% else %}
+                        row_turnster
                     {% endif %}
-                    {{ loop.index }} |
-                    <input type="text" class="turnster_voornaam" id="voornaam_{{ key }}" name="voornaam_{{ key }}"
-                           placeholder="Voornaam"/> <!--
-                vergeet de
-            spatie niet -->
-                    <input type="text" class="turnster_achternaam" id="achternaam_{{ key }}" name="achternaam_{{ key }}"
-                           placeholder="Achternaam"/> <!-- vergeet de spatie niet -->
-                    <select class="turnster_niveau" id="geboorteJaar_{{ key }}" name="geboorteJaar_{{ key }}"
-                            onchange="get_niveaus
-                                    ({{ key }})">
-                        <option value="" selected>Geboortejaar</option>
-                        {% for geboorteJaar in geboorteJaren %}
-                            <option value="{{ geboorteJaar }}">{{ geboorteJaar }}</option>
+                    ">
+                    <label for="team_soort_{{ team.id }}">Teamsoort:</label>
+                    <select class="turnster_niveau" name="team_soort_{{ team.id }}" id="team_soort_{{ team.id }}"
+                            onchange="get_geboortejaren({{ team.id }}, {{ team.id }})">
+                        <option value="" selected>Soort team</option>
+                        {% for teamSoort in team.wedstrijdRonde.teamSoorten %}
+                            <option value="{{ teamSoort.id }}">{{ teamSoort.categorie }} {{ teamSoort.niveau }}</option>
                         {% endfor %}
                     </select>
-                    <select class="turnster_niveau" id="mogelijke_niveaus_{{ key }}" name="niveau_{{ key }}">
-                        <option value="" selected>Niveau</option>
-                    </select>
                 </div>
+                {% for turnster in team.turnsters %}
+                    <div class="
+                        {% if turnster.wachtlijst %}
+                            row_turnster_wachtlijst
+                        {% else %}
+                            row_turnster
+                        {% endif %}
+                        ">
+                        {{ loop.index }} |
+                        <input type="text" class="turnster_voornaam" id="voornaam_{{ turnster.id }}"
+                               name="voornaam_{{ turnster.id }}"
+                               placeholder="Voornaam"/> <!--
+                vergeet de
+            spatie niet -->
+                        <input type="text" class="turnster_achternaam" id="achternaam_{{ turnster.id }}"
+                               name="achternaam_{{ turnster.id }}"
+                               placeholder="Achternaam"/> <!-- vergeet de spatie niet -->
+                        <select class="turnster_niveau" id="geboorteJaar_{{ team.id }}_{{ loop.index }}"
+                                name="geboorteJaar_{{ turnster.id }}"
+                                onchange="get_niveaus
+                                        ({{ team.id }}, {{ turnster.id }}, {{ loop.index }})">
+                            <option value="" selected>Geboortejaar</option>
+                            {#{% for geboorteJaar in geboorteJaren %}#}
+                            {#<option value="{{ geboorteJaar }}">{{ geboorteJaar }}</option>#}
+                            {#{% endfor %}#}
+                        </select>
+                        <select class="turnster_niveau" id="mogelijke_niveaus_{{ turnster.id }}"
+                                name="niveau_{{ turnster.id }}">
+                            <option value="" selected>Niveau</option>
+                        </select>
+                    </div>
                 {% endfor %}
-
-            </div>
+                </p>
+            {% endfor %}
 
             <div id="inschrijven_jury">
                 <h4>&#187; Juryleden</h4>
@@ -129,63 +147,64 @@
                 en hiermee akkoord gaat!
                 <input type="hidden" name="csrfToken" value="{{ csrfToken }}"/>
                 <br/><br/>
-                <center>
-                    <div id="controle_button" onclick="post_turnsters()">Ingevoerde turnsters en juryleden
-                        opslaan
-                    </div>
-                </center>
-                <br>
+                {#<center>#}
+                {#<div id="controle_button" onclick="post_turnsters()">Ingevoerde turnsters en juryleden#}
+                {#opslaan#}
+                {#</div>#}
+                {#</center>#}
+                {#<br>#}
                 <center>
                     <div id="controle_button" onclick="afsluiten()">Ik ben klaar met inschrijven!</div>
                 </center>
                 <input type="hidden" id="remove_session" name="remove_session"/>
+            </div>
         </form>
 
 
-        <h4>&#187; Opgeslagen deelnemers</h4>
-        De volgende turnsters zijn succesvol opgeslagen (als de achtergrond rood is staan de turnsters op de
-        wachtlijst):
-        <table class="controle_tabel">
-            {% for turnster in opgeslagenTurnsters %}
-                {% if turnster.wachtlijst %}
-                    <tr class="controle_wachtlijst">
-                {% else %}
-                    <tr>
-                {% endif %}
-                <td class="controle_nummer">{{ loop.index }}</td>
-                <td class="controle_voornaam">{{ turnster.voornaam }}</td>
-                <td class="controle_achternaam">{{ turnster.achternaam }}</td>
-                <td class="controle_geboortejaar">{{ turnster.geboortejaar }}</td>
-                <td class="controle_niveau">{{ turnster.niveau }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <br>
-
-        <h4>&#187; Opgeslagen juryleden</h4>
-        De volgende juryleden zijn succesvol opgeslagen:
-        <table class="controle_tabel">
-            {% for jurylid in opgeslagenJuryleden %}
-                <tr>
-                    <td class="controle_nummer">{{ loop.index }}</td>
-                    <td class="controle_voornaam">{{ jurylid.voornaam }}</td>
-                    <td class="controle_achternaam">{{ jurylid.achternaam }}</td>
-                    <td class="controle_achternaam">{{ jurylid.email }}</td>
-                    <td class="controle_niveau">{{ jurylid.brevet }}</td>
-                </tr>
-            {% endfor %}
-        </table>
+        {#<h4>&#187; Opgeslagen deelnemers</h4>#}
+        {#De volgende turnsters zijn succesvol opgeslagen (als de achtergrond rood is staan de turnsters op de#}
+        {#wachtlijst):#}
+        {#<table class="controle_tabel">#}
+        {#{% for turnster in opgeslagenTurnsters %}#}
+        {#{% if turnster.wachtlijst %}#}
+        {#<tr class="controle_wachtlijst">#}
+        {#{% else %}#}
+        {#<tr>#}
+        {#{% endif %}#}
+        {#<td class="controle_nummer">{{ loop.index }}</td>#}
+        {#<td class="controle_voornaam">{{ turnster.voornaam }}</td>#}
+        {#<td class="controle_achternaam">{{ turnster.achternaam }}</td>#}
+        {#<td class="controle_geboortejaar">{{ turnster.geboortejaar }}</td>#}
+        {#<td class="controle_niveau">{{ turnster.niveau }}</td>#}
+        {#</tr>#}
+        {#{% endfor %}#}
+        {#</table>#}
+        {#<br>#}
+        {##}
+        {#<h4>&#187; Opgeslagen juryleden</h4>#}
+        {#De volgende juryleden zijn succesvol opgeslagen:#}
+        {#<table class="controle_tabel">#}
+        {#{% for jurylid in opgeslagenJuryleden %}#}
+        {#<tr>#}
+        {#<td class="controle_nummer">{{ loop.index }}</td>#}
+        {#<td class="controle_voornaam">{{ jurylid.voornaam }}</td>#}
+        {#<td class="controle_achternaam">{{ jurylid.achternaam }}</td>#}
+        {#<td class="controle_achternaam">{{ jurylid.email }}</td>#}
+        {#<td class="controle_niveau">{{ jurylid.brevet }}</td>#}
+        {#</tr>#}
+        {#{% endfor %}#}
+        {#</table>#}
     </div>
 {% endblock %}
 
 {% block javascripts %}
     <script>
-        {% if timeToExpiration == 0 %}
-        var deadline = new Date(Date.parse(new Date()) + 1 * 1 * 1 * 1 * 1000);
-        initializeClock('countdown_inner', deadline);
-        {% else %}
-        var deadline = new Date(Date.parse(new Date()) + 1 * 1 * {{ timeToExpiration }} * 60 * 1000);
-        initializeClock('countdown_inner', deadline);
-        {% endif %}
+        {#{% if timeToExpiration == 0 %}#}
+        // var deadline = new Date(Date.parse(new Date()) + 1 * 1 * 1 * 1 * 1000);
+        // initializeClock('countdown_inner', deadline);
+        {#{% else %}#}
+        {#var deadline = new Date(Date.parse(new Date()) + 1 * 1 * {{ timeToExpiration }} * 60 * 1000);#}
+        // initializeClock('countdown_inner', deadline);
+        {#{% endif %}#}
     </script>
 {% endblock %}

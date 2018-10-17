@@ -471,11 +471,14 @@ class Turnster
         return $this->categorie;
     }
 
-    public function setTeam(Team $team)
+    public function setTeam(?Team $team)
     {
         $this->team = $team;
     }
 
+    /**
+     * @return Team
+     */
     public function getTeam()
     {
         return $this->team;

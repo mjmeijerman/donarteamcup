@@ -44,16 +44,12 @@ class WedstrijdIndelingPdfController extends AlphaPDFController
 
     function Header()
     {
-        //BACKGROUND
-        $this->Image('images/background4.png', 0, 0);    //BACKGROUND2: 0,45		BACKGROUND3: 17,77
-        //			$this->SetFillColor(127);
-        //			$this->Rect(0,0,210,35,'F');
         //LOGO
         $this->SetFillColor(0);
         $this->SetAlpha(0.5);
         $this->Rect(0, 0, 297, 35, 'F');
         $this->SetAlpha(1);
-        $this->Image('images/HDCFactuurHeader.png', 0, 0);
+        $this->Image('images/header_uitslagen.png', 0, 0);
 
         //TITEL
         $this->SetFont('Gotham', '', 20);

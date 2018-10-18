@@ -1,0 +1,47 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1><a href="{{ path('organisatieGetContent', { 'page': app.request.get('page') }) }}">
+            <img src="{{ asset('images/back_arrow.png') }}"></a>
+            Team soort Toevoegen
+    </h1>
+
+    <form method="post">
+        <table>
+            <tr>
+                <td>
+                    <select name="categorie">
+                        <option value="">Selecteer de categorie</option>
+                        {% for categorie in categorien %}
+                            <option value="{{ categorie }}">{{ categorie }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select name="team_niveau">
+                        <option value="">Selecteer het niveau</option>
+                        {% for niveau in teamNiveaus %}
+                            <option value="{{ niveau }}">{{ niveau }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% for niveau in niveaus %}
+                        <input type="checkbox" name="niveau_{{ niveau.id }}" id="{{ niveau.id }}">
+                        <label for="{{ niveau.id }}">{{ niveau.categorie }} {{ niveau.niveau }}</label><br />
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Opslaan"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+{% endblock %}

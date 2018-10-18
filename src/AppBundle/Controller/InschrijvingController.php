@@ -4,10 +4,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Jurylid;
 use AppBundle\Entity\Scores;
+use AppBundle\Entity\Team;
 use AppBundle\Entity\Turnster;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Vereniging;
 use AppBundle\Entity\Voorinschrijving;
+use AppBundle\Entity\WedstrijdRonde;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
@@ -28,7 +30,7 @@ class InschrijvingController extends BaseController
      */
     private function InschrijvenPageDeelTwee(User $user, Session $session, Request $request)
     {
-        $aantalJury = (ceil($session->get('aantalTurnsters') / 10) - count($user->getJurylid()));
+        $aantalJury = (ceil($session->get('aantalTeams') / 2) - count($user->getJurylid()));
         if ($request->getMethod() == 'POST') {
             $postedToken = $request->request->get('csrfToken');
             if (!empty($postedToken)) {
@@ -37,51 +39,39 @@ class InschrijvingController extends BaseController
                         $ids = explode('.', $request->request->get('ids'));
                         array_pop($ids);
                         foreach ($ids as $id) {
-                            if ($request->request->get('voornaam_' . trim($id)) && $request->request->get(
-                                    'achternaam_' . trim($id)
-                                ) &&
-                                $request->request->get('geboorteJaar_' . trim($id)) && $request->request->get(
-                                    'niveau_' . trim($id)
-                                )
-                            ) {
-                                /** @var Turnster $turnster */
-                                if ($turnster = $this->getDoctrine()->getRepository('AppBundle:Turnster')
-                                    ->findOneBy(['id' => trim($id)])
+                            $team = $this->getDoctrine()->getRepository('AppBundle:Team')->find($id);
+                            $teamSoortId = $request->request->get('team_soort_' . $id);
+                            $teamSoort = $this->getDoctrine()->getRepository('AppBundle:TeamSoort')->find($teamSoortId);
+                            $team->setTeamSoort($teamSoort);
+                            if (!empty($request->request->get('team_name_' . $id))) {
+                                $team->setName($request->request->get('team_name_' . $id));
+                            }
+                            $this->addToDB($team);
+
+                            /** @var Turnster $turnster */
+                            foreach ($team->getTurnsters() as $turnster) {
+                                if ($request->request->get('voornaam_' . $turnster->getId()) && $request->request->get(
+                                        'achternaam_' . $turnster->getId()
+                                    ) &&
+                                    $request->request->get('geboorteJaar_' . $turnster->getId()) && $request->request->get(
+                                        'niveau_' . $turnster->getId()
+                                    )
                                 ) {
-                                    $turnster->setVoornaam(trim($request->request->get('voornaam_' . trim($id))));
-                                    $turnster->setAchternaam(trim($request->request->get('achternaam_' . trim($id))));
-                                    $turnster->setGeboortejaar($request->request->get('geboorteJaar_' . trim($id)));
-                                    $turnster->setNiveau($request->request->get('niveau_' . trim($id)));
+                                    $turnster->setVoornaam(trim($request->request->get('voornaam_' . $turnster->getId())));
+                                    $turnster->setAchternaam(trim($request->request->get('achternaam_' . $turnster->getId())));
+                                    $turnster->setGeboortejaar($request->request->get('geboorteJaar_' . $turnster->getId()));
+                                    $turnster->setNiveau($request->request->get('niveau_' . $turnster->getId()));
                                     $turnster->setCategorie(
                                         $this->getCategorie(
                                             $request->request->get
                                             (
-                                                'geboorteJaar_' . trim($id)
+                                                'geboorteJaar_' . $turnster->getId()
                                             )
                                         )
                                     );
                                     $turnster->setExpirationDate(null);
                                     $turnster->setIngevuld(true);
                                     $this->addToDB($turnster);
-                                } else {
-                                    $turnster = new Turnster();
-                                    $scores   = new Scores();
-                                    if ($this->getVrijePlekken() > 0) {
-                                        $turnster->setWachtlijst(false);
-                                    } else {
-                                        $turnster->setWachtlijst(true);
-                                    }
-                                    $turnster->setCreationDate(new \DateTime('now'));
-                                    $turnster->setExpirationDate(null);
-                                    $turnster->setScores($scores);
-                                    $turnster->setUser($user);
-                                    $turnster->setIngevuld(true);
-                                    $turnster->setVoornaam(trim($request->request->get('voornaam_' . trim($id))));
-                                    $turnster->setAchternaam(trim($request->request->get('achternaam_' . trim($id))));
-                                    $turnster->setGeboortejaar($request->request->get('geboorteJaar_' . trim($id)));
-                                    $turnster->setNiveau($request->request->get('niveau_' . trim($id)));
-                                    $user->addTurnster($turnster);
-                                    $this->addToDB($user);
                                 }
                             }
                         }
@@ -130,63 +120,26 @@ class InschrijvingController extends BaseController
                 }
             }
         }
+
         $turnsterFields   = [];
         $timeToExpiration = 0;
-        /** @var Turnster[] $turnsters */
-        $turnsters = $user->getTurnster();
-        if (count($turnsters) < $session->get('aantalTurnsters')) {
-            for ($i = 0; $i < ($session->get('aantalTurnsters') - count($turnsters)); $i++) {
-                $turnster = new Turnster();
-                $scores   = new Scores();
-                if ($this->getVrijePlekken() > $i) {
-                    $turnster->setWachtlijst(false);
-                } else {
-                    $turnster->setWachtlijst(true);
-                }
-                $turnster->setCreationDate(new \DateTime('now'));
-                $turnster->setExpirationDate(new \DateTime('now + 2 minutes'));
-                $turnster->setScores($scores);
-                $turnster->setUser($user);
-                $user->addTurnster($turnster);
-                $this->addToDB($user);
-            }
-        }
-        $geboorteJaren       = $this->getGeboorteJaren();
-        $opgeslagenTurnsters = [];
-        foreach ($turnsters as $turnster) {
-            if ($turnster->getExpirationDate()) {
-                $turnsterFields[$turnster->getId()] = $turnster->getWachtlijst();
-                if ($timeToExpiration == 0) {
-                    $timeToExpiration = floor(($turnster->getExpirationDate()->getTimestamp() - time() - 120) / 60);
-                }
-                if ($timeToExpiration < 0) {
-                    $timeToExpiration = 0;
-                }
-            } else {
-                $opgeslagenTurnsters[] = [
-                    'voornaam'     => $turnster->getVoornaam(),
-                    'achternaam'   => $turnster->getAchternaam(),
-                    'geboortejaar' => $turnster->getGeboortejaar(),
-                    'niveau'       => $turnster->getNiveau(),
-                    'wachtlijst'   => $turnster->getWachtlijst(),
-                ];
-            }
-        }
-        $opgeslagenJuryleden = [];
+
+//        $turnsters = $user->getTurnster();
+//        foreach ($turnsters as $turnster) {
+//            $turnsterFields[$turnster->getId()] = $turnster->getWachtlijst();
+//            if ($timeToExpiration == 0) {
+//                $timeToExpiration = floor(($turnster->getExpirationDate()->getTimestamp() - time() - 120) / 60);
+//            }
+//            if ($timeToExpiration < 0) {
+//                $timeToExpiration = 0;
+//            }
+//        }
         /** @var Jurylid[] $juryleden */
-        $juryleden = $user->getJurylid();
-        foreach ($juryleden as $jurylid) {
-            $opgeslagenJuryleden[] = [
-                'voornaam'   => $jurylid->getVoornaam(),
-                'achternaam' => $jurylid->getAchternaam(),
-                'email'      => $jurylid->getEmail(),
-                'brevet'     => $jurylid->getBrevet(),
-            ];
-        }
         $tijdTot       = date('d-m-Y H:i', (time() + ($timeToExpiration) * 60));
         $csrfToken     = $this->getToken();
-        $optegevenJury = ceil($session->get('aantalTurnsters') / 10);
-        $aantalJury    = (ceil($session->get('aantalTurnsters') / 10) - count($user->getJurylid()));
+        $optegevenJury = ceil($session->get('aantalTeams') / 2);
+        $aantalJury = (ceil($session->get('aantalTeams') / 2) - count($user->getJurylid()));
+
         return $this->render(
             'inschrijven/inschrijven_turnsters.html.twig',
             array(
@@ -196,12 +149,10 @@ class InschrijvingController extends BaseController
                 'timeToExpiration'    => $timeToExpiration,
                 'turnsterFields'      => $turnsterFields,
                 'tijdTot'             => $tijdTot,
-                'geboorteJaren'       => $geboorteJaren,
-                'opgeslagenTurnsters' => $opgeslagenTurnsters,
                 'aantalJury'          => $aantalJury,
-                'opgeslagenJuryleden' => $opgeslagenJuryleden,
                 'optegevenJury'       => $optegevenJury,
                 'vrijePlekken'        => $session->get('vrijePlekken'),
+                'user'                => $user,
             )
         );
     }
@@ -215,6 +166,37 @@ class InschrijvingController extends BaseController
      */
     public function inschrijvenPage(Request $request)
     {
+//        session_destroy();
+//        $repository = $this->getDoctrine()->getRepository('AppBundle:Team');
+//
+//        $team = $repository->find(20);
+//        /** @var Turnster $turnster */
+//        foreach ($team->getTurnsters() as $turnster) {
+//            $turnster->setTeam(null);
+//        }
+//        $this->removeFromDB($team);
+//
+//        $team = $repository->find(21);
+//        /** @var Turnster $turnster */
+//        foreach ($team->getTurnsters() as $turnster) {
+//            $turnster->setTeam(null);
+//        }
+//        $this->removeFromDB($team);
+//
+//        $team = $repository->find(22);
+//        /** @var Turnster $turnster */
+//        foreach ($team->getTurnsters() as $turnster) {
+//            $turnster->setTeam(null);
+//        }
+//        $this->removeFromDB($team);
+//
+//        $team = $repository->find(19);
+//        /** @var Turnster $turnster */
+//        foreach ($team->getTurnsters() as $turnster) {
+//            $turnster->setTeam(null);
+//        }
+//        $this->removeFromDB($team);
+
         $this->updateGereserveerdePlekken();
         $session = new Session();
         if ($this->inschrijvingToegestaan($request->query->get('token'), $session)) {
@@ -441,22 +423,33 @@ class InschrijvingController extends BaseController
                             $classNames['inschrijven_contactpersoon_header'] = 'success';
                         }
 
-                        $validationAantalturnsters = false;
-                        if ($request->request->get('aantalTurnsters') > 0) {
-                            if ($request->request->get('aantalTurnsters') > 70) {
+                        $validationAantalTeams = false;
+                        /** @var WedstrijdRonde[] $rondes */
+                        $rondes = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde')->findAll();
+
+                        $aantalTeams = 0;
+                        $ingeschrevenRondes = [];
+                        foreach ($rondes as $ronde) {
+                            if ($request->request->get('aantal_teams_' . $ronde->getId()) >= 0) {
+                                $aantalTeams += $request->request->get('aantal_teams_' . $ronde->getId());
+                                $ingeschrevenRondes[$ronde->getId()] = $request->request->get('aantal_teams_' . $ronde->getId());
+                            }
+                        }
+                        if ($aantalTeams > 0) {
+                            if ($aantalTeams > 20) {
                                 $this->addFlash(
                                     'error',
                                     'Je probeert te veel plekken te reserveren!'
                                 );
                             } else {
-                                $validationAantalturnsters           = true;
+                                $validationAantalTeams           = true;
                                 $classNames['aantalTurnsters']       = 'numberIngevuld';
                                 $classNames['aantal_plekken_header'] = 'success';
                             }
                         } else {
                             $this->addFlash(
                                 'error',
-                                'Aantal turnsters moet groter zijn dan 0!'
+                                'Totaal aantal teams moet groter zijn dan 0!'
                             );
                         }
 
@@ -464,7 +457,7 @@ class InschrijvingController extends BaseController
                                 false,
                                 $validationContactpersoon
                             )) &&
-                            $validationAantalturnsters
+                            $validationAantalTeams
                         ) {
                             if ($request->query->get('token')) {
                                 /** @var Voorinschrijving $result */
@@ -494,29 +487,40 @@ class InschrijvingController extends BaseController
                             $contactpersoon->setTelefoonnummer($request->request->get('telefoonnummer'));
                             $contactpersoon->setCreatedAt(new \DateTime('now'));
                             $contactpersoon->setVereniging($vereniging);
-                            for ($i = 0; $i < $request->request->get('aantalTurnsters'); $i++) {
-                                $turnster = new Turnster();
-                                $scores   = new Scores();
-                                if ($this->getVrijePlekken() > $i) {
-                                    $turnster->setWachtlijst(false);
-                                } else {
-                                    $turnster->setWachtlijst(true);
-                                }
-                                $turnster->setCreationDate(new \DateTime('now'));
-                                $turnster->setExpirationDate(
-                                    new \DateTime(
-                                        'now + ' . ($this->getMinutesToExpiration(
-                                                $request->request->get('aantalTurnsters')
+                            foreach ($ingeschrevenRondes as $id => $number) {
+                                for ($i = 0; $i < $number; $i++) {
+                                    $wedstrijdRonde = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde')->find($id);
+                                    $team = new Team();
+                                    $team->setWachtlijst(false);
+                                    if ($wedstrijdRonde->getMaxTeams() - $wedstrijdRonde->getTeams()->count() <= 0) {
+                                        $team->setWachtlijst(true);
+                                    }
+                                    $team->setUser($contactpersoon);
+                                    $contactpersoon->addTeam($team);
+                                    $team->setWedstrijdRonde($wedstrijdRonde);
+                                    $wedstrijdRonde->addTeam($team);
+
+                                    for ($j = 0; $j < 4; $j++) {
+                                        $turnster = new Turnster();
+                                        $scores   = new Scores();
+                                        $turnster->setWachtlijst($team->getWachtlijst());
+
+                                        $turnster->setCreationDate(new \DateTime('now'));
+                                        $turnster->setExpirationDate(
+                                            new \DateTime(
+                                                'now + 20 minutes'
                                             )
-                                            + 3) . 'minutes'
-                                    )
-                                );
-                                $turnster->setScores($scores);
-                                $turnster->setUser($contactpersoon);
-                                $contactpersoon->addTurnster($turnster);
+                                        );
+                                        $turnster->setScores($scores);
+                                        $turnster->setUser($contactpersoon);
+                                        $turnster->setTeam($team);
+                                        $contactpersoon->addTurnster($turnster);
+                                        $team->addTurnster($turnster);
+                                    }
+                                    $this->addToDB($contactpersoon);
+                                }
                             }
                             $session->set('vrijePlekken', $this->getVrijePlekken());
-                            $this->addToDB($contactpersoon);
                             $subject        = 'Inloggegevens Donar Team Cup';
                             $to             = $contactpersoon->getEmail();
                             $view           = 'mails/inschrijven_contactpersoon.html.twig';
@@ -528,7 +532,7 @@ class InschrijvingController extends BaseController
                             ];
                             $this->sendEmail($subject, $to, $view, $parameters);
                             $session->set('username', $contactpersoon->getUsername());
-                            $session->set('aantalTurnsters', $request->request->get('aantalTurnsters'));
+                            $session->set('aantalTeams', $aantalTeams);
                             return $this->InschrijvenPageDeelTwee($contactpersoon, $session, $request);
                         }
                     }
@@ -537,6 +541,10 @@ class InschrijvingController extends BaseController
             $vrijePlekken = $this->getVrijePlekken();
             $verenigingen = $this->getVerenigingen();
             $csrfToken    = $this->getToken();
+            $repository   = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde');
+            /** @var WedstrijdRonde[] $wedstrijdRondes */
+            $wedstrijdRondes = $repository->findBy([], ['startTijd' => 'asc', 'ronde' => 'asc', 'baan' => 'asc']);
+
             return $this->render(
                 'inschrijven/inschrijven_contactpersoon.html.twig',
                 array(
@@ -549,6 +557,7 @@ class InschrijvingController extends BaseController
                     'verenigingOption' => $verenigingOption,
                     'classNames'       => $classNames,
                     'values'           => $values,
+                    'wedstrijdRondes'  => $wedstrijdRondes,
                 )
             );
         } else {
@@ -556,10 +565,10 @@ class InschrijvingController extends BaseController
         }
     }
 
-    private function getMinutesToExpiration($aantalTurnsters)
+    private function getMinutesToExpiration($aantalTeams)
     {
-        if ($aantalTurnsters > 5) {
-            return $aantalTurnsters;
+        if ($aantalTeams > 1) {
+            return $aantalTeams * 4;
         } else {
             return 5;
         }
@@ -602,14 +611,27 @@ class InschrijvingController extends BaseController
     }
 
     /**
-     * @Route("/getAvailableNiveausAjaxCall/{geboorteJaar}/", name="getAvailableNiveausAjaxCall",
+     * @Route("/getAvailableNiveausAjaxCall/{teamSoortId}/{geboorteJaar}/", name="getAvailableNiveausAjaxCall",
      * options={"expose"=true}, methods={"GET"})
+     * @param $teamSoortId
      * @param $geboorteJaar
      *
      * @return JsonResponse
      */
-    public function getAvailableNiveausAjaxCall($geboorteJaar)
+    public function getAvailableNiveausAjaxCall($teamSoortId, $geboorteJaar)
     {
-        return new JsonResponse($this->getAvailableNiveaus($geboorteJaar));
+        return new JsonResponse($this->getAvailableNiveaus($teamSoortId, $geboorteJaar));
+    }
+
+    /**
+     * @Route("/getAvailableGeboorteJarenAjaxCall/{teamSoortId}/", name="getAvailableGeboorteJarenAjaxCall",
+     * options={"expose"=true}, methods={"GET"})
+     * @param $teamSoortId
+     *
+     * @return JsonResponse
+     */
+    public function getAvailableGeboorteJarenAjaxCall($teamSoortId)
+    {
+        return new JsonResponse($this->getAvailableGeboortejaren($teamSoortId));
     }
 }

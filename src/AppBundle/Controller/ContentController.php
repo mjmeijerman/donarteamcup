@@ -117,6 +117,15 @@ class ContentController extends BaseController
     }
 
     /**
+     * @Route("/aantalVrijePlekkenPerRonde/{rondeId}", name="aantalVrijePlekkenPerRondeAjaxCall", options={"expose"=true}, methods={"GET"})
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function aantalVrijePlekkenPerRondeAjaxCall($rondeId)
+    {
+        return new JsonResponse($this->getVrijePlekkenPerWedstrijdRonde($rondeId));
+    }
+
+    /**
      * @return Response
      * @throws \Doctrine\ORM\NonUniqueResultException
      */

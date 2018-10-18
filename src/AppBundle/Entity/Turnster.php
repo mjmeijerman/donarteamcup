@@ -89,16 +89,22 @@ class Turnster
     private $opmerking;
 
     /**
-     * @ORM\OneToOne(targetEntity="Vloermuziek", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Vloermuziek", inversedBy="turnster", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="vloermuziek_id", referencedColumnName="id", nullable=true)
      **/
     private $vloermuziek;
 
     /**
-     * @ORM\OneToOne(targetEntity="Scores", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Scores", inversedBy="turnster", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="score_id", referencedColumnName="id", nullable=true)
      **/
     private $scores;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="turnsters")
+     * @ORM\JoinColumn(name="team", referencedColumnName="id", nullable=true)
+     */
+    private $team;
 
     public function getUitslagenLijst()
     {
@@ -136,6 +142,15 @@ class Turnster
             'totaalSprong' => $totaalSprong,
             'totaal' => $totaal,
         );
+    }
+
+    public function isKeuze()
+    {
+        $leeftijd = (date('Y', time()) - $this->geboortejaar);
+        if ($leeftijd >= 13) {
+            return true;
+        }
+        return false;
     }
 
     public function getId()
@@ -463,5 +478,18 @@ class Turnster
     public function getCategorie()
     {
         return $this->categorie;
+    }
+
+    public function setTeam(?Team $team)
+    {
+        $this->team = $team;
+    }
+
+    /**
+     * @return Team
+     */
+    public function getTeam()
+    {
+        return $this->team;
     }
 }

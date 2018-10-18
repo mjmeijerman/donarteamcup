@@ -33,6 +33,12 @@ class ToegestaneNiveaus
     private $uitslagGepubliceerd = 0;
 
     /**
+     * @ORM\ManyToOne(targetEntity="TeamSoort", inversedBy="niveaus")
+     * @ORM\JoinColumn(name="team_soort", referencedColumnName="id", nullable=true)
+     */
+    private $teamSoort;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -109,5 +115,15 @@ class ToegestaneNiveaus
     public function getUitslagGepubliceerd()
     {
         return $this->uitslagGepubliceerd;
+    }
+
+    public function getTeamSoort()
+    {
+        return $this->teamSoort;
+    }
+
+    public function setTeamSoort(?TeamSoort $teamSoort)
+    {
+        $this->teamSoort = $teamSoort;
     }
 }

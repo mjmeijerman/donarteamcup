@@ -7,6 +7,7 @@ use AppBundle\Entity\Scores;
 use AppBundle\Entity\ScoresRepository;
 use AppBundle\Entity\Turnster;
 use AppBundle\Entity\TurnsterRepository;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,7 +56,7 @@ class UitslagenController extends BaseController
         $pdf->AliasNbPages();
         $pdf->AddPage();
         $pdf->Table($turnsters, $userId);
-        return new Response(
+        return new BinaryFileResponse(
             $pdf->Output(
                 $request->query->get('categorie') . "_" . $request->query->get('niveau') . ".pdf",
                 "I"
@@ -75,7 +76,7 @@ class UitslagenController extends BaseController
         $pdf->AliasNbPages();
         $pdf->AddPage();
         $pdf->Table($waardes);
-        return new Response(
+        return new BinaryFileResponse(
             $pdf->Output(), 200, [
                               'Content-Type' => 'application/pdf'
                           ]
@@ -180,7 +181,7 @@ class UitslagenController extends BaseController
             $pdf->ContentDiploma($turnster);
         }
 
-        return new Response(
+        return new BinaryFileResponse(
             $pdf->Output(), 200, [
                               'Content-Type' => 'application/pdf'
                           ]
@@ -210,7 +211,7 @@ class UitslagenController extends BaseController
         $pdf->FooterDiploma(self::DATUM_DTC);
         $pdf->ContentDiploma($legeTurnster);
 
-        return new Response(
+        return new BinaryFileResponse(
             $pdf->Output(), 200, [
                               'Content-Type' => 'application/pdf'
                           ]
@@ -345,7 +346,7 @@ class UitslagenController extends BaseController
         $pdf->SetFont('Gotham', '', 14);
         $pdf->SetY(60);
         $pdf->wedstrijdIndelingContent($turnsters, $userId);
-        return new Response(
+        return new BinaryFileResponse(
             $pdf->Output(
                 'wedstrijdindeling HDC ' . self::DATUM_DTC . " " . $request->query->get(
                     'wedstrijddag'

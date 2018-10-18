@@ -3,12 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="221375e8-7e4c-4103-9c31-f15aa3c39b7e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/inschrijven/inschrijven_turnsters.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/inschrijven/inschrijven_turnsters.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/uitslagen/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/uitslagen/base.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Entity/Team.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Team.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Entity/Vloermuziek.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Vloermuziek.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,23 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="InschrijvingController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/InschrijvingController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="526">
-              <caret line="190" column="37" selection-start-line="190" selection-start-column="37" selection-end-line="190" selection-end-column="37" />
-              <folding>
-                <element signature="e#40#69#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ContactpersoonController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="53" selection-start-line="53" selection-end-line="53" />
+            <state relative-caret-position="153">
+              <caret line="131" column="41" selection-start-line="131" selection-start-column="41" selection-end-line="131" selection-end-column="41" />
               <folding>
                 <element signature="e#40#70#0#PHP" expanded="true" />
                 <element signature="e#2927#2973#0#PHP" expanded="true" />
@@ -47,11 +35,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="contactpersoonIndex.html.twig" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UitslagenController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="251">
+              <caret line="353" column="59" lean-forward="true" selection-start-line="353" selection-start-column="59" selection-end-line="353" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="contactpersoonIndex.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="481" column="31" lean-forward="true" selection-start-line="481" selection-start-column="31" selection-end-line="481" selection-end-column="31" />
+            <state relative-caret-position="476">
+              <caret line="481" column="31" selection-start-line="481" selection-start-column="31" selection-end-line="481" selection-end-column="31" />
               <folding>
                 <element signature="e#5633#5662#0#HTML" expanded="true" />
                 <element signature="e#5951#5980#0#HTML" expanded="true" />
@@ -83,32 +80,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WedstrijdRonde.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdRonde.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-              <folding>
-                <element signature="e#36#84#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="inschrijven_turnsters.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/inschrijven/inschrijven_turnsters.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="37" column="75" selection-start-line="35" selection-start-column="16" selection-end-line="37" selection-end-column="75" />
+            <state>
+              <caret column="28" selection-start-column="28" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="countdown_clock.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/js/countdown_clock.js">
+      <file leaf-file-name="base.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/inschrijven/base.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            <state>
+              <caret column="14" selection-start-column="14" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="276">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/uitslagen/base.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -116,22 +119,10 @@
       <file leaf-file-name="BaseController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="160" selection-start-line="160" selection-end-line="160" />
+            <state relative-caret-position="153">
+              <caret line="849" column="47" selection-start-line="849" selection-start-column="47" selection-end-line="849" selection-end-column="47" />
               <folding>
                 <element signature="e#40#74#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Team.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Team.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="66" column="7" selection-start-line="66" selection-start-column="7" selection-end-line="66" selection-end-column="7" />
-              <folding>
-                <element signature="e#36#84#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -141,9 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>wedstrijdronde</find>
-      <find>wedstrijdRonde</find>
-      <find>instellingen_overzicht</find>
       <find>post_aantalturnsters</find>
       <find>aantal_plekk</find>
       <find>aantal</find>
@@ -171,6 +159,9 @@
       <find>isKeuze</find>
       <find>turnster.vloer</find>
       <find>locatie</find>
+      <find>clock</find>
+      <find>timer</find>
+      <find>HDC</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -183,8 +174,8 @@
       <dir>$PROJECT_DIR$/src/AppBundle</dir>
       <dir>$PROJECT_DIR$/app/Resources/views/organisatie</dir>
       <dir>$PROJECT_DIR$/src/AppBundle/Entity</dir>
-      <dir>$PROJECT_DIR$</dir>
       <dir>$PROJECT_DIR$/src/AppBundle/Controller</dir>
+      <dir>$PROJECT_DIR$</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -193,7 +184,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Vereniging.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/VoorinschrijvingRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/InstellingenRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/JurylidRepository.php" />
@@ -212,12 +202,10 @@
         <option value="$PROJECT_DIR$/app/config/services.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/FpdfController.php" />
         <option value="$PROJECT_DIR$/app/DoctrineMigrations/Version20180929123547.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenPdfController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/WedstrijdIndelingPdfController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/JurybadgePdfController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/DiplomaPdfController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/organisatie/base.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/organisatie/teamSoortToevoegen.html.twig" />
@@ -236,14 +224,17 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/TeamSoort.php" />
         <option value="$PROJECT_DIR$/web/js/inschrijf_check.js" />
         <option value="$PROJECT_DIR$/app/Resources/views/inschrijven/inschrijven_contactpersoon.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/inschrijven/inschrijven_turnsters.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/InschrijvingController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Team.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Vloermuziek.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/inschrijven/inschrijven_turnsters.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/uitslagen/base.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php" />
       </list>
     </option>
   </component>
@@ -505,27 +496,28 @@
       <workItem from="1539193220405" duration="5755000" />
       <workItem from="1539541744032" duration="8770000" />
       <workItem from="1539783741488" duration="6926000" />
-      <workItem from="1539861172935" duration="5523000" />
+      <workItem from="1539861172935" duration="6131000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="73176000" />
+    <option name="totallyTimeSpent" value="73784000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16380544" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32977587" />
-      <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16380544" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.32893" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991462" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -534,7 +526,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32893" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -569,20 +560,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/organisatieInstellingen.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1815">
-          <caret line="121" column="36" selection-start-line="121" selection-start-column="22" selection-end-line="121" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Scores.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6015">
-          <caret line="401" column="23" selection-start-line="401" selection-start-column="23" selection-end-line="401" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -618,13 +595,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6330">
           <caret line="422" column="18" lean-forward="true" selection-start-line="422" selection-start-column="18" selection-end-line="422" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="347" column="17" selection-start-line="347" selection-start-column="17" selection-end-line="347" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -735,13 +705,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="89" selection-start-line="8" selection-start-column="89" selection-end-line="8" selection-end-column="89" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/css/organisatie.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
@@ -781,6 +744,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="412">
           <caret line="648" column="16" selection-start-line="648" selection-start-column="16" selection-end-line="648" selection-end-column="72" />
+          <folding>
+            <element signature="e#40#70#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -867,13 +833,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/inschrijven/inschrijven_turnsters.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="37" column="75" selection-start-line="35" selection-start-column="16" selection-end-line="37" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Team.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
@@ -894,16 +853,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="160" selection-start-line="160" selection-end-line="160" />
-          <folding>
-            <element signature="e#40#74#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
@@ -918,21 +867,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
-          <folding>
-            <element signature="e#40#70#0#PHP" expanded="true" />
-            <element signature="e#2927#2973#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="481" column="31" lean-forward="true" selection-start-line="481" selection-start-column="31" selection-end-line="481" selection-end-column="31" />
+        <state relative-caret-position="476">
+          <caret line="481" column="31" selection-start-line="481" selection-start-column="31" selection-end-line="481" selection-end-column="31" />
           <folding>
             <element signature="e#5633#5662#0#HTML" expanded="true" />
             <element signature="e#5951#5980#0#HTML" expanded="true" />
@@ -942,6 +880,62 @@
             <element signature="e#15074#15098#0#HTML" expanded="true" />
             <element signature="e#15231#15254#0#HTML" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/inschrijven/inschrijven_turnsters.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" selection-start-column="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/inschrijven/base.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="14" selection-start-column="14" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/uitslagen/base.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="849" column="47" selection-start-line="849" selection-start-column="47" selection-end-line="849" selection-end-column="47" />
+          <folding>
+            <element signature="e#40#74#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="131" column="41" selection-start-line="131" selection-start-column="41" selection-end-line="131" selection-end-column="41" />
+          <folding>
+            <element signature="e#40#70#0#PHP" expanded="true" />
+            <element signature="e#2927#2973#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="353" column="59" lean-forward="true" selection-start-line="353" selection-start-column="59" selection-end-line="353" selection-end-column="59" />
         </state>
       </provider>
     </entry>

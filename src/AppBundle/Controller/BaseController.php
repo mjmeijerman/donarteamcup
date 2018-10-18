@@ -847,7 +847,7 @@ class BaseController extends Controller
 
         $this->addToDB($tokenObject);
 
-        $subject        = 'Voorinschrijving HDC';
+        $subject        = 'Voorinschrijving DTC';
         $to             = $email;
         $view           = 'mails/voorinschrijving.txt.twig';
         $mailParameters = [

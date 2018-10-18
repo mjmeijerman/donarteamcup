@@ -6,6 +6,7 @@ use AppBundle\Entity\Betaling;
 use AppBundle\Entity\Jurylid;
 use AppBundle\Entity\Scores;
 use AppBundle\Entity\ScoresRepository;
+use AppBundle\Entity\Team;
 use AppBundle\Entity\Turnster;
 use AppBundle\Entity\TurnsterRepository;
 use AppBundle\Entity\User;
@@ -29,96 +30,33 @@ class ContactpersoonController extends BaseController
      */
     public function getIndexPageAction()
     {
-        $indelingen                    = $this->getWedstrijdindelingen();
+        $user          = $this->getUser();
+
         $uploadenVloermuziekToegestaan = $this->uploadenVloermuziekToegestaan();
         $wijzigenTurnsterToegestaan    = $this->wijzigTurnsterToegestaan();
-        $verwijderenTurnsterToegestaan = $this->verwijderenTurnsterToegestaan();
+        $verwijderenTurnsterToegestaan = $this->wijzigTurnsterToegestaan();
         $wijzigJuryToegestaan          = $this->wijzigJuryToegestaan();
         $verwijderJuryToegestaan       = $this->wijzigJuryToegestaan();
         $factuurBekijkenToegestaan     = $this->factuurBekijkenToegestaan();
-        $this->updateGereserveerdePlekken();
         $this->setBasicPageData();
         /** @var User $user */
-        $user          = $this->getUser();
-        $contactgevens = [
-            'vereniging'     => $user->getVereniging()->getNaam() . ', ' . $user->getVereniging()->getPlaats(),
-            'gebruikersnaam' => $user->getUsername(),
-            'voornaam'       => $user->getVoornaam(),
-            'achternaam'     => $user->getAchternaam(),
-            'email'          => $user->getEmail(),
-            'telNr'          => $user->getTelefoonnummer(),
-        ];
-        $turnsters     = [];
-        $wachtlijst    = [];
-        $afgemeld      = [];
-        /** @var Turnster[] $turnsterObjecten */
-        $turnsterObjecten = $user->getTurnster();
-        foreach ($turnsterObjecten as $turnsterObject) {
-            if ($turnsterObject->getVloermuziek()) {
-                $vloermuziek = true;
-                $locatie     = $turnsterObject->getVloermuziek()->getWebPath();
-            } else {
-                $vloermuziek = false;
-                $locatie     = '';
-            }
-            if ($turnsterObject->getAfgemeld()) {
-                $afgemeld[] = [
-                    'id'           => $turnsterObject->getId(),
-                    'voornaam'     => $turnsterObject->getVoornaam(),
-                    'achternaam'   => $turnsterObject->getAchternaam(),
-                    'geboorteJaar' => $turnsterObject->getGeboortejaar(),
-                    'categorie'    => $this->getCategorie($turnsterObject->getGeboortejaar()),
-                    'niveau'       => $turnsterObject->getNiveau(),
-                    'opmerking'    => $turnsterObject->getOpmerking(),
-                ];
-            } elseif ($turnsterObject->getWachtlijst()) {
-                $wachtlijst[] = [
-                    'id'           => $turnsterObject->getId(),
-                    'voornaam'     => $turnsterObject->getVoornaam(),
-                    'achternaam'   => $turnsterObject->getAchternaam(),
-                    'geboorteJaar' => $turnsterObject->getGeboortejaar(),
-                    'categorie'    => $this->getCategorie($turnsterObject->getGeboortejaar()),
-                    'niveau'       => $turnsterObject->getNiveau(),
-                    'opmerking'    => $turnsterObject->getOpmerking(),
-                ];
-            } else {
-                $turnsters[] = [
-                    'id'                 => $turnsterObject->getId(),
-                    'voornaam'           => $turnsterObject->getVoornaam(),
-                    'achternaam'         => $turnsterObject->getAchternaam(),
-                    'geboorteJaar'       => $turnsterObject->getGeboortejaar(),
-                    'categorie'          => $this->getCategorie($turnsterObject->getGeboortejaar()),
-                    'niveau'             => $turnsterObject->getNiveau(),
-                    'wedstrijdnummer'    => $turnsterObject->getScores()->getWedstrijdnummer(),
-                    'vloermuziek'        => $vloermuziek,
-                    'opmerking'          => $turnsterObject->getOpmerking(),
-                    'keuze'              => $this->isKeuzeOefenstof($turnsterObject->getGeboortejaar()),
-                    'wedstrijddag'       => $turnsterObject->getScores()->getWedstrijddag(),
-                    'baan'               => $turnsterObject->getScores()->getBaan(),
-                    'wedstrijdronde'     => $turnsterObject->getScores()->getWedstrijdronde(),
-                    'groep'              => $turnsterObject->getScores()->getGroep(),
-                    'vloermuziekLocatie' => $locatie,
-                ];
+
+        // Todo: afmelden functionaliteit toevoegen
+        $afgemeldAantal = 0;
+        $wachtlijstAantal = 0;
+
+        /** @var Team $team */
+        foreach ($user->getTeams() as $team) {
+            if ($team->getWachtlijst()) {
+                $wachtlijstAantal++;
             }
         }
-        $juryleden = [];
-        /** @var Jurylid[] $juryObjecten */
-        $juryObjecten = $user->getJurylid();
-        foreach ($juryObjecten as $juryObject) {
-            $juryleden[] = [
-                'id'         => $juryObject->getId(),
-                'voornaam'   => $juryObject->getVoornaam(),
-                'achternaam' => $juryObject->getAchternaam(),
-                'opmerking'  => $juryObject->getOpmerking(),
-                'brevet'     => $juryObject->getBrevet(),
-                'dag'        => $this->getBeschikbareDag($juryObject),
-            ];
-        }
-        $teLeverenJuryleden = ceil(count($turnsters) / 10);
-        if (($juryBoete = $teLeverenJuryleden - count($juryleden)) < 0) {
+
+        $teLeverenJuryleden = ceil($user->getTeams()->count() / 2);
+        if (($juryBoete = $teLeverenJuryleden - $user->getJurylid()->count()) < 0) {
             $juryBoete = 0;
         }
-        $teBetalenBedrag = (count($turnsters) + count($afgemeld)) * 15 + $juryBoete * 35;
+        $teBetalenBedrag = $user->getTeams()->count() * BaseController::BEDRAG_PER_TEAM + $juryBoete * BaseController::JURY_BOETE_BEDRAG;
         /** @var Betaling[] $betalingen */
         $betalingen    = $user->getBetaling();
         $betaaldBedrag = 0;
@@ -139,11 +77,6 @@ class ContactpersoonController extends BaseController
             array(
                 'menuItems'                     => $this->menuItems,
                 'sponsors'                      => $this->sponsors,
-                'contactgegevens'               => $contactgevens,
-                'turnsters'                     => $turnsters,
-                'wachtlijstTurnsters'           => $wachtlijst,
-                'afgemeldTurnsters'             => $afgemeld,
-                'juryleden'                     => $juryleden,
                 'wijzigenTurnsterToegestaan'    => $wijzigenTurnsterToegestaan,
                 'verwijderenTurnsterToegestaan' => $verwijderenTurnsterToegestaan,
                 'wijzigJuryToegestaan'          => $wijzigJuryToegestaan,
@@ -151,10 +84,9 @@ class ContactpersoonController extends BaseController
                 'uploadenVloermuziekToegestaan' => $uploadenVloermuziekToegestaan,
                 'factuurBekijkenToegestaan'     => $factuurBekijkenToegestaan,
                 'factuurId'                     => $factuurId,
-                'banen'                         => $indelingen['banen'],
-                'dagen'                         => $indelingen['dagen'],
-                'wedstrijdrondes'               => $indelingen['wedstrijdrondes'],
-                'categorieNiveau'               => $indelingen['categorieNiveau'],
+                'user'                          => $user,
+                'afgemeldAantal'                => $afgemeldAantal,
+                'wachtlijstAantal'              => $wachtlijstAantal,
             )
         );
     }

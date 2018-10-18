@@ -144,6 +144,15 @@ class Turnster
         );
     }
 
+    public function isKeuze()
+    {
+        $leeftijd = (date('Y', time()) - $this->geboortejaar);
+        if ($leeftijd >= 13) {
+            return true;
+        }
+        return false;
+    }
+
     public function getId()
     {
         return $this->id;

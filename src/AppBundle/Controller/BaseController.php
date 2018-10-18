@@ -159,20 +159,6 @@ class BaseController extends Controller
     }
 
     /**
-     * @param $geboorteJaar
-     *
-     * @return bool
-     */
-    protected function isKeuzeOefenstof($geboorteJaar)
-    {
-        $leeftijd = (date('Y', time()) - $geboorteJaar);
-        if ($leeftijd >= 13) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * @param              $token
      * @param Session|null $session
      *

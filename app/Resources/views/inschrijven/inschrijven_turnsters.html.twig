@@ -5,7 +5,6 @@
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ asset('js/inschrijf_check.js') }}"></script>
-    <script src="{{ asset('js/countdown_clock.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
 
     <h1>Inschrijven</h1>
@@ -14,15 +13,10 @@
         <h4>&#187; Details deelnemers</h4>
         Er is/zijn {{ user.teams.count }} plekken voor teams gereserveerd!
         <br/><br/>
-        Nu kun je in alle rust de details van je turnsters invoeren. Je hebt
-        tot {{ tijdTot }} voor de niet-ingevulde plekken worden vrijgegeven. <br/><br/>
+        Nu kun je in alle rust de details van je turnsters invoeren. <br/>
         <b>Let op: Turnsters in rood zullen op de wachtlijst geplaatst worden!</b><br><br/>
         <br>
         <br>
-        We hebben ook een mooie klok voor je
-        aangezet die
-        aftelt (rechts bovenin). <br><br>
-        <br/>
         <br/>
 
         <form method="post" action="" name="teams">

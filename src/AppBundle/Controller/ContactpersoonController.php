@@ -129,7 +129,7 @@ class ContactpersoonController extends BaseController
         return new BinaryFileResponse(
             $pdf->Output(
                 'Uitslagen ' . $this->getUser()->getVereniging()->getNaam() . ' ' . $this->getUser()->getVereniging()
-                    ->getPlaats() . ' HDC ' . self::DATUM_DTC . ".pdf",
+                    ->getPlaats() . ' DTC ' . self::DATUM_DTC . ".pdf",
                 "I"
             ), 200, [
                 'Content-Type' => 'application/pdf'

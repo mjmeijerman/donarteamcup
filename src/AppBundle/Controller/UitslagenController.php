@@ -348,7 +348,7 @@ class UitslagenController extends BaseController
         $pdf->wedstrijdIndelingContent($turnsters, $userId);
         return new BinaryFileResponse(
             $pdf->Output(
-                'wedstrijdindeling HDC ' . self::DATUM_DTC . " " . $request->query->get(
+                'wedstrijdindeling DTC ' . self::DATUM_DTC . " " . $request->query->get(
                     'wedstrijddag'
                 ) . " wedstrijdronde " .
                 $request->query->get('wedstrijdronde') . " baan " . $request->query->get('baan') . ".pdf",

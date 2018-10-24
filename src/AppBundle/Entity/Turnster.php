@@ -146,7 +146,12 @@ class Turnster
 
     public function isKeuze()
     {
-        $leeftijd = (date('Y', time()) - $this->geboortejaar);
+        if (date('n') >= 8) {
+            $leeftijd = (date('Y', time()) - $this->geboortejaar) + 1;
+        } else {
+            $leeftijd = (date('Y', time()) - $this->geboortejaar);
+        }
+
         if ($leeftijd >= 13) {
             return true;
         }

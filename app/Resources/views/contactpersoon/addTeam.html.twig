@@ -1,0 +1,57 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/inschrijf_check.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+    <div id="inschrijven_controle">
+        <h1><a href="{{ path('getContactpersoonIndexPage') }}">
+                <img src="{{ asset('images/back_arrow.png') }}"></a>
+            Team toevoegen</h1>
+        Via deze pagina kun je een extra team toevoegen. In het overzicht hieronder zie je waar nog plekken vrij zijn.
+
+        <form method="post" action="{{ path('addTeam') }}">
+            <table class="wedstrijdindeling">
+                <tr>
+                    <th>Dag en tijd</th>
+                    <th>Soort teams</th>
+                    <th>Plekken</th>
+                    <th>Inschrijven</th>
+                </tr>
+                {% for wedstrijdRonde in wedstrijdRondes %}
+                    <form method="post" action="{{ path('addTeam') }}">
+                        <tr id="wedstrijd_ronde_row_{{ wedstrijdRonde.id }}">
+                            <td>{{ wedstrijdRonde.startTijd | date('d-m-Y') }}<br/>
+                                {{ wedstrijdRonde.startTijd | date('H:i') }}
+                                - {{ wedstrijdRonde.eindTijd | date('H:i') }}</td>
+                            <td>
+                                <select name="soortTeam">
+                                    {% if wedstrijdRonde.teamSoorten.count > 1 %}
+                                        <option value="" selected>Selecteer team soort</option>
+                                    {% endif %}
+                                    {% for soortTeam in wedstrijdRonde.teamSoorten %}
+                                        <option value="{{ soortTeam.id }}">{{ soortTeam.categorie }} {{ soortTeam.niveau }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                {% if wedstrijdRonde.maxTeams - wedstrijdRonde.teams.count < 0 %}
+                                    Vol. {{ wedstrijdRonde.teams.count - wedstrijdRonde.maxTeams }} teams staan op de wachtlijst
+                                {% else %}
+                                    {{ wedstrijdRonde.maxTeams - wedstrijdRonde.teams.count }}
+                                {% endif %}
+                            </td>
+                            <td align="center">
+                                <input type="hidden" name="csrfToken" value="{{ csrfToken }}"/>
+                                <input type="hidden" name="wedstrijdronde" value="{{ wedstrijdRonde.id }}" />
+                                <input type="image" src="{{ asset('images/add.png') }}" width="20px;" alt="Submit" />
+                            </td>
+                        </tr>
+                    </form>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
+{% endblock %}

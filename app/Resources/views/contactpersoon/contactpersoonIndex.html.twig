@@ -4,11 +4,11 @@
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
-    {#{% if wijzigenTurnsterToegestaan %}#}
-    {#<div id="inschrijven">#}
-    {#<a href="{{ path('addTurnster') }}">Turnster toevoegen &#187;</a>#}
-    {#</div>#}
-    {#{% endif %}#}
+    {% if wijzigenTurnsterToegestaan %}
+        <div id="inschrijven">
+            <a href="{{ path('addTeam') }}">Team toevoegen &#187;</a>
+        </div>
+    {% endif %}
     {% if wijzigJuryToegestaan %}
         <div id="add_jury">
             <a href="{{ path('addJury') }}">Jurylid toevoegen &#187;</a>
@@ -204,11 +204,11 @@
         {% if team.wachtlijst == 1 %}
             <h3>
                 {% if team.name %}
-                    {{ team.name }}
+                    {{ team.name }}:
                 {% else %}
-                    Naamloos team
+                    Naamloos team:
                 {% endif %}
-                : {{ team.wedstrijdRonde.dag }} {{ team.wedstrijdRonde.startTijd | date('d-m-Y') }},
+                {{ team.wedstrijdRonde.dag }} {{ team.wedstrijdRonde.startTijd | date('d-m-Y') }},
                 {{ team.wedstrijdRonde.startTijd | date('H:i') }}
                 - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}</h3>
             <table id="wachtlijst">

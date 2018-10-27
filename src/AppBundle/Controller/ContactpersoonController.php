@@ -11,6 +11,7 @@ use AppBundle\Entity\Turnster;
 use AppBundle\Entity\TurnsterRepository;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Vloermuziek;
+use AppBundle\Entity\WedstrijdRonde;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -30,7 +31,7 @@ class ContactpersoonController extends BaseController
      */
     public function getIndexPageAction()
     {
-        $user          = $this->getUser();
+        $user = $this->getUser();
 
         $uploadenVloermuziekToegestaan = $this->uploadenVloermuziekToegestaan();
         $wijzigenTurnsterToegestaan    = $this->wijzigTurnsterToegestaan();
@@ -42,7 +43,7 @@ class ContactpersoonController extends BaseController
         /** @var User $user */
 
         // Todo: afmelden functionaliteit toevoegen
-        $afgemeldAantal = 0;
+        $afgemeldAantal   = 0;
         $wachtlijstAantal = 0;
 
         /** @var Team $team */
@@ -56,7 +57,8 @@ class ContactpersoonController extends BaseController
         if (($juryBoete = $teLeverenJuryleden - $user->getJurylid()->count()) < 0) {
             $juryBoete = 0;
         }
-        $teBetalenBedrag = $user->getTeams()->count() * BaseController::BEDRAG_PER_TEAM + $juryBoete * BaseController::JURY_BOETE_BEDRAG;
+        $teBetalenBedrag = $user->getTeams()->count(
+            ) * BaseController::BEDRAG_PER_TEAM + $juryBoete * BaseController::JURY_BOETE_BEDRAG;
         /** @var Betaling[] $betalingen */
         $betalingen    = $user->getBetaling();
         $betaaldBedrag = 0;
@@ -87,6 +89,78 @@ class ContactpersoonController extends BaseController
                 'user'                          => $user,
                 'afgemeldAantal'                => $afgemeldAantal,
                 'wachtlijstAantal'              => $wachtlijstAantal,
+            )
+        );
+    }
+
+    /**
+     * @Route("/contactpersoon/addTeam/", name="addTeam", methods={"GET", "POST"})
+     * @param Request $request
+     *
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function addTeam(Request $request)
+    {
+        $wedstrijdRondeRepository = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde');
+
+        if ($request->getMethod() == 'POST') {
+            $postedToken = $request->request->get('csrfToken');
+            if (!empty($postedToken)) {
+                if ($this->isTokenValid($postedToken)) {
+                    $contactpersoon = $this->getUser();
+
+                    $wedstrijdRonde = $wedstrijdRondeRepository->find($request->request->get('wedstrijdronde'));
+                    $team           = new Team();
+                    $team->setWachtlijst(false);
+                    if ($wedstrijdRonde->getMaxTeams() - $wedstrijdRonde->getTeams()->count() <= 0) {
+                        $team->setWachtlijst(true);
+                    }
+                    $team->setUser($contactpersoon);
+                    $contactpersoon->addTeam($team);
+                    $team->setWedstrijdRonde($wedstrijdRonde);
+                    $wedstrijdRonde->addTeam($team);
+
+                    for ($j = 0; $j < 4; $j++) {
+                        $turnster = new Turnster();
+                        $scores   = new Scores();
+                        $turnster->setWachtlijst($team->getWachtlijst());
+
+                        $turnster->setCreationDate(new \DateTime('now'));
+                        $turnster->setExpirationDate(
+                            new \DateTime(
+                                'now + 20 minutes'
+                            )
+                        );
+                        $turnster->setScores($scores);
+                        $turnster->setUser($contactpersoon);
+                        $turnster->setTeam($team);
+                        $contactpersoon->addTurnster($turnster);
+                        $team->addTurnster($turnster);
+                    }
+                    $this->addToDB($contactpersoon);
+
+                    return $this->redirectToRoute('getContactpersoonIndexPage');
+                }
+            }
+        }
+
+        $this->setBasicPageData();
+
+        /** @var WedstrijdRonde[] $wedstrijdRondes */
+        $wedstrijdRondes = $wedstrijdRondeRepository->findBy(
+            [],
+            ['startTijd' => 'asc', 'ronde' => 'asc', 'baan' => 'asc']
+        );
+        $csrfToken       = $this->getToken();
+
+        return $this->render(
+            'contactpersoon/addTeam.html.twig',
+            array(
+                'menuItems'       => $this->menuItems,
+                'sponsors'        => $this->sponsors,
+                'csrfToken'       => $csrfToken,
+                'wedstrijdRondes' => $wedstrijdRondes,
             )
         );
     }

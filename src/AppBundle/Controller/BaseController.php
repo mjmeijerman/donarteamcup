@@ -1076,7 +1076,7 @@ class BaseController extends Controller
         $returnData['data']  = '';
         $returnData['error'] = null;
 
-        $errors             = $this->get('validator')->validate(
+        $errors = $this->get('validator')->validate(
             $newName,
             $emptyConstraint
         );
@@ -1105,7 +1105,9 @@ class BaseController extends Controller
             }
         }
 
-        $returnData['error'] = 'An unknown error occurred, please contact webmaster@donarteamcup.nl';
+        if (!isset($returnData['error'])) {
+            $returnData['error'] = 'An unknown error occurred, please contact webmaster@donarteamcup.nl';
+        }
 
         return new JsonResponse($returnData);
     }

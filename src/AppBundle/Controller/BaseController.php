@@ -7,6 +7,7 @@ use AppBundle\Entity\JuryIndeling;
 use AppBundle\Entity\Jurylid;
 use AppBundle\Entity\Scores;
 use AppBundle\Entity\SendMail;
+use AppBundle\Entity\Team;
 use AppBundle\Entity\TeamSoort;
 use AppBundle\Entity\TijdSchema;
 use AppBundle\Entity\ToegestaneNiveaus;
@@ -435,7 +436,7 @@ class BaseController extends Controller
     protected function getAvailableGeboortejaren($teamSoortId)
     {
         /** @var TeamSoort $teamSoort */
-        $teamSoort = $this->getDoctrine()->getRepository('AppBundle:TeamSoort')->find($teamSoortId);
+        $teamSoort     = $this->getDoctrine()->getRepository('AppBundle:TeamSoort')->find($teamSoortId);
         $geboorteJaren = [];
         foreach ($teamSoort->getNiveaus() as $niveau) {
             $opties = $this->getGeboortejaarFromCategorie($niveau->getCategorie());
@@ -482,7 +483,7 @@ class BaseController extends Controller
 
     protected function getVrijePlekkenPerWedstrijdRonde($rondeId)
     {
-        $result     = $this->getDoctrine()
+        $result = $this->getDoctrine()
             ->getRepository('AppBundle:WedstrijdRonde')
             ->find($rondeId);
 
@@ -1054,6 +1055,58 @@ class BaseController extends Controller
             default:
                 $returnData['error'] = 'An unknown error occurred, please contact webmaster@donarteamcup.nl';
         }
+        return new JsonResponse($returnData);
+    }
+
+    /**
+     * @Route("/contactgegevens/editTeamNaam/{id}/{newName}/", name="editTeamNaam", options={"expose"=true}, methods={"GET"})
+     * @param $id
+     * @param $newName
+     *
+     * @return JsonResponse
+     */
+    public function editTeamNaam($id, $newName)
+    {
+        if ($newName == 'null') {
+            $newName = false;
+        }
+        /** @var User $userObject */
+        $emptyConstraint     = new EmptyConstraint();
+        $userObject          = $this->getUser();
+        $returnData['data']  = '';
+        $returnData['error'] = null;
+
+        $errors             = $this->get('validator')->validate(
+            $newName,
+            $emptyConstraint
+        );
+
+        if (count($errors) == 0) {
+            /** @var Team $team */
+            foreach ($userObject->getTeams() as $team) {
+                if ($team->getId() === (int) $id) {
+                    try {
+                        $team->setName($newName);
+                        $this->addToDB($team);
+
+                        $returnData['data'] = $team->getName();
+
+                        return new JsonResponse($returnData);
+                    } catch (\Exception $e) {
+                        $returnData['error'] = $e->getMessage();
+
+                        return new JsonResponse($returnData);
+                    }
+                }
+            }
+        } else {
+            foreach ($errors as $error) {
+                $returnData['error'] .= $error->getMessage() . ' ';
+            }
+        }
+
+        $returnData['error'] = 'An unknown error occurred, please contact webmaster@donarteamcup.nl';
+
         return new JsonResponse($returnData);
     }
 

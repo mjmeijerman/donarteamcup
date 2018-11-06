@@ -64,12 +64,13 @@
     <h4>&#187; Teams ({{ user.teams.count - wachtlijstAantal - afgemeldAantal }})</h4>
     {% for team in user.teams %}
         {% if team.wachtlijst == 0 %}
-            <h3>
+            <h3><span id="team_naam_{{ team.id }}" class="editTeamNaam">
                 {% if team.name %}
                     {{ team.name }}
                 {% else %}
                     Naamloos team
                 {% endif %}
+                    </span>
                 : {{ team.wedstrijdRonde.dag }} {{ team.wedstrijdRonde.startTijd | date('d-m-Y') }},
                 {{ team.wedstrijdRonde.startTijd | date('H:i') }}
                 - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}</h3>
@@ -202,12 +203,13 @@
     <h4>&#187; Wachtlijst ({{ wachtlijstAantal }})</h4>
     {% for team in user.teams %}
         {% if team.wachtlijst == 1 %}
-            <h3>
+            <h3><span id="team_naam_{{ team.id }}" class="editTeamNaam">
                 {% if team.name %}
-                    {{ team.name }}:
+                    {{ team.name }}
                 {% else %}
-                    Naamloos team:
+                    Naamloos team
                 {% endif %}
+                    </span>
                 {{ team.wedstrijdRonde.dag }} {{ team.wedstrijdRonde.startTijd | date('d-m-Y') }},
                 {{ team.wedstrijdRonde.startTijd | date('H:i') }}
                 - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}</h3>
@@ -480,6 +482,22 @@
             var data = $(this).val();
             var fieldName = this.id.replace('txt_', '');
             onChange(data, fieldName, 'editGegevens');
+        });
+
+        $('.editTeamNaam').click(function () {
+            var data = $(this).text().trim();
+            if (data === 'Naamloos team') {
+                data = '';
+            }
+            var id = this.id;
+            onClickTeamName(data, id, 'text');
+        });
+        //
+        $(document).on('blur keypress', '.txt_edit_teamname', function (e) {
+            if (e.type === 'keypress' && e.keyCode !== 13) return;
+            var newName = $(this).val();
+            var id = this.id.replace('txt_team_naam_', '');
+            onChangeTeamName(id, newName);
         });
 
         //

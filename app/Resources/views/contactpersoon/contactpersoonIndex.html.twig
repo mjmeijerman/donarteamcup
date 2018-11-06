@@ -62,6 +62,9 @@
     {#<a href="{{ path('contactpersoonUitslagen') }}" id="indeling" target="_blank">&#187; Uitslagen downloaden</a>#}
 
     <h4>&#187; Teams ({{ user.teams.count - wachtlijstAantal - afgemeldAantal }})</h4>
+    <p>
+        <i>Je kunt de naam van je team wijzigen door erop te klikken!</i>
+    </p>
     {% for team in user.teams %}
         {% if team.wachtlijst == 0 %}
             <h3><span id="team_naam_{{ team.id }}" class="editTeamNaam">

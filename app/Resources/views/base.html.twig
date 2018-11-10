@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Donar Team Cup</title>
     {% block stylesheets %}
         <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
@@ -32,7 +32,7 @@
     <div id="container">
         <div id="header">
             <a href="{{ path('getIndexPage') }}">
-                <img src="{{ asset('images/header.png') }}" alt="" />
+                <img src="{{ asset('images/header.png') }}" alt=""/>
             </a>
         </div>
 
@@ -76,12 +76,13 @@
             <div class="locatie">
                 <h2>Locatie</h2>
                 <hr>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2452.939070444615!2d4.24481031570471!3d52.062633077775324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5b105e3805a29%3A0x510650291e057370!2sTurnhal+Den+Haag!5e0!3m2!1snl!2snl!4v1536157523360"
-                        width="200" frameborder="0"
-                        style="border:0;margin-left:10px;margin-right:10px;margin-bottom:5px;"></iframe>
-                <br/>
-                Turnhal GVP Den Haag<br/>
-                Groen van Prinstererlaan 510, Den Haag
+                <a href="https://www.google.com/maps/place/Turnhal+Den+Haag/@52.0626331,4.2448103,17z/data=!3m1!4b1!4m5!3m4!1s0x47c5b105e3805a29:0x510650291e057370!8m2!3d52.0626298!4d4.246999"
+                   target="_blank" style="color:#F2E609">
+                    <img src="{{ asset('images/locatie.png') }}" width="200"/>
+                    <br/>
+                    Turnhal GVP Den Haag<br/>
+                    Groen van Prinstererlaan 510, Den Haag
+                </a>
             </div>
         </div>
 
@@ -94,23 +95,24 @@
         <div id="s">
             <div class="sponsor">
                 Sponsors
-                <hr />
+                <hr/>
                 {% for sponsor in sponsors %}
-                {% if sponsor.website %}
-                    <a href="{{ sponsor.website }}" target="_blank" style="text-decoration: none;">
-                {% endif %}
-                    <img src="/uploads/sponsors/{{ sponsor.locatie }}" />
-                {% if sponsor.website %}
-                    </a>
-                {% endif %}
-                <br />
-                    {% if loop.index != sponsors|length %}<br />{% endif %}
+                    {% if sponsor.website %}
+                        <a href="{{ sponsor.website }}" target="_blank" style="text-decoration: none;">
+                    {% endif %}
+                    <img src="/uploads/sponsors/{{ sponsor.locatie }}"/>
+                    {% if sponsor.website %}
+                        </a>
+                    {% endif %}
+                    <br/>
+                    {% if loop.index != sponsors|length %}<br/>{% endif %}
                 {% endfor %}
             </div>
         </div>
 
         <div id="social">
-            <a href="https://www.facebook.com/Donar-Team-Cup-2164095070583401/" target="_blank"><img src="{{ asset('images/facebook.png') }}" width="30" /></a>
+            <a href="https://www.facebook.com/Donar-Team-Cup-2164095070583401/" target="_blank"><img
+                        src="{{ asset('images/facebook.png') }}" width="30"/></a>
         </div>
 
         {% block javascripts %}

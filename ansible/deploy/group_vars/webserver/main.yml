@@ -1,5 +1,6 @@
-deploy_user: mark
-nginx_user:  www-data
+deploy_user: 'deploy'
+nginx_user:  'www-data'
+deploy_root: '/home/{{ deploy_user }}'
 
 project_deploy_hook_on_finalize: "tasks/finalize_hooks.yml"
 

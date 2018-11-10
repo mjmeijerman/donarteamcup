@@ -1,2 +1,2 @@
-project_root: /var/www/test.donarteamcup.nl
+project_root: '{{ deploy_root }}/test.donarteamcup.nl'
 mailer_delivery_address: ['markmeijerman@gmail.com']

@@ -6,4 +6,4 @@ webserver-test
 donarteamcup-production ansible_ssh_host=donarteamcup.nl
 
 [webserver-test]
-donarteamcup-test ansible_ssh_host=donarteamcup.nl
+donarteamcup-test ansible_ssh_host=test.donarteamcup.nl

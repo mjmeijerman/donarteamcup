@@ -1,2 +1,2 @@
-project_root: /var/www/donarteamcup.nl
+project_root: '{{ deploy_root }}/donarteamcup.nl'
 mailer_delivery_address: ~

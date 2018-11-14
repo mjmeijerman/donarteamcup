@@ -15,6 +15,7 @@ use AppBundle\Entity\Turnster;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Vereniging;
 use AppBundle\Entity\Voorinschrijving;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -1090,11 +1091,11 @@ class BaseController extends Controller
                         $this->addToDB($team);
 
                         $returnData['data'] = $team->getName();
-
-                        return new JsonResponse($returnData);
-                    } catch (\Exception $e) {
-                        $returnData['error'] = $e->getMessage();
-
+                    } catch (UniqueConstraintViolationException $e) {
+                        $returnData['error'] = 'Deze naam is helaas al in gebruik!';
+                    } catch (\Exception $exception) {
+                        $returnData['error'] = 'Er is helaas iets mis gegaan :-(';
+                    } finally {
                         return new JsonResponse($returnData);
                     }
                 }

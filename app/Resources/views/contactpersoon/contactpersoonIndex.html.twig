@@ -4,7 +4,7 @@
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
-    {% if wijzigenTurnsterToegestaan %}
+    {% if wijzigenTeamToegestaan %}
         <div id="inschrijven">
             <a href="{{ path('addTeam') }}">Team toevoegen &#187;</a>
         </div>
@@ -66,7 +66,7 @@
         <i>Je kunt de naam van je team wijzigen door erop te klikken!</i>
     </p>
     {% for team in user.teams %}
-        {% if team.wachtlijst == 0 %}
+        {% if team.wachtlijst == 0 and team.afgemeld != 1 %}
             <h3><span id="team_naam_{{ team.id }}" class="editTeamNaam">
                 {% if team.name %}
                     {{ team.name }}
@@ -76,7 +76,22 @@
                     </span>
                 : {{ team.wedstrijdRonde.dag }} {{ team.wedstrijdRonde.startTijd | date('d-m-Y') }},
                 {{ team.wedstrijdRonde.startTijd | date('H:i') }}
-                - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}</h3>
+                - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}
+                {% if wijzigenTeamToegestaan %}
+                    {#<a href="{{ path('editTeam', { 'teamId': team.id }) }}"#}
+                    {#style="text-decoration: none">#}
+                    <img src="{{ asset('images/edit.png') }}">
+                    {#</a>#}
+                {% endif %}
+                <form method="post" name="remove_team_{{ team.id }}"
+                      action="{{ path('removeTeam') }}" style="display: inline;">
+                    <div class="fake_link" onclick="remove_team('{{ team.id }}',
+                            '{{ team.name }}')" style="display: inline">
+                        <img src="{{ asset('images/remove.png') }}" width="15"/>
+                        <input type="hidden" name="teamId" value="{{ team.id }}"/>
+                    </div>
+                </form>
+            </h3>
             <table id="deelnemers">
                 <tr>
                     <th width="20">
@@ -147,24 +162,6 @@
                                 </a>
                             {% endif %}
                         </td>
-                        {#<td>#}
-                        {#{% if wijzigenTurnsterToegestaan %}#}
-                        {#<a href="{{ path('editTurnster', { 'turnsterId': turnster.id }) }}"#}
-                        {#style="text-decoration: none">#}
-                        {#<img src="{{ asset('images/edit.png') }}">#}
-                        {#</a>#}
-                        {#{% endif %}#}
-                        {#{% if verwijderenTurnsterToegestaan %}#}
-                        {#<form method="post" name="remove_turnster_{{ turnster.id }}"#}
-                        {#action="{{ path('removeTurnster') }}" style="display: inline;">#}
-                        {#<div class="fake_link" onclick="remove_turnster('{{ turnster.id }}',#}
-                        {#'{{ turnster.voornaam }}', '{{ turnster.achternaam }}')" style="display: inline">#}
-                        {#<img src="{{ asset('images/remove.png') }}" width="15"/>#}
-                        {#<input type="hidden" name="turnsterId" value="{{ turnster.id }}"/>#}
-                        {#</div>#}
-                        {#</form>#}
-                        {#{% endif %}#}
-                        {#</td>#}
                     </tr>
                 {% endfor %}
             </table>
@@ -179,7 +176,7 @@
                 <td><img src="{{ asset('images/upload.png') }}" height="18"></td>
                 <td>Muziek uploaden</td>
             {% endif %}
-            {% if wijzigenTurnsterToegestaan %}
+            {% if wijzigenTeamToegestaan %}
                 <td><img src="{{ asset('images/edit.png') }}"></td>
                 <td>Team bewerken</td>
             {% endif %}
@@ -189,10 +186,8 @@
                 <td><img src="{{ asset('images/listen.png') }}" height="18"></td>
                 <td>Muziek beluisteren</td>
             {% endif %}
-            {% if verwijderenTurnsterToegestaan %}
-                <td><img src="{{ asset('images/remove.png') }}" width="15"/></td>
-                <td>Team afmelden</td>
-            {% endif %}
+            <td><img src="{{ asset('images/remove.png') }}" width="15"/></td>
+            <td>Team afmelden</td>
         </tr>
         <tr>
             {% if uploadenVloermuziekToegestaan %}
@@ -215,7 +210,22 @@
                     </span>
                 {{ team.wedstrijdRonde.dag }} {{ team.wedstrijdRonde.startTijd | date('d-m-Y') }},
                 {{ team.wedstrijdRonde.startTijd | date('H:i') }}
-                - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}</h3>
+                - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}
+                {% if wijzigenTeamToegestaan %}
+                    {#<a href="{{ path('editTeam', { 'teamId': team.id }) }}"#}
+                    {#style="text-decoration: none">#}
+                    <img src="{{ asset('images/edit.png') }}">
+                    {#</a>#}
+                {% endif %}
+                <form method="post" name="remove_team_{{ team.id }}"
+                      action="{{ path('removeTeam') }}" style="display: inline;">
+                    <div class="fake_link" onclick="remove_team('{{ team.id }}',
+                            '{{ team.name }}')" style="display: inline">
+                        <img src="{{ asset('images/remove.png') }}" width="15"/>
+                        <input type="hidden" name="teamId" value="{{ team.id }}"/>
+                    </div>
+                </form>
+            </h3>
             <table id="wachtlijst">
                 <tr>
                     <th width="20">
@@ -279,24 +289,6 @@
                                 </a>
                             {% endif %}
                         </td>
-                        {#<td>#}
-                        {#{% if wijzigenTurnsterToegestaan %}#}
-                        {#<a href="{{ path('editTurnster', { 'turnsterId': turnster.id }) }}"#}
-                        {#style="text-decoration: none">#}
-                        {#<img src="{{ asset('images/edit.png') }}">#}
-                        {#</a>#}
-                        {#{% endif %}#}
-                        {#{% if verwijderenTurnsterToegestaan %}#}
-                        {#<form method="post" name="remove_turnster_{{ turnster.id }}"#}
-                        {#action="{{ path('removeTurnster') }}" style="display: inline;">#}
-                        {#<div class="fake_link" onclick="remove_turnster('{{ turnster.id }}',#}
-                        {#'{{ turnster.voornaam }}', '{{ turnster.achternaam }}')" style="display: inline">#}
-                        {#<img src="{{ asset('images/remove.png') }}" width="15"/>#}
-                        {#<input type="hidden" name="turnsterId" value="{{ turnster.id }}"/>#}
-                        {#</div>#}
-                        {#</form>#}
-                        {#{% endif %}#}
-                        {#</td>#}
                     </tr>
                 {% endfor %}
             </table>
@@ -307,16 +299,14 @@
 
     <table>
         <tr>
-            {% if wijzigenTurnsterToegestaan %}
+            {% if wijzigenTeamToegestaan %}
                 <td><img src="{{ asset('images/edit.png') }}"></td>
                 <td>Team bewerken</td>
             {% endif %}
         </tr>
         <tr>
-            {% if verwijderenTurnsterToegestaan %}
-                <td><img src="{{ asset('images/remove.png') }}" width="15"/></td>
-                <td>Team afmelden</td>
-            {% endif %}
+            <td><img src="{{ asset('images/remove.png') }}" width="15"/></td>
+            <td>Team afmelden</td>
         </tr>
     </table>
 
@@ -406,67 +396,75 @@
         </tr>
     </table>
 
-    {#<h4>&#187; Afmeldingen ({{ afgemeldTurnsters|length }})</h4>#}
-    {#<table id="wachtlijst">#}
-    {#<tr>#}
-    {#<th width="20">#}
-    {###}
-{#</th>#}
-    {#<th>#}
-    {#Voornaam#}
-    {#</th>#}
-    {#<th>#}
-    {#Achternaam#}
-    {#</th>#}
-    {#<th>#}
-    {#Geb. jaar#}
-    {#</th>#}
-    {#<th>#}
-    {#Cat.#}
-    {#</th>#}
-    {#<th>#}
-    {#Niv.#}
-    {#</th>#}
-    {#<th>#}
+    <h4>&#187; Afmeldingen ({{ afgemeldAantal }})</h4>
+    {% for team in user.teams %}
+        {% if team.afgemeld == 1 %}
+            <h3><span id="team_naam_{{ team.id }}">
+                {% if team.name %}
+                    {{ team.name }}
+                {% else %}
+                    Naamloos team
+                {% endif %}
+                    </span>
+                </h3>
+            <table id="wachtlijst">
+                <tr>
+                    <th width="20">
+                        #
+                    </th>
+                    <th>
+                        Voornaam
+                    </th>
+                    <th>
+                        Achternaam
+                    </th>
+                    <th>
+                        Geb. jaar
+                    </th>
+                    <th>
+                        Cat.
+                    </th>
+                    <th>
+                        Niv.
+                    </th>
+                </tr>
+                {% for turnster in team.turnsters %}
+                    <tr>
+                        <td>
+                            {{ loop.index }}
+                        </td>
+                        <td>
+                            {{ turnster.voornaam }}
+                        </td>
+                        <td>
+                            {{ turnster.achternaam }}
+                        </td>
+                        <td>
+                            {{ turnster.geboorteJaar }}
+                        </td>
+                        <td>
+                            {{ turnster.categorie }}
+                        </td>
+                        <td>
+                            {{ turnster.niveau }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br/>
+            <br/>
+        {% endif %}
+    {% endfor %}
 
-    {#</th>#}
-    {#<th>#}
-
-    {#</th>#}
-    {#</tr>#}
-    {#{% for afmelding in afgemeldTurnsters %}#}
-    {#<tr title="{{ afmelding.opmerking }}">#}
-    {#<td>#}
-    {#{{ loop.index }}#}
-    {#</td>#}
-    {#<td>#}
-    {#{{ afmelding.voornaam }}#}
-    {#</td>#}
-    {#<td>#}
-    {#{{ afmelding.achternaam }}#}
-    {#</td>#}
-    {#<td>#}
-    {#{{ afmelding.geboorteJaar }}#}
-    {#</td>#}
-    {#<td>#}
-    {#{{ afmelding.categorie }}#}
-    {#</td>#}
-    {#<td>#}
-    {#{{ afmelding.niveau }}#}
-    {#</td>#}
-    {#</tr>#}
-    {#{% endfor %}#}
-    {#</table>#}
-
-    {#<h4 id="contact">&#187; Contact</h4>#}
-    {#Problemen? Stuur een mail naar de betreffende afdeling:<br/>#}
-    {#<br/>#}
-    {#<li><a href="mailto:jury@donarteamcup.nl">jury@donarteamcup.nl</a></li>#}
-    {#<li><a href="mailto:webmaster@donarteamcup.nl">webmaster@donarteamcup.nl</a></li>#}
-    {#<br/>#}
-    {#Bij algemene vragen, of bij twijfel, mail dan naar:#}
-    {#<br/>#}
-    {#<li><a href="mailto:info@donarteamcup.nl">info@donarteamcup.nl</a></li>#}
+    <h4 id="contact">&#187; Contact</h4>
+    Problemen? Stuur een mail naar de betreffende afdeling:<br/>
+    <br/>
+    <li><a href="mailto:jury@donarteamcup.nl">jury@donarteamcup.nl</a></li>
+    <li><a href="mailto:webmaster@donarteamcup.nl">webmaster@donarteamcup.nl</a></li>
+    <br/>
+    Bij algemene vragen, of bij twijfel, mail dan naar:
+    <br/>
+    <li><a href="mailto:info@donarteamcup.nl">info@donarteamcup.nl</a></li>
 {% endblock %}
 
 {% block javascripts %}
@@ -504,9 +502,9 @@
         });
 
         //
-        function remove_turnster(id, voornaam, achternaam) {
-            if (confirm("Weet je zeker dat je " + voornaam + " " + achternaam + " wilt afmelden?")) {
-                document.forms["remove_turnster_" + id].submit();
+        function remove_team(id, naam) {
+            if (confirm("Weet je zeker dat je team '" + naam + "' wilt afmelden?")) {
+                document.forms["remove_team_" + id].submit();
             }
         }
 

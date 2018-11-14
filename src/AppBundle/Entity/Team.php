@@ -51,9 +51,17 @@ class Team
      */
     private $wachtlijst;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $afgemeld;
+
     public function __construct()
     {
         $this->turnsters = new ArrayCollection();
+        $this->afgemeld  = false;
     }
 
     /**
@@ -151,5 +159,21 @@ class Team
     public function getWachtlijst()
     {
         return $this->wachtlijst;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAfgemeld(): bool
+    {
+        return $this->afgemeld;
+    }
+
+    /**
+     * @param bool $afgemeld
+     */
+    public function setAfgemeld(bool $afgemeld): void
+    {
+        $this->afgemeld = $afgemeld;
     }
 }

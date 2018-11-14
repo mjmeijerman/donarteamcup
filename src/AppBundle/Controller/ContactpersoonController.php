@@ -42,7 +42,6 @@ class ContactpersoonController extends BaseController
         $this->setBasicPageData();
         /** @var User $user */
 
-        // Todo: afmelden functionaliteit toevoegen
         $afgemeldAantal   = 0;
         $wachtlijstAantal = 0;
 
@@ -50,6 +49,9 @@ class ContactpersoonController extends BaseController
         foreach ($user->getTeams() as $team) {
             if ($team->getWachtlijst()) {
                 $wachtlijstAantal++;
+            }
+            if ($team->isAfgemeld()) {
+                $afgemeldAantal++;
             }
         }
 
@@ -79,8 +81,8 @@ class ContactpersoonController extends BaseController
             array(
                 'menuItems'                     => $this->menuItems,
                 'sponsors'                      => $this->sponsors,
-                'wijzigenTurnsterToegestaan'    => $wijzigenTurnsterToegestaan,
-                'verwijderenTurnsterToegestaan' => $verwijderenTurnsterToegestaan,
+                'wijzigenTeamToegestaan'        => $wijzigenTurnsterToegestaan,
+                'verwijderenTeamToegestaan'     => $verwijderenTurnsterToegestaan,
                 'wijzigJuryToegestaan'          => $wijzigJuryToegestaan,
                 'verwijderJuryToegestaan'       => $verwijderJuryToegestaan,
                 'uploadenVloermuziekToegestaan' => $uploadenVloermuziekToegestaan,
@@ -533,6 +535,66 @@ class ContactpersoonController extends BaseController
             $this->addFlash(
                 'success',
                 'Turnster succesvol afgemeld!'
+            );
+            return $this->redirectToRoute('getContactpersoonIndexPage');
+        }
+    }
+
+    /**
+     * @Route("/contactpersoon/removeTeam/", name="removeTeam", methods={"POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeTeam(Request $request)
+    {
+        /** @var Team $team */
+        $team = $this->getDoctrine()->getRepository('AppBundle:Team')
+            ->findOneBy(['id' => $request->request->get('teamId')]) ;
+        if (!$team) {
+            $this->addFlash(
+                'error',
+                'Team niet gevonden'
+            );
+            return $this->redirectToRoute('getContactpersoonIndexPage');
+        }
+        if ($team->getUser() != $this->getUser()) {
+            $this->addFlash(
+                'error',
+                'Not authorized!'
+            );
+            return $this->redirectToRoute('getContactpersoonIndexPage');
+        } else {
+            if ($this->wijzigTurnsterToegestaan() || $team->getWachtlijst()) {
+                foreach ($team->getTurnsters() as $turnster) {
+                    $this->removeFromDB($turnster);
+                }
+                /** @var User $user */
+                $user = $team->getUser();
+                $user->removeTeam($team);
+                $wedstrijdRonde = $team->getWedstrijdRonde();
+                $wedstrijdRonde->removeTeam($team);
+                $this->removeFromDB($team);
+                $this->addToDB($user);
+                $this->addToDB($wedstrijdRonde);
+                if (!$team->getWachtlijst()) {
+                    $this->updateWachtlijst($wedstrijdRonde);
+                }
+            } else {
+                $team->setAfgemeld(true);
+                foreach ($team->getTurnsters() as $turnster) {
+                    $turnster->setAfgemeld(true);
+                    $this->addToDB($turnster);
+                }
+                $this->addToDB($team);
+                $wedstrijdRonde = $team->getWedstrijdRonde();
+                if (!$team->getWachtlijst()) {
+                    $this->updateWachtlijst($wedstrijdRonde);
+                }
+            }
+            $this->addFlash(
+                'success',
+                'Team succesvol afgemeld!'
             );
             return $this->redirectToRoute('getContactpersoonIndexPage');
         }
@@ -1111,5 +1173,33 @@ class ContactpersoonController extends BaseController
             'wedstrijdrondes' => $wedstrijdrondes,
             'categorieNiveau' => $categorieNiveau,
         ];
+    }
+
+    private function updateWachtlijst(WedstrijdRonde $wedstrijdRonde)
+    {
+        if (!$this->wijzigTurnsterToegestaan()) {
+            return;
+        }
+        $geplaatsteTeams = 0;
+        /** @var Team $team */
+        foreach ($wedstrijdRonde->getTeams() as $team) {
+            if ($team->isAfgemeld()) {
+                continue;
+            }
+
+            if ($team->getWachtlijst()) {
+                $team->setWachtlijst(false);
+                foreach ($team->getTurnsters() as $turnster) {
+                    $turnster->setWachtlijst(false);
+                    $this->addToDB($turnster);
+                }
+                $this->addToDB($team);
+            }
+            $geplaatsteTeams++;
+
+            if ($geplaatsteTeams == $wedstrijdRonde->getMaxTeams()) {
+                return;
+            }
+        }
     }
 }

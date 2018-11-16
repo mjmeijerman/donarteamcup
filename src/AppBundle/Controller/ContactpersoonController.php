@@ -411,7 +411,6 @@ class ContactpersoonController extends BaseController
                         'id'           => $toegestaneNiveau->getId(),
                         'categorie'    => $toegestaneNiveau->getCategorie(),
                         'niveau'       => $toegestaneNiveau->getNiveau(),
-                        'geboorteJaar' => $this->getGeboortejaarFromCategorie($toegestaneNiveau->getCategorie()),
                     ];
                 }
                 if ($request->getMethod() == 'POST') {
@@ -487,9 +486,6 @@ class ContactpersoonController extends BaseController
 
                                 $turnster->setCategorie($toegestaneNiveau->getCategorie());
                                 $turnster->setNiveau($toegestaneNiveau->getNiveau());
-                                $turnster->setGeboortejaar(
-                                    $this->getGeboortejaarFromCategorie($toegestaneNiveau->getCategorie())
-                                );
                                 $turnster->setIngevuld(true);
                                 $this->addToDB($turnster);
                             }

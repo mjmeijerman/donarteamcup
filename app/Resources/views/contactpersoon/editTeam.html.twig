@@ -73,11 +73,11 @@
                                 <option value="" selected>Niveau</option>
                                 {% for niveau in toegestaneCombinatiesNiveauGeboortejaar %}
                                     <option value="{{ niveau.id }}"
-                                            {% if turnster.categorie == niveau.categorie and turnster.geboorteJaar == niveau.geboorteJaar and turnster.niveau == niveau.niveau %}
+                                            {% if turnster.categorie == niveau.categorie and turnster.niveau == niveau.niveau %}
                                                 selected
                                             {% endif %}
                                     >
-                                        {{ niveau.categorie }} ({{ niveau.geboorteJaar }}) {{ niveau.niveau }}
+                                        {{ niveau.categorie }} {{ niveau.niveau }}
                                     </option>
                                 {% endfor %}
                             </select>

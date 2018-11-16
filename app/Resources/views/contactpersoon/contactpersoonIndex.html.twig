@@ -68,13 +68,20 @@
     {% for team in user.teams %}
         {% if team.wachtlijst == 0 and team.afgemeld != 1 %}
             <h3><span id="team_naam_{{ team.id }}" class="editTeamNaam">
-                {% if team.name %}
+                {%- if team.name -%}
                     {{ team.name }}
-                {% else %}
+                {%- else -%}
                     Naamloos team
-                {% endif %}
-                    </span>
-                : {{ team.wedstrijdRonde.dag }} {{ team.wedstrijdRonde.startTijd | date('d-m-Y') }},
+                {%- endif -%}
+                    </span>:
+                {% for teamSoort in team.wedstrijdRonde.teamSoorten %}
+                    {{ teamSoort.categorie }} {{ teamSoort.niveau }}
+                    {% if not loop.last -%}
+                        /
+                    {%- endif -%}
+                {% endfor %}
+                ,
+                {{ team.wedstrijdRonde.dag }} {{ team.wedstrijdRonde.startTijd | date('d-m-Y') }},
                 {{ team.wedstrijdRonde.startTijd | date('H:i') }}
                 - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}
                 {% if wijzigenTeamToegestaan %}

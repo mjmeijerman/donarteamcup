@@ -125,6 +125,7 @@
                     <th>
 
                     </th>
+                    <th></th>
                 </tr>
                 {% for turnster in team.turnsters %}
                     <tr>
@@ -167,6 +168,18 @@
                                 <a href="{{ asset(turnster.vloermuziek.webPath) }}" target="_blank">
                                     <img src="{{ asset('images/listen.png') }}" height="18">
                                 </a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if wijzigenTeamToegestaan and turnster.voornaam != 'leeg' and turnster.achternaam != 'leeg' %}
+                                <form method="post" name="remove_turnster_{{ turnster.id }}"
+                                      action="{{ path('removeTurnsterData') }}" style="display: inline;">
+                                    <div class="fake_link" onclick="remove_turnster_data('{{ turnster.id }}',
+                                            '{{ turnster.voornaam }} {{ turnster.achternaam }}')" style="display: inline">
+                                        <img src="{{ asset('images/remove.png') }}" width="15"/>
+                                        <input type="hidden" name="turnsterId" value="{{ turnster.id }}"/>
+                                    </div>
+                                </form>
                             {% endif %}
                         </td>
                     </tr>
@@ -215,6 +228,14 @@
                     Naamloos team
                 {% endif %}
                     </span>
+                :
+                {% for teamSoort in team.wedstrijdRonde.teamSoorten %}
+                    {{ teamSoort.categorie }} {{ teamSoort.niveau }}
+                    {% if not loop.last -%}
+                        /
+                    {%- endif -%}
+                {% endfor %}
+                ,
                 {{ team.wedstrijdRonde.dag }} {{ team.wedstrijdRonde.startTijd | date('d-m-Y') }},
                 {{ team.wedstrijdRonde.startTijd | date('H:i') }}
                 - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}
@@ -255,6 +276,7 @@
                     </th>
                     <th>
                     </th>
+                    <th></th>
                 </tr>
                 {% for turnster in team.turnsters %}
                     <tr>
@@ -294,6 +316,18 @@
                                 <a href="{{ asset(turnster.vloermuziek.webPath) }}" target="_blank">
                                     <img src="{{ asset('images/listen.png') }}" height="18">
                                 </a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if wijzigenTeamToegestaan and turnster.voornaam != 'leeg' and turnster.achternaam != 'leeg' %}
+                                <form method="post" name="remove_turnster_{{ turnster.id }}"
+                                      action="{{ path('removeTurnsterData') }}" style="display: inline;">
+                                    <div class="fake_link" onclick="remove_turnster_data('{{ turnster.id }}',
+                                            '{{ turnster.voornaam }} {{ turnster.achternaam }}')" style="display: inline">
+                                        <img src="{{ asset('images/remove.png') }}" width="15"/>
+                                        <input type="hidden" name="turnsterId" value="{{ turnster.id }}"/>
+                                    </div>
+                                </form>
                             {% endif %}
                         </td>
                     </tr>
@@ -512,6 +546,12 @@
         function remove_team(id, naam) {
             if (confirm("Weet je zeker dat je team '" + naam + "' wilt afmelden?")) {
                 document.forms["remove_team_" + id].submit();
+            }
+        }
+
+        function remove_turnster_data(id, naam) {
+            if (confirm("Weet je zeker dat je turnster '" + naam + "' wilt afmelden?")) {
+                document.forms["remove_turnster_" + id].submit();
             }
         }
 

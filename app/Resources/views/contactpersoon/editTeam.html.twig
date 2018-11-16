@@ -1,0 +1,95 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/inschrijf_check.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+    <div id="inschrijven_controle">
+        <h1><a href="{{ path('getContactpersoonIndexPage') }}">
+                <img src="{{ asset('images/back_arrow.png') }}"></a>
+            Team wijzigen</h1>
+        Via deze pagina kun je de gegevens van turnsters in je team wijzigen.
+
+        <h4>&#187; Gegevens</h4>
+
+        <form method="post" action="" name="turnsters">
+            <h3>{% if team.name %}
+                    {{ team.name }}
+                {% else %}
+                    Naamloos team
+                {% endif %}
+                : {{ team.wedstrijdRonde.dag }} {{ team.wedstrijdRonde.startTijd | date('d-m-Y') }},
+                {{ team.wedstrijdRonde.startTijd | date('H:i') }}
+                - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}</h3>
+            <table class="aanpas_tabel">
+                <tr>
+                    <td>
+                        Naam team:
+                    </td>
+                    <td>
+                        <input type="text" class="text" placeholder="Naam team" value="{{ team.name }}"
+                               name="teamName"/>
+                    </td>
+                </tr>
+            </table>
+            {% for turnster in team.turnsters %}
+                <br/>
+                <table class="aanpas_tabel">
+                    <tr>
+                        <td>
+                            Voornaam turnster {{ loop.index }}:
+                        </td>
+                        <td>
+                            <input type="text" class="text" placeholder="Voornaam" value="
+{%- if turnster.voornaam != 'leeg' -%}
+{{ turnster.voornaam }}
+{%- endif -%}
+"
+                                   name="turnster_voornaam_{{ turnster.id }}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Achternaam turnster {{ loop.index }}:
+                        </td>
+                        <td>
+                            <input type="text" class="text" placeholder="Achternaam" value="
+{%- if turnster.achternaam != 'leeg' -%}
+{{ turnster.achternaam }}
+{%- endif -%}
+"
+                                   name="turnster_achternaam_{{ turnster.id }}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Niveau turnster {{ loop.index }}:
+                        </td>
+                        <td>
+                            <select class="turnster_niveau" id="mogelijke_niveaus_{{ turnster.id }}"
+                                    name="niveau_turnster_{{ turnster.id }}">
+                                <option value="" selected>Niveau</option>
+                                {% for niveau in toegestaneCombinatiesNiveauGeboortejaar %}
+                                    <option value="{{ niveau.id }}"
+                                            {% if turnster.categorie == niveau.categorie and turnster.geboorteJaar == niveau.geboorteJaar and turnster.niveau == niveau.niveau %}
+                                                selected
+                                            {% endif %}
+                                    >
+                                        {{ niveau.categorie }} ({{ niveau.geboorteJaar }}) {{ niveau.niveau }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            {% endfor %}
+            <br/>
+            <center>
+                <a href="#" id="reserveer_button" onclick="post_turnsters()">Gegevens opslaan</a>
+            </center>
+            <input type="hidden" name="csrfToken" value="{{ csrfToken }}"/>
+        </form>
+    </div>
+{% endblock %}

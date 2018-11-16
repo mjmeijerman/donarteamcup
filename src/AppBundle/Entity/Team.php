@@ -89,7 +89,7 @@ class Team
     }
 
     /**
-     * @return mixed
+     * @return TeamSoort
      */
     public function getTeamSoort()
     {

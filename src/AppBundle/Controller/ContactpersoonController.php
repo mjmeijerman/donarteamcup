@@ -7,6 +7,7 @@ use AppBundle\Entity\Jurylid;
 use AppBundle\Entity\Scores;
 use AppBundle\Entity\ScoresRepository;
 use AppBundle\Entity\Team;
+use AppBundle\Entity\ToegestaneNiveaus;
 use AppBundle\Entity\Turnster;
 use AppBundle\Entity\TurnsterRepository;
 use AppBundle\Entity\User;
@@ -356,139 +357,151 @@ class ContactpersoonController extends BaseController
     }
 
     /**
-     * @Route("/contactpersoon/editTurnster/{turnsterId}/", name="editTurnster", methods={"GET", "POST"})
+     * @Route("/contactpersoon/editTeam/{teamId}/", name="editTeam", methods={"GET", "POST"})
      * @param Request $request
-     * @param         $turnsterId
+     * @param         $teamId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function editTurnster(Request $request, $turnsterId)
+    public function editTeam(Request $request, $teamId)
     {
         if ($this->wijzigTurnsterToegestaan()) {
             $this->setBasicPageData();
-            /** @var Turnster $result */
-            $result = $this->getDoctrine()->getRepository('AppBundle:Turnster')
-                ->findOneBy(['id' => $turnsterId]);
-            if (!$result) {
+            /** @var Team $team */
+            $team = $this->getDoctrine()->getRepository('AppBundle:Team')
+                ->findOneBy(['id' => $teamId]);
+            if (!$team) {
                 $this->addFlash(
                     'error',
-                    'Turnster niet gevonden'
+                    'Team niet gevonden'
                 );
                 return $this->redirectToRoute('getContactpersoonIndexPage');
-            } elseif ($result->getUser() != $this->getUser()) {
+            } elseif ($team->getUser() != $this->getUser()) {
                 $this->addFlash(
                     'error',
                     'Not authorized!'
                 );
                 return $this->redirectToRoute('getContactpersoonIndexPage');
             } else {
-                $turnster      = [
-                    'voornaam'     => $result->getVoornaam(),
-                    'achternaam'   => $result->getAchternaam(),
-                    'geboortejaar' => $result->getGeboortejaar(),
-                    'niveau'       => $result->getNiveau(),
-                    'opmerking'    => $result->getOpmerking(),
-                ];
-                $classNames    = [
-                    'voornaam'     => 'text',
-                    'achternaam'   => 'text',
-                    'geboortejaar' => 'turnster_niveau',
-                    'niveau'       => 'turnster_niveau',
-                    'opmerking'    => 'text',
-                ];
-                $geboorteJaren = $this->getGeboorteJaren();
-                $csrfToken     = $this->getToken();
-                if ($request->getMethod() == 'POST') {
-                    $turnster    = [
-                        'voornaam'     => $request->request->get('voornaam'),
-                        'achternaam'   => $request->request->get('achternaam'),
-                        'geboortejaar' => $request->request->get('geboorteJaar'),
-                        'niveau'       => $request->request->get('niveau'),
-                        'opmerking'    => $request->request->get('opmerking'),
+                $csrfToken = $this->getToken();
+                if (!$team->getTeamSoort()) {
+                    $wedstrijdRonde = $team->getWedstrijdRonde();
+                    $teamSoorten    = $wedstrijdRonde->getTeamSoorten();
+                    if ($teamSoorten->count() > 1) {
+                        return $this->render(
+                            'contactpersoon/setTeamSoort.html.twig',
+                            array(
+                                'menuItems' => $this->menuItems,
+                                'sponsors'  => $this->sponsors,
+                                'team'      => $team,
+                                'csrfToken' => $csrfToken,
+                            )
+                        );
+                    }
+
+                    $team->setTeamSoort($teamSoorten->first());
+                    $this->addToDB($team);
+                }
+                $toegestaneCombinatiesNiveauGeboortejaar = [];
+                $toegestaneNiveaus                       = $team->getTeamSoort()->getNiveaus();
+                /** @var ToegestaneNiveaus $toegestaneNiveau */
+                foreach ($toegestaneNiveaus as $toegestaneNiveau) {
+                    $toegestaneCombinatiesNiveauGeboortejaar[] = [
+                        'id'           => $toegestaneNiveau->getId(),
+                        'categorie'    => $toegestaneNiveau->getCategorie(),
+                        'niveau'       => $toegestaneNiveau->getNiveau(),
+                        'geboorteJaar' => $this->getGeboortejaarFromCategorie($toegestaneNiveau->getCategorie()),
                     ];
+                }
+                if ($request->getMethod() == 'POST') {
                     $postedToken = $request->request->get('csrfToken');
-                    if (!empty($postedToken)) {
-                        if ($this->isTokenValid($postedToken)) {
-                            $validationTurnster = [
-                                'voornaam'     => false,
-                                'achternaam'   => false,
-                                'geboorteJaar' => false,
-                                'niveau'       => false,
-                                'opmerking'    => true,
-                            ];
+                    if (!empty($postedToken) && $this->isTokenValid($postedToken)) {
+                        $toegestaneNiveauRepository = $this->getDoctrine()->getRepository(
+                            'AppBundle:ToegestaneNiveaus'
+                        );
 
-                            $classNames['opmerking'] = 'succesIngevuld';
+                        if ($request->request->get('teamName')) {
+                            $team->setName($request->request->get('teamName'));
+                            $this->addToDB($team);
+                        }
+                        /** @var Turnster $turnster */
+                        foreach ($team->getTurnsters() as $turnster) {
+                            if (
+                                $request->request->get('turnster_voornaam_' . $turnster->getId()) ||
+                                $request->request->get('turnster_achternaam_' . $turnster->getId()) ||
+                                $request->request->get('niveau_turnster_' . $turnster->getId())
+                            ) {
+                                if (!
+                                (
+                                    $request->request->get('turnster_voornaam_' . $turnster->getId()) &&
+                                    $request->request->get('turnster_achternaam_' . $turnster->getId()) &&
+                                    $request->request->get('niveau_turnster_' . $turnster->getId())
+                                )
+                                ) {
+                                    $this->addFlash('error', 'De turnster moet volledig ingevuld zijn!');
+                                    return $this->render(
+                                        'contactpersoon/editTeam.html.twig',
+                                        array(
+                                            'menuItems'                               => $this->menuItems,
+                                            'sponsors'                                => $this->sponsors,
+                                            'toegestaneCombinatiesNiveauGeboortejaar' => $toegestaneCombinatiesNiveauGeboortejaar,
+                                            'team'                                    => $team,
+                                            'csrfToken'                               => $csrfToken,
+                                        )
+                                    );
+                                }
+                                $turnster->setVoornaam(
+                                    $request->request->get('turnster_voornaam_' . $turnster->getId())
+                                );
+                                $turnster->setAchternaam(
+                                    $request->request->get('turnster_achternaam_' . $turnster->getId())
+                                );
 
-                            if (strlen($request->request->get('voornaam')) > 1) {
-                                $validationTurnster['voornaam'] = true;
-                                $classNames['voornaam']         = 'succesIngevuld';
-                            } else {
-                                $this->addFlash(
-                                    'error',
-                                    'geen geldige voornaam ingevoerd'
+                                $toegestaneNiveau = $toegestaneNiveauRepository->find(
+                                    $request->request->get('niveau_turnster_' . $turnster->getId())
                                 );
-                                $classNames['voornaam'] = 'error';
-                            }
 
-                            if (strlen($request->request->get('achternaam')) > 1) {
-                                $validationTurnster['achternaam'] = true;
-                                $classNames['achternaam']         = 'succesIngevuld';
-                            } else {
-                                $this->addFlash(
-                                    'error',
-                                    'geen geldige achternaam ingevoerd'
-                                );
-                                $classNames['achternaam'] = 'error';
-                            }
-                            if ($request->request->get('geboorteJaar')) {
-                                $validationTurnster['geboorteJaar'] = true;
-                                $classNames['geboortejaar']         = 'succesIngevuld';
-                            } else {
-                                $this->addFlash(
-                                    'error',
-                                    'geen geboortejaar ingevoerd'
-                                );
-                                $classNames['geboortejaar'] = 'error';
-                            }
+                                if (!$toegestaneNiveau || !$team->getTeamSoort()->getNiveaus()->contains(
+                                        $toegestaneNiveau
+                                    )) {
+                                    $this->addFlash('error', 'Niet overal is een geldig niveau ingevuld');
+                                    return $this->render(
+                                        'contactpersoon/editTeam.html.twig',
+                                        array(
+                                            'menuItems'                               => $this->menuItems,
+                                            'sponsors'                                => $this->sponsors,
+                                            'toegestaneCombinatiesNiveauGeboortejaar' => $toegestaneCombinatiesNiveauGeboortejaar,
+                                            'team'                                    => $team,
+                                            'csrfToken'                               => $csrfToken,
+                                        )
+                                    );
+                                }
 
-                            if ($request->request->get('niveau')) {
-                                $validationTurnster['niveau'] = true;
-                                $classNames['niveau']         = 'succesIngevuld';
-                            } else {
-                                $this->addFlash(
-                                    'error',
-                                    'geen niveau ingevoerd'
+                                $turnster->setCategorie($toegestaneNiveau->getCategorie());
+                                $turnster->setNiveau($toegestaneNiveau->getNiveau());
+                                $turnster->setGeboortejaar(
+                                    $this->getGeboortejaarFromCategorie($toegestaneNiveau->getCategorie())
                                 );
-                                $classNames['niveau'] = 'error';
-                            }
-                            if (!(in_array(false, $validationTurnster))) {
-                                $turnster = $result;
-                                $turnster->setVoornaam(trim($request->request->get('voornaam')));
-                                $turnster->setAchternaam(trim($request->request->get('achternaam')));
-                                $turnster->setGeboortejaar($request->request->get('geboorteJaar'));
-                                $turnster->setCategorie($this->getCategorie($request->request->get('geboorteJaar')));
-                                $turnster->setNiveau($request->request->get('niveau'));
-                                $turnster->setOpmerking($request->request->get('opmerking'));
+                                $turnster->setIngevuld(true);
                                 $this->addToDB($turnster);
-                                $this->addFlash(
-                                    'success',
-                                    'Gegevens succesvol gewijzigd!'
-                                );
-                                return $this->redirectToRoute('getContactpersoonIndexPage');
                             }
                         }
+                        $this->addFlash(
+                            'success',
+                            'Gegevens succesvol gewijzigd!'
+                        );
+                        return $this->redirectToRoute('getContactpersoonIndexPage');
                     }
                 }
                 return $this->render(
-                    'contactpersoon/editTurnster.html.twig',
+                    'contactpersoon/editTeam.html.twig',
                     array(
-                        'menuItems'     => $this->menuItems,
-                        'sponsors'      => $this->sponsors,
-                        'turnster'      => $turnster,
-                        'geboorteJaren' => $geboorteJaren,
-                        'classNames'    => $classNames,
-                        'csrfToken'     => $csrfToken,
+                        'menuItems'                               => $this->menuItems,
+                        'sponsors'                                => $this->sponsors,
+                        'toegestaneCombinatiesNiveauGeboortejaar' => $toegestaneCombinatiesNiveauGeboortejaar,
+                        'team'                                    => $team,
+                        'csrfToken'                               => $csrfToken,
                     )
                 );
             }
@@ -550,7 +563,7 @@ class ContactpersoonController extends BaseController
     {
         /** @var Team $team */
         $team = $this->getDoctrine()->getRepository('AppBundle:Team')
-            ->findOneBy(['id' => $request->request->get('teamId')]) ;
+            ->findOneBy(['id' => $request->request->get('teamId')]);
         if (!$team) {
             $this->addFlash(
                 'error',

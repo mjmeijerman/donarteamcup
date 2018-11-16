@@ -136,7 +136,7 @@ class TeamSoort
     }
 
     /**
-     * @return ToegestaneNiveaus[]
+     * @return ArrayCollection|ToegestaneNiveaus[]
      */
     public function getNiveaus()
     {

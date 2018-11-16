@@ -432,15 +432,7 @@ class ContactpersoonController extends BaseController
                                 !$request->request->get('turnster_achternaam_' . $turnster->getId()) &&
                                 !$request->request->get('niveau_turnster_' . $turnster->getId())
                             ) {
-                                $turnster->setVoornaam('leeg');
-                                $turnster->setAchternaam('leeg');
-                                $turnster->setCategorie('leeg');
-                                $turnster->setNiveau('leeg');
-                                $turnster->setGeboortejaar(0);
-                                $turnster->setIngevuld(false);
-                                $turnster->getVloermuziek()->removeUpload();
-                                $this->removeFromDB($turnster->getVloermuziek());
-                                $turnster->setVloermuziek(null);
+                                $this->emptyTurnster($turnster);
                             }
                             if (
                                 $request->request->get('turnster_voornaam_' . $turnster->getId()) ||
@@ -527,6 +519,24 @@ class ContactpersoonController extends BaseController
             );
             return $this->redirectToRoute('getContactpersoonIndexPage');
         }
+    }
+
+    private function emptyTurnster(Turnster $turnster): void
+    {
+        $turnster->setVoornaam('leeg');
+        $turnster->setAchternaam('leeg');
+        $turnster->setCategorie('leeg');
+        $turnster->setNiveau('leeg');
+        $turnster->setGeboortejaar(0);
+        $turnster->setIngevuld(false);
+
+        if ($turnster->getVloermuziek()) {
+            $turnster->getVloermuziek()->removeUpload();
+            $this->removeFromDB($turnster->getVloermuziek());
+            $turnster->setVloermuziek(null);
+        }
+
+        $this->addToDB($turnster);
     }
 
     /**
@@ -623,6 +633,40 @@ class ContactpersoonController extends BaseController
             $this->addFlash(
                 'success',
                 'Team succesvol afgemeld!'
+            );
+            return $this->redirectToRoute('getContactpersoonIndexPage');
+        }
+    }
+
+    /**
+     * @Route("/contactpersoon/removeTurnsterData/", name="removeTurnsterData", methods={"POST"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeTurnsterData(Request $request)
+    {
+        /** @var Turnster $turnster */
+        $turnster = $this->getDoctrine()->getRepository('AppBundle:Turnster')
+            ->findOneBy(['id' => $request->request->get('turnsterId')]);
+        if (!$turnster) {
+            $this->addFlash(
+                'error',
+                'Team niet gevonden'
+            );
+            return $this->redirectToRoute('getContactpersoonIndexPage');
+        }
+        if ($turnster->getUser() != $this->getUser()) {
+            $this->addFlash(
+                'error',
+                'Not authorized!'
+            );
+            return $this->redirectToRoute('getContactpersoonIndexPage');
+        } else {
+            $this->emptyTurnster($turnster);
+            $this->addFlash(
+                'success',
+                'Turnster succesvol verwijderd'
             );
             return $this->redirectToRoute('getContactpersoonIndexPage');
         }

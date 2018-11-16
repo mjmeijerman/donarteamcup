@@ -111,9 +111,6 @@
                         Achternaam
                     </th>
                     <th>
-                        Geb. jaar
-                    </th>
-                    <th>
                         Cat.
                     </th>
                     <th>
@@ -139,9 +136,6 @@
                             {{ turnster.achternaam }}
                         </td>
                         <td>
-                            {{ turnster.geboorteJaar }}
-                        </td>
-                        <td>
                             {{ turnster.categorie }}
                         </td>
                         <td>
@@ -151,7 +145,7 @@
                             {{ turnster.scores.wedstrijdnummer }}
                         </td>
                         <td>
-                            {% if uploadenVloermuziekToegestaan and turnster.keuze and turnster.geboorteJaar != 0 %}
+                            {% if uploadenVloermuziekToegestaan and turnster.keuze and turnster.voornaam != 'leeg' and turnster.achternaam != 'leeg' %}
                                 {% if turnster.vloermuziek %}
                                     <a href="{{ path('addVloermuziek', { 'turnsterId': turnster.id }) }}"
                                        style="text-decoration: none">
@@ -266,9 +260,6 @@
                         Achternaam
                     </th>
                     <th>
-                        Geb. jaar
-                    </th>
-                    <th>
                         Cat.
                     </th>
                     <th>
@@ -290,16 +281,13 @@
                             {{ turnster.achternaam }}
                         </td>
                         <td>
-                            {{ turnster.geboorteJaar }}
-                        </td>
-                        <td>
                             {{ turnster.categorie }}
                         </td>
                         <td>
                             {{ turnster.niveau }}
                         </td>
                         <td>
-                            {% if uploadenVloermuziekToegestaan and turnster.keuze and turnster.geboorteJaar != 0 %}
+                            {% if uploadenVloermuziekToegestaan and turnster.keuze and turnster.voornaam != 'leeg' and turnster.achternaam != 'leeg' %}
                                 {% if turnster.vloermuziek %}
                                     <a href="{{ path('addVloermuziek', { 'turnsterId': turnster.id }) }}"
                                        style="text-decoration: none">
@@ -460,9 +448,6 @@
                         Achternaam
                     </th>
                     <th>
-                        Geb. jaar
-                    </th>
-                    <th>
                         Cat.
                     </th>
                     <th>
@@ -479,9 +464,6 @@
                         </td>
                         <td>
                             {{ turnster.achternaam }}
-                        </td>
-                        <td>
-                            {{ turnster.geboorteJaar }}
                         </td>
                         <td>
                             {{ turnster.categorie }}

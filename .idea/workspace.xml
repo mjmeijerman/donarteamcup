@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="221375e8-7e4c-4103-9c31-f15aa3c39b7e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -78,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="contactpersoonIndex.html.twig" pinned="false" current-in-tab="true">
+      <file leaf-file-name="contactpersoonIndex.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="33">
-              <caret line="261" column="24" selection-start-line="261" selection-start-column="24" selection-end-line="261" selection-end-column="24" />
+            <state relative-caret-position="248">
+              <caret line="289" column="82" selection-start-line="289" selection-start-column="77" selection-end-line="289" selection-end-column="82" />
               <folding>
                 <element signature="e#12#32#0#Twig" expanded="true" />
               </folding>
@@ -99,11 +100,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Turnster.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Turnster.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-73">
-              <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+            <state relative-caret-position="329">
+              <caret line="151" column="43" selection-start-line="151" selection-start-column="43" selection-end-line="151" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -121,7 +122,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>editGegeve</find>
       <find>editGegevens</find>
       <find>txt_edit</find>
       <find>txt_</find>
@@ -151,6 +151,7 @@
       <find>toegestaneCombinatiesNiveauGeboortejaar</find>
       <find>setGeb</find>
       <find>geboorte</find>
+      <find>isKey</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -205,7 +206,6 @@
         <option value="$PROJECT_DIR$/app/Resources/views/inschrijven/inschrijven_turnsters.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/uitslagen/base.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/inschrijven/inschrijven_contactpersoon.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/contactpersoon/addTeam.html.twig" />
         <option value="$PROJECT_DIR$/web/js/EditFieldByClicking.js" />
@@ -224,6 +224,7 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/contactpersoon/editTeam.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php" />
       </list>
     </option>
   </component>
@@ -475,7 +476,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="Toegest&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/ToegestaneNiveaus.php&#10;contact&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig&#10;Team&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Team.php&#10;Turnster&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;Tea&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;Toeges&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/ToegestaneNiveaus.php&#10;Cont&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/ContactpersoonController.php&#10;Turns&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;BaseCon&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/BaseController.php&#10;Vloerm&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Vloermuziek.php&#10;Turnster.&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;Wedstr&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/WedstrijdRonde.php&#10;contactpersoon&#9;null&#9;null&#10;Us&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/User.php&#10;Use&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/User.php&#10;Wed&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/WedstrijdRonde.php&#10;.css&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/web/css/organisatie.css&#10;TeamSoo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;Orga&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Organisa&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Soo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;instell&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/app/Resources/views/organisatie/organisatieInstellingen.html.twig&#10;OrganisatieContro&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Uitslagen&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/UitslagenController.php&#10;compos&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/composer.json&#10;makefo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/MakeFont/makefont.php&#10;makefont&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/MakeFont/makefont.php" />
+    <property name="SearchEverywhereHistoryKey" value="turnst&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;Toegest&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/ToegestaneNiveaus.php&#10;contact&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig&#10;Team&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Team.php&#10;Turnster&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;Tea&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;Toeges&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/ToegestaneNiveaus.php&#10;Cont&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/ContactpersoonController.php&#10;Turns&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;BaseCon&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/BaseController.php&#10;Vloerm&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Vloermuziek.php&#10;Turnster.&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;Wedstr&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/WedstrijdRonde.php&#10;contactpersoon&#9;null&#9;null&#10;Us&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/User.php&#10;Use&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/User.php&#10;Wed&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/WedstrijdRonde.php&#10;.css&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/web/css/organisatie.css&#10;TeamSoo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;Orga&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Organisa&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Soo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;instell&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/app/Resources/views/organisatie/organisatieInstellingen.html.twig&#10;OrganisatieContro&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Uitslagen&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/UitslagenController.php&#10;compos&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/composer.json&#10;makefo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/MakeFont/makefont.php&#10;makefont&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/MakeFont/makefont.php" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
@@ -542,7 +543,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="97940000" />
+    <option name="totallyTimeSpent" value="98171000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -882,13 +883,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-73">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Team.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="236">
@@ -955,11 +949,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="261" column="24" selection-start-line="261" selection-start-column="24" selection-end-line="261" selection-end-column="24" />
+        <state relative-caret-position="248">
+          <caret line="289" column="82" selection-start-line="289" selection-start-column="77" selection-end-line="289" selection-end-column="82" />
           <folding>
             <element signature="e#12#32#0#Twig" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="151" column="43" selection-start-line="151" selection-start-column="43" selection-end-line="151" selection-end-column="43" />
         </state>
       </provider>
     </entry>

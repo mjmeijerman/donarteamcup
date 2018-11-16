@@ -428,6 +428,21 @@ class ContactpersoonController extends BaseController
                         /** @var Turnster $turnster */
                         foreach ($team->getTurnsters() as $turnster) {
                             if (
+                                !$request->request->get('turnster_voornaam_' . $turnster->getId()) &&
+                                !$request->request->get('turnster_achternaam_' . $turnster->getId()) &&
+                                !$request->request->get('niveau_turnster_' . $turnster->getId())
+                            ) {
+                                $turnster->setVoornaam('leeg');
+                                $turnster->setAchternaam('leeg');
+                                $turnster->setCategorie('leeg');
+                                $turnster->setNiveau('leeg');
+                                $turnster->setGeboortejaar(0);
+                                $turnster->setIngevuld(false);
+                                $turnster->getVloermuziek()->removeUpload();
+                                $this->removeFromDB($turnster->getVloermuziek());
+                                $turnster->setVloermuziek(null);
+                            }
+                            if (
                                 $request->request->get('turnster_voornaam_' . $turnster->getId()) ||
                                 $request->request->get('turnster_achternaam_' . $turnster->getId()) ||
                                 $request->request->get('niveau_turnster_' . $turnster->getId())

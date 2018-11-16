@@ -149,6 +149,9 @@ class WedstrijdRonde
         $this->teamSoorten->removeElement($teamSoort);
     }
 
+    /**
+     * @return ArrayCollection|TeamSoort[]
+     */
     public function getTeamSoorten()
     {
         return $this->teamSoorten;

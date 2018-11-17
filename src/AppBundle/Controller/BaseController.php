@@ -42,7 +42,7 @@ class BaseController extends Controller
     const EMPTY_RESULT                    = 'Klik om te wijzigen';
     const BEDRAG_PER_TEAM                 = 50;
     const JURY_BOETE_BEDRAG               = 50;
-    const AANTAL_TEAMS_PER_JURY           = 10;
+    const AANTAL_TEAMS_PER_JURY           = 2;
     const DATUM_DTC                       = '26 & 27 januari 2019';
     const YEAR_DTC                        = 2019;
     const LOCATIE_DTC                     = 'Turnhal GVP Den Haag';

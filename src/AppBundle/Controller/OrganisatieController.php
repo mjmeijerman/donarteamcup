@@ -788,23 +788,23 @@ class OrganisatieController extends BaseController
             ->loadUsersByRole('ROLE_CONTACT');
         $factuurInformatie = [];
         foreach ($results as $result) {
-            $factuurNummer             = $this->getFactuurNummer($result);
+            $factuurNummer           = $this->getFactuurNummer($result);
             $bedragPerTurnster
-                                       = self::BEDRAG_PER_TEAM; //todo: bedrag per turnster toevoegen aan instellingen
+                                     = self::BEDRAG_PER_TEAM; //todo: bedrag per turnster toevoegen aan instellingen
             $juryBoeteBedrag
-                                       = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
-            $jurylidPerAantalTurnsters = self::AANTAL_TEAMS_PER_JURY; //todo: toevoegen als instelling
-            $juryledenAantal           = $this->getDoctrine()
+                                     = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
+            $aantalTeamsPerJury      = self::AANTAL_TEAMS_PER_JURY; //todo: toevoegen als instelling
+            $juryledenAantal         = $this->getDoctrine()
                 ->getRepository('AppBundle:Jurylid')
                 ->getIngeschrevenJuryleden($result);
-            $turnstersAantal           = $this->getDoctrine()
+            $turnstersAantal         = $this->getDoctrine()
                 ->getRepository('AppBundle:Turnster')
                 ->getIngeschrevenTurnsters($result);
-            $turnstersAfgemeldAantal   = $this->getDoctrine()
+            $turnstersAfgemeldAantal = $this->getDoctrine()
                 ->getRepository('AppBundle:Turnster')
                 ->getAantalAfgemeldeTurnsters($result);
 
-            $teLeverenJuryleden = ceil($turnstersAantal / $jurylidPerAantalTurnsters);
+            $teLeverenJuryleden = ceil($turnstersAantal / $aantalTeamsPerJury);
             if (($juryTekort = $teLeverenJuryleden - $juryledenAantal) < 0) {
                 $juryTekort = 0;
             }
@@ -972,9 +972,9 @@ class OrganisatieController extends BaseController
                 $teamSoorten = $this->getDoctrine()->getManager()->getRepository(TeamSoort::class)->findAll();
 
                 $wedstrijdronde = new WedstrijdRonde();
-                $startDateTime = new \DateTime($request->request->get('startTijd'));
-                $endDateTime = new \DateTime($request->request->get('eindTijd'));
-                $dag = $this->dayToDutch($startDateTime->format('D'));
+                $startDateTime  = new \DateTime($request->request->get('startTijd'));
+                $endDateTime    = new \DateTime($request->request->get('eindTijd'));
+                $dag            = $this->dayToDutch($startDateTime->format('D'));
                 $wedstrijdronde->setDag($dag);
                 $wedstrijdronde->setBaan($request->request->get('baan'));
                 $wedstrijdronde->setMaxTeams($request->request->get('maxTeams'));

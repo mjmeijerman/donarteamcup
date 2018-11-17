@@ -49,7 +49,7 @@ class WedstrijdIndelingPdfController extends AlphaPDFController
         $this->SetAlpha(0.5);
         $this->Rect(0, 0, 297, 35, 'F');
         $this->SetAlpha(1);
-        $this->Image('images/header_uitslagen.png', 0, 0);
+        $this->Image('images/HDCFactuurHeader.png',0,0);
 
         //TITEL
         $this->SetFont('Gotham', '', 20);

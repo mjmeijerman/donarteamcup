@@ -21,7 +21,7 @@ class UitslagenPdfController extends AlphaPDFController
     {
         $this->SetFillColor(127);
         $this->Rect(0, 0, 297, 32, 'F');
-        $this->Image('images/header_uitslagen.png', 30, -1);
+        $this->Image('images/HDCFactuurHeader.png', 30, -1);
         $this->Ln(30);
         $this->SetTextColor(0, 0, 0);
         $this->SetFont('Helvetica', 'B', 20);

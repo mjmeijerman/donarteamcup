@@ -147,7 +147,7 @@ class Turnster
     public function isKeuze()
     {
         return (
-            strtolower($this->categorie) === 'jeugd 1' ||
+            strtolower($this->categorie) === 'jeugd 2' ||
             strtolower($this->categorie) === 'junior' ||
             strtolower($this->categorie) === 'senior'
         );

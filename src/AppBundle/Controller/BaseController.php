@@ -1118,7 +1118,7 @@ class BaseController extends Controller
         //LOGO
         $pdf->SetFillColor(127);
         $pdf->Rect(0, 0, 210, 35, 'F');
-        $pdf->Image('images/header_uitslagen.png', 40, null, 170);
+        $pdf->Image('images/HDCFactuurHeader.png');
 
         //FACTUUR, NUMMER EN DATUM
         $pdf->SetFont('Franklin', '', 16);
@@ -1257,31 +1257,42 @@ class BaseController extends Controller
                         ->getRepository('AppBundle:User')
                         ->findOneBy(['id' => $userId]);
                 }
-                $factuurNummer             = $this->getFactuurNummer($user);
+                $factuurNummer        = $this->getFactuurNummer($user);
                 $bedragPerTeam
-                                           = self::BEDRAG_PER_TEAM; //todo: bedrag per turnster toevoegen aan instellingen
+                                      = self::BEDRAG_PER_TEAM; //todo: bedrag per turnster toevoegen aan instellingen
                 $juryBoeteBedrag
-                                           = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
-                $datumHBC                  = self::DATUM_DTC; // todo: datum toernooi toevoegen aan instellingen
-                $locatieHBC                = self::LOCATIE_DTC; //todo: locatie toernooi toevoegen aan instellingen
-                $rekeningNummer            = self::REKENINGNUMMER; // todo: rekeningnummer toevoegen aan instellingen
-                $rekeningTNV               = self::REKENING_TNV; // todo: TNV toevoegen aan instellingen
-                $jurylidPerAantalTurnsters = self::AANTAL_TEAMS_PER_JURY; //todo: toevoegen als instelling
-                $juryledenAantal           = $this->getDoctrine()
+                                      = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
+                $datumHBC             = self::DATUM_DTC; // todo: datum toernooi toevoegen aan instellingen
+                $locatieHBC           = self::LOCATIE_DTC; //todo: locatie toernooi toevoegen aan instellingen
+                $rekeningNummer       = self::REKENINGNUMMER; // todo: rekeningnummer toevoegen aan instellingen
+                $rekeningTNV          = self::REKENING_TNV; // todo: TNV toevoegen aan instellingen
+                $aantalTeamsPerJury   = self::AANTAL_TEAMS_PER_JURY; //todo: toevoegen als instelling
+                $juryledenAantal      = $this->getDoctrine()
                     ->getRepository('AppBundle:Jurylid')
                     ->getIngeschrevenJuryleden($user);
-                $turnstersAantal           = $this->getDoctrine()
-                    ->getRepository('AppBundle:Turnster')
-                    ->getIngeschrevenTurnsters($user);
-                $turnstersAfgemeldAantal   = $this->getDoctrine()
-                    ->getRepository('AppBundle:Turnster')
-                    ->getAantalAfgemeldeTurnsters($user);
 
-                $teLeverenJuryleden = ceil($turnstersAantal / $jurylidPerAantalTurnsters);
+                $teamsAantal          = 0;
+                $afgemeldeTeamsAantal = 0;
+                /** @var Team[] $teams */
+                $teams = $user->getTeams();
+                foreach ($teams as $team) {
+                    if ($team->getWachtlijst()) {
+                        continue;
+                    }
+
+                    if ($team->isAfgemeld()) {
+                        $afgemeldeTeamsAantal++;
+                        continue;
+                    }
+
+                    $teamsAantal++;
+                }
+
+                $teLeverenJuryleden = ceil($teamsAantal / $aantalTeamsPerJury);
                 if (($juryTekort = $teLeverenJuryleden - $juryledenAantal) < 0) {
                     $juryTekort = 0;
                 }
-                $teBetalenBedrag = ($turnstersAantal + $turnstersAfgemeldAantal) * $bedragPerTeam + $juryTekort *
+                $teBetalenBedrag = ($teamsAantal + $afgemeldeTeamsAantal) * $bedragPerTeam + $juryTekort *
                     $juryBoeteBedrag;
 
                 /** @var User $user */
@@ -1328,23 +1339,28 @@ class BaseController extends Controller
                 $pdf->Ln(8);
                 //EURO-TEKENS
                 $pdf->SetFont('Courier', '', 14);
+                $pdf->Text(161, 89.9, EURO);
+                $pdf->Text(161, 96.9, EURO);
+                $pdf->Text(161, 103.9, EURO);
+                $pdf->Text(161, 110.9, '');
+                $pdf->SetFont('Courier', '', 14);
                 $pdf->Text(161, 96.9, EURO);
                 $pdf->Text(161, 103.9, EURO);
                 $pdf->Text(161, 110.9, '');
                 $pdf->SetFont('Gotham', '', 12);
-                //TWEEDE RIJ - LEEG
-                $pdf->Cell(22, 0);        //Blank space
-                $pdf->Cell(95, 0);
-                $pdf->Cell(26, 0);
-                $pdf->Cell(17, 0);        //Blank space
-                $pdf->Cell(25, 0);
-                $pdf->Ln(7);
-                //DERDE RIJ - TURNSTERS
+                //TWEEDE RIJ - TEAMS
                 $pdf->Cell(22, 0);        //Blank space
                 $pdf->Cell(95, 0, 'Deelnemende teams');
-                $pdf->Cell(26, 0, $turnstersAantal, 0, 0, 'C');
+                $pdf->Cell(26, 0, $teamsAantal, 0, 0, 'C');
                 $pdf->Cell(17, 0);        //Blank space
-                $pdf->Cell(25, 0, ($turnstersAantal * $bedragPerTeam), 0, 0, 'R');
+                $pdf->Cell(25, 0, ($teamsAantal * $bedragPerTeam), 0, 0, 'R');
+                $pdf->Ln(7);
+                //DERDE RIJ - AFGEMELDE TEAMS
+                $pdf->Cell(22, 0);        //Blank space
+                $pdf->Cell(95, 0, 'Afgemelde teams (na sluiting inschrijving)');
+                $pdf->Cell(26, 0, $afgemeldeTeamsAantal, 0, 0, 'C');
+                $pdf->Cell(17, 0);        //Blank space
+                $pdf->Cell(25, 0, ($afgemeldeTeamsAantal * $bedragPerTeam), 0, 0, 'R');
                 $pdf->Ln(7);
                 //VIERDE RIJ - JURYLEDEN TEKORT
                 $pdf->Cell(22, 0);        //Blank space

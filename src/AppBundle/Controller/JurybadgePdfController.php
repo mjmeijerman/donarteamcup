@@ -21,7 +21,7 @@ class JurybadgePdfController extends AlphaPDFController
         $this->SetAlpha(0.5);
         $this->Rect(0, 0, 85.6, 11, 'F');
         $this->SetAlpha(1);
-        $this->Image('images/header_uitslagen.png', 0, 0);
+        $this->Image('images/BadgeHeader.png',0,0);
 
         //LINKS EN DATUM
         $this->SetFont('Gotham', '', 8);

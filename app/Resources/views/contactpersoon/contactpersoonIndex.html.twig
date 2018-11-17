@@ -56,9 +56,9 @@
         </tr>
     </table>
 
-    {#{% if factuurBekijkenToegestaan %}#}
-    {#<a href="{{ path('pdfFactuur') }}" id="{{ factuurId }}" target="_blank">&#187; Factuur downloaden</a>#}
-    {#{% endif %}#}
+    {% if factuurBekijkenToegestaan %}
+        <a href="{{ path('pdfFactuur') }}" id="{{ factuurId }}" target="_blank">&#187; Factuur downloaden</a>
+    {% endif %}
     {#<a href="{{ path('contactpersoonUitslagen') }}" id="indeling" target="_blank">&#187; Uitslagen downloaden</a>#}
 
     <h4>&#187; Teams ({{ user.teams.count - wachtlijstAantal - afgemeldAantal }})</h4>
@@ -86,8 +86,8 @@
                 - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}
                 {% if wijzigenTeamToegestaan %}
                     <a href="{{ path('editTeam', { 'teamId': team.id }) }}"
-                    style="text-decoration: none">
-                    <img src="{{ asset('images/edit.png') }}">
+                       style="text-decoration: none">
+                        <img src="{{ asset('images/edit.png') }}">
                     </a>
                 {% endif %}
                 <form method="post" name="remove_team_{{ team.id }}"
@@ -169,7 +169,8 @@
                                 <form method="post" name="remove_turnster_{{ turnster.id }}"
                                       action="{{ path('removeTurnsterData') }}" style="display: inline;">
                                     <div class="fake_link" onclick="remove_turnster_data('{{ turnster.id }}',
-                                            '{{ turnster.voornaam }} {{ turnster.achternaam }}')" style="display: inline">
+                                            '{{ turnster.voornaam }} {{ turnster.achternaam }}')"
+                                         style="display: inline">
                                         <img src="{{ asset('images/remove.png') }}" width="15"/>
                                         <input type="hidden" name="turnsterId" value="{{ turnster.id }}"/>
                                     </div>
@@ -311,7 +312,8 @@
                                 <form method="post" name="remove_turnster_{{ turnster.id }}"
                                       action="{{ path('removeTurnsterData') }}" style="display: inline;">
                                     <div class="fake_link" onclick="remove_turnster_data('{{ turnster.id }}',
-                                            '{{ turnster.voornaam }} {{ turnster.achternaam }}')" style="display: inline">
+                                            '{{ turnster.voornaam }} {{ turnster.achternaam }}')"
+                                         style="display: inline">
                                         <img src="{{ asset('images/remove.png') }}" width="15"/>
                                         <input type="hidden" name="turnsterId" value="{{ turnster.id }}"/>
                                     </div>
@@ -435,7 +437,7 @@
                     Naamloos team
                 {% endif %}
                     </span>
-                </h3>
+            </h3>
             <table id="wachtlijst">
                 <tr>
                     <th width="20">

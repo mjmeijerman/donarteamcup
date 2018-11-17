@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="221375e8-7e4c-4103-9c31-f15aa3c39b7e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/organisatie/betalingInzien.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/betalingInzien.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/DiplomaPdfController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/DiplomaPdfController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/JurybadgePdfController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/JurybadgePdfController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenPdfController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenPdfController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/WedstrijdIndelingPdfController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/WedstrijdIndelingPdfController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,24 +21,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DiplomaPdfController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/DiplomaPdfController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JurybadgePdfController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/JurybadgePdfController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="UitslagenPdfController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UitslagenPdfController.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -72,8 +51,8 @@
       <file leaf-file-name="BaseController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="1133" selection-start-line="1133" selection-end-line="1133" />
+            <state relative-caret-position="236">
+              <caret line="54" column="23" selection-start-line="54" selection-start-column="23" selection-end-line="54" selection-end-column="23" />
               <folding>
                 <element signature="e#40#74#0#PHP" expanded="true" />
               </folding>
@@ -81,30 +60,70 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="14" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
+            <state relative-caret-position="545">
+              <caret line="630" column="4" selection-start-line="630" selection-start-column="4" selection-end-line="630" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HDCFactuurHeader.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/images/HDCFactuurHeader.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file leaf-file-name="HBCFactuurHeader.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/images/HBCFactuurHeader.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file leaf-file-name="UitslagenController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="178" column="23" selection-start-line="178" selection-start-column="23" selection-end-line="178" selection-end-column="23" />
+            <state relative-caret-position="210">
+              <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OrganisatieController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="236">
+              <caret line="1152" column="8" selection-start-line="1152" selection-start-column="8" selection-end-line="1152" selection-end-column="8" />
+              <folding>
+                <element signature="e#40#70#0#PHP" expanded="true" />
+                <element signature="e#35432#35477#0#PHP" expanded="true" />
+                <element signature="e#49164#49202#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="contactpersoonIndex.html.twig" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="314">
+              <caret line="62" lean-forward="true" selection-start-line="62" selection-end-line="62" />
+              <folding>
+                <element signature="e#12#32#0#Twig" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="betalingInzien.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/betalingInzien.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="521">
+              <caret line="65" column="17" selection-start-line="65" selection-start-column="17" selection-end-line="65" selection-end-column="17" />
+              <folding>
+                <element signature="e#12#38#0#Twig" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="organisatieFinancieel.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="32" column="43" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
+              <folding>
+                <element signature="e#12#38#0#Twig" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -113,8 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Naamloos</find>
-      <find>onClickTeamName</find>
       <find>Klik om te wijzigen</find>
       <find>donarteamcup.nl</find>
       <find>/var/www/</find>
@@ -142,7 +159,9 @@
       <find>isKey</find>
       <find>Vloermuziek</find>
       <find>this-&gt;Image</find>
+      <find>.idea</find>
       <find>factuur</find>
+      <find>factuu</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -165,8 +184,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Resources/views/mails/inschrijven_jurylid.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/mails/new_password.txt.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mails/new_user.txt.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mails/voorinschrijving.txt.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/AdminController.php" />
@@ -176,7 +193,6 @@
         <option value="$PROJECT_DIR$/app/Resources/views/organisatie/base.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/organisatie/teamSoortToevoegen.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdDag.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/ToegestaneNiveaus.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/organisatie/wedstrijdrondeToevoegen.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdRondeRepository.php" />
@@ -206,16 +222,19 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdRonde.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/contactpersoon/editTeam.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/DiplomaPdfController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/JurybadgePdfController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenPdfController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/WedstrijdIndelingPdfController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/organisatie/betalingInzien.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" />
       </list>
     </option>
   </component>
@@ -307,6 +326,40 @@
               <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
               <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
+            <path>
+              <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="contactpersoon" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="organisatie" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -314,7 +367,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="Uitsla&#9;null&#9;null&#10;JuryBad&#9;null&#9;null&#10;Organisat&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;turnst&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;Toegest&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/ToegestaneNiveaus.php&#10;contact&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig&#10;Team&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Team.php&#10;Turnster&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;Tea&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;Toeges&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/ToegestaneNiveaus.php&#10;Cont&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/ContactpersoonController.php&#10;Turns&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;BaseCon&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/BaseController.php&#10;Vloerm&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Vloermuziek.php&#10;Turnster.&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;Wedstr&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/WedstrijdRonde.php&#10;contactpersoon&#9;null&#9;null&#10;Us&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/User.php&#10;Use&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/User.php&#10;Wed&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/WedstrijdRonde.php&#10;.css&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/web/css/organisatie.css&#10;TeamSoo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;Orga&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Organisa&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Soo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;instell&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/app/Resources/views/organisatie/organisatieInstellingen.html.twig&#10;OrganisatieContro&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Uitslagen&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/UitslagenController.php&#10;compos&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/composer.json&#10;makefo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/MakeFont/makefont.php&#10;makefont&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/MakeFont/makefont.php" />
+    <property name="SearchEverywhereHistoryKey" value="OrganisatieC&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Uitsla&#9;null&#9;null&#10;JuryBad&#9;null&#9;null&#10;Organisat&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;turnst&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;Toegest&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/ToegestaneNiveaus.php&#10;contact&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig&#10;Team&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Team.php&#10;Turnster&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;Tea&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;Toeges&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/ToegestaneNiveaus.php&#10;Cont&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/ContactpersoonController.php&#10;Turns&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;BaseCon&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/BaseController.php&#10;Vloerm&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Vloermuziek.php&#10;Turnster.&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/Turnster.php&#10;Wedstr&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/WedstrijdRonde.php&#10;contactpersoon&#9;null&#9;null&#10;Us&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/User.php&#10;Use&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/User.php&#10;Wed&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/WedstrijdRonde.php&#10;.css&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/web/css/organisatie.css&#10;TeamSoo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;Orga&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Organisa&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Soo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Entity/TeamSoort.php&#10;instell&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/app/Resources/views/organisatie/organisatieInstellingen.html.twig&#10;OrganisatieContro&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/OrganisatieController.php&#10;Uitslagen&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/UitslagenController.php&#10;compos&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/composer.json&#10;makefo&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/MakeFont/makefont.php&#10;makefont&#9;FILE&#9;file:///Users/mark/Sites/donarteamcup/src/AppBundle/Controller/MakeFont/makefont.php" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
@@ -381,7 +434,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="101154000" />
+    <option name="totallyTimeSpent" value="102492000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -440,14 +493,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/DoctrineMigrations/Version20181010193423.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="14" column="69" selection-start-line="14" selection-start-column="69" selection-end-line="14" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/var/cache/dev/doctrine/orm/Proxies/__CG__AppBundleEntityTeamSoort.php" />
     <entry file="file://$PROJECT_DIR$/vendor/doctrine/collections/lib/Doctrine/Common/Collections/ArrayCollection.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3645">
@@ -459,13 +504,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1785">
           <caret line="125" column="5" selection-start-line="125" selection-start-column="5" selection-end-line="125" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1710">
-          <caret line="117" column="37" selection-start-line="117" selection-start-column="37" selection-end-line="117" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -691,31 +729,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="289" column="83" selection-start-line="289" selection-start-column="68" selection-end-line="289" selection-end-column="83" />
-          <folding>
-            <element signature="e#12#32#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="647">
           <caret line="149" column="53" selection-start-line="149" selection-start-column="53" selection-end-line="149" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="799" column="59" selection-start-line="799" selection-start-column="59" selection-end-line="799" selection-end-column="59" />
-          <folding>
-            <element signature="e#40#70#0#PHP" expanded="true" />
-            <element signature="e#33398#33418#1#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -773,20 +790,69 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="545">
+          <caret line="630" column="4" selection-start-line="630" selection-start-column="4" selection-end-line="630" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="1133" selection-start-line="1133" selection-end-line="1133" />
+        <state relative-caret-position="236">
+          <caret line="54" column="23" selection-start-line="54" selection-start-column="23" selection-end-line="54" selection-end-column="23" />
           <folding>
             <element signature="e#40#74#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="14" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
+        <state relative-caret-position="480">
+          <caret line="32" column="43" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
+          <folding>
+            <element signature="e#12#38#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/betalingInzien.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="521">
+          <caret line="65" column="17" selection-start-line="65" selection-start-column="17" selection-end-line="65" selection-end-column="17" />
+          <folding>
+            <element signature="e#12#38#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="1152" column="8" selection-start-line="1152" selection-start-column="8" selection-end-line="1152" selection-end-column="8" />
+          <folding>
+            <element signature="e#40#70#0#PHP" expanded="true" />
+            <element signature="e#35432#35477#0#PHP" expanded="true" />
+            <element signature="e#49164#49202#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="62" lean-forward="true" selection-start-line="62" selection-end-line="62" />
+          <folding>
+            <element signature="e#12#32#0#Twig" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

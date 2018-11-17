@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="221375e8-7e4c-4103-9c31-f15aa3c39b7e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/organisatie/betalingInzien.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/betalingInzien.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -48,11 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BaseController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BaseController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="54" column="23" selection-start-line="54" selection-start-column="23" selection-end-line="54" selection-end-column="23" />
+            <state relative-caret-position="341">
+              <caret line="51" column="29" lean-forward="true" selection-start-line="51" selection-start-column="29" selection-end-line="51" selection-end-column="29" />
               <folding>
                 <element signature="e#40#74#0#PHP" expanded="true" />
               </folding>
@@ -81,8 +78,8 @@
       <file leaf-file-name="OrganisatieController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="1152" column="8" selection-start-line="1152" selection-start-column="8" selection-end-line="1152" selection-end-column="8" />
+            <state relative-caret-position="81">
+              <caret line="1126" column="52" selection-start-line="1126" selection-start-column="52" selection-end-line="1126" selection-end-column="52" />
               <folding>
                 <element signature="e#40#70#0#PHP" expanded="true" />
                 <element signature="e#35432#35477#0#PHP" expanded="true" />
@@ -92,11 +89,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="contactpersoonIndex.html.twig" pinned="false" current-in-tab="true">
+      <file leaf-file-name="contactpersoonIndex.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="62" lean-forward="true" selection-start-line="62" selection-end-line="62" />
+            <state relative-caret-position="344">
+              <caret line="64" column="7" lean-forward="true" selection-start-line="64" selection-start-column="7" selection-end-line="64" selection-end-column="7" />
               <folding>
                 <element signature="e#12#32#0#Twig" expanded="true" />
               </folding>
@@ -119,8 +116,8 @@
       <file leaf-file-name="organisatieFinancieel.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" column="43" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
+            <state relative-caret-position="450">
+              <caret line="30" column="38" lean-forward="true" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
               <folding>
                 <element signature="e#12#38#0#Twig" expanded="true" />
               </folding>
@@ -230,11 +227,11 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/WedstrijdIndelingPdfController.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/organisatie/betalingInzien.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" />
       </list>
     </option>
   </component>
@@ -434,7 +431,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102492000" />
+    <option name="totallyTimeSpent" value="102698000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -804,26 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="54" column="23" selection-start-line="54" selection-start-column="23" selection-end-line="54" selection-end-column="23" />
-          <folding>
-            <element signature="e#40#74#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="43" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
-          <folding>
-            <element signature="e#12#38#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/betalingInzien.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="521">
@@ -834,10 +811,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="64" column="7" lean-forward="true" selection-start-line="64" selection-start-column="7" selection-end-line="64" selection-end-column="7" />
+          <folding>
+            <element signature="e#12#32#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/organisatieFinancieel.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="38" lean-forward="true" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+          <folding>
+            <element signature="e#12#38#0#Twig" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="1152" column="8" selection-start-line="1152" selection-start-column="8" selection-end-line="1152" selection-end-column="8" />
+        <state relative-caret-position="81">
+          <caret line="1126" column="52" selection-start-line="1126" selection-start-column="52" selection-end-line="1126" selection-end-column="52" />
           <folding>
             <element signature="e#40#70#0#PHP" expanded="true" />
             <element signature="e#35432#35477#0#PHP" expanded="true" />
@@ -846,12 +843,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="62" lean-forward="true" selection-start-line="62" selection-end-line="62" />
+        <state relative-caret-position="341">
+          <caret line="51" column="29" lean-forward="true" selection-start-line="51" selection-start-column="29" selection-end-line="51" selection-end-column="29" />
           <folding>
-            <element signature="e#12#32#0#Twig" expanded="true" />
+            <element signature="e#40#74#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

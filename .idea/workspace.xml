@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="221375e8-7e4c-4103-9c31-f15aa3c39b7e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,7 +20,7 @@
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="353">
-              <caret line="241" column="55" lean-forward="true" selection-start-line="241" selection-start-column="55" selection-end-line="241" selection-end-column="55" />
+              <caret line="241" column="55" selection-start-line="241" selection-start-column="55" selection-end-line="241" selection-end-column="55" />
               <folding>
                 <element signature="e#40#70#0#PHP" expanded="true" />
                 <element signature="e#18607#18636#1#PHP" expanded="true" />
@@ -65,7 +64,7 @@
         <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/editTeam.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="387">
-              <caret line="60" column="13" lean-forward="true" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
+              <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -82,8 +81,8 @@
       <file leaf-file-name="contactpersoonIndex.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="289" column="82" selection-start-line="289" selection-start-column="77" selection-end-line="289" selection-end-column="82" />
+            <state relative-caret-position="227">
+              <caret line="289" column="83" selection-start-line="289" selection-start-column="68" selection-end-line="289" selection-end-column="83" />
               <folding>
                 <element signature="e#12#32#0#Twig" expanded="true" />
               </folding>
@@ -103,17 +102,17 @@
       <file leaf-file-name="Turnster.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="151" column="43" selection-start-line="151" selection-start-column="43" selection-end-line="151" selection-end-column="43" />
+            <state relative-caret-position="299">
+              <caret line="149" column="53" selection-start-line="149" selection-start-column="53" selection-end-line="149" selection-end-column="53" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Team.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Team.php">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="91" column="24" selection-start-line="91" selection-start-column="24" selection-end-line="91" selection-end-column="24" />
+            <state relative-caret-position="285">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
             </state>
           </provider>
         </entry>
@@ -174,7 +173,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Resources/views/mails/inschrijven_contactpersoon.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mails/inschrijven_jurylid.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mails/new_password.txt.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mails/new_user.txt.twig" />
@@ -224,6 +222,7 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/contactpersoon/editTeam.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php" />
       </list>
     </option>
@@ -543,7 +542,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98171000" />
+    <option name="totallyTimeSpent" value="98258000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -809,7 +808,7 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
@@ -931,7 +930,7 @@
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ContactpersoonController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="353">
-          <caret line="241" column="55" lean-forward="true" selection-start-line="241" selection-start-column="55" selection-end-line="241" selection-end-column="55" />
+          <caret line="241" column="55" selection-start-line="241" selection-start-column="55" selection-end-line="241" selection-end-column="55" />
           <folding>
             <element signature="e#40#70#0#PHP" expanded="true" />
             <element signature="e#18607#18636#1#PHP" expanded="true" />
@@ -943,14 +942,14 @@
     <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/editTeam.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="387">
-          <caret line="60" column="13" lean-forward="true" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
+          <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/contactpersoonIndex.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="289" column="82" selection-start-line="289" selection-start-column="77" selection-end-line="289" selection-end-column="82" />
+        <state relative-caret-position="227">
+          <caret line="289" column="83" selection-start-line="289" selection-start-column="68" selection-end-line="289" selection-end-column="83" />
           <folding>
             <element signature="e#12#32#0#Twig" expanded="true" />
           </folding>
@@ -959,8 +958,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="151" column="43" selection-start-line="151" selection-start-column="43" selection-end-line="151" selection-end-column="43" />
+        <state relative-caret-position="299">
+          <caret line="149" column="53" selection-start-line="149" selection-start-column="53" selection-end-line="149" selection-end-column="53" />
         </state>
       </provider>
     </entry>

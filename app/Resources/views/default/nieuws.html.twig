@@ -1,11 +1,27 @@
 {% extends 'default/base.html.twig' %}
 
 {% block body %}
+
     {% if app.user and is_granted('ROLE_ADMIN') %}
         <a href="{{ path('addNieuwsPage') }}">Nieuw nieuwsbericht plaatsen:<img src="{{ asset('images/add.png') }}"
                                                                                 width="18px"/></a>
     {% endif %}
     <div id="inschrijven"><a href="{{ path('inschrijven') }}" target="_blank">Inschrijven &#187;</a></div>
+
+    <h1>Een nieuw toernooi!!!</h1>
+    <p>
+        Donar Team Cup is een toernooi voor teams met 3 of 4 turnsters.<br/>
+        Ieder teamlid turnt op een toestel mee en de beste 3 per toestel tellen voor het teamresultaat.<br/>
+        Daarnaast kun je met je eigen scores individuele toestelmedailles winnen.<br/>
+        Geef je nu op met je team voor dit gezellige toernooi!<br/>
+        Deelname kost €50 per team.<br />
+        Je kunt je inschrijven met een team bestaande uit onderbouw turnsters in N3, D1 of D2 of bovenbouw 3e, 4e of 5e
+        divisie.<br />
+        Meer informatie vind je verder op deze website!!
+    </p>
+    <br />
+    <br />
+
     <h1>Laatste nieuws</h1>
     {% for item in nieuwsItems %}
         <div class="date">{{ item.datumtijd }}</div>

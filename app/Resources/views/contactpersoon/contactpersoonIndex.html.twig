@@ -235,10 +235,10 @@
                 {{ team.wedstrijdRonde.startTijd | date('H:i') }}
                 - {{ team.wedstrijdRonde.eindTijd | date('H:i') }}
                 {% if wijzigenTeamToegestaan %}
-                    {#<a href="{{ path('editTeam', { 'teamId': team.id }) }}"#}
-                    {#style="text-decoration: none">#}
-                    <img src="{{ asset('images/edit.png') }}">
-                    {#</a>#}
+                    <a href="{{ path('editTeam', { 'teamId': team.id }) }}"
+                       style="text-decoration: none">
+                        <img src="{{ asset('images/edit.png') }}">
+                    </a>
                 {% endif %}
                 <form method="post" name="remove_team_{{ team.id }}"
                       action="{{ path('removeTeam') }}" style="display: inline;">

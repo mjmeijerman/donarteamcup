@@ -1117,15 +1117,15 @@ class OrganisatieController extends BaseController
     {
         $this->setBasicPageData('Organisatie');
         /** @var User $result */
-        $result                  = $this->getDoctrine()
+        $result             = $this->getDoctrine()
             ->getRepository('AppBundle:User')
             ->findOneBy(['id' => $userId]);
-        $factuurNummer           = $this->getFactuurNummer($result);
-        $bedragPerTeam           = self::BEDRAG_PER_TEAM; //todo: bedrag per turnster toevoegen aan instellingen
+        $factuurNummer      = $this->getFactuurNummer($result);
+        $bedragPerTeam      = self::BEDRAG_PER_TEAM; //todo: bedrag per turnster toevoegen aan instellingen
         $juryBoeteBedrag
-                                 = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
-        $aantalTeamsPerJury      = self::AANTAL_TEAMS_PER_JURY; //todo: toevoegen als instelling
-        $juryledenAantal         = $this->getDoctrine()
+                            = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
+        $aantalTeamsPerJury = self::AANTAL_TEAMS_PER_JURY; //todo: toevoegen als instelling
+        $juryledenAantal    = $this->getDoctrine()
             ->getRepository('AppBundle:Jurylid')
             ->getIngeschrevenJuryleden($result);
 
@@ -1334,6 +1334,11 @@ class OrganisatieController extends BaseController
         $groepen            = $this->getGroepen();
         $aantallenPerNiveau = $this->getAantallenPerNiveau($groepen);
         $contactpersonen    = $this->getContactpersonen();
+
+        $repository = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde');
+        /** @var WedstrijdRonde[] $wedstrijdRondes */
+        $wedstrijdRondes = $repository->findBy([], ['startTijd' => 'asc', 'ronde' => 'asc', 'baan' => 'asc']);
+
         return $this->render(
             'organisatie/organisatieInschrijvingen.html.twig',
             array(
@@ -1345,6 +1350,7 @@ class OrganisatieController extends BaseController
                 'totaalAantalJuryleden'           => $this->aantalJury,
                 'groepen'                         => $groepen,
                 'aantallenPerNiveau'              => $aantallenPerNiveau,
+                'wedstrijdRondes'                 => $wedstrijdRondes,
             )
         );
     }
@@ -1536,6 +1542,110 @@ class OrganisatieController extends BaseController
                 'niveau'                          => $niveau,
                 'turnsters'                       => $turnsters,
                 'wachtlijst'                      => $wachtlijst,
+            )
+        );
+    }
+
+    /**
+     * @Route("/organisatie/{page}/organisatieShowWedstrijdRonde/{wedstrijdRondeId}/", name="organisatieShowWedstrijdRonde", methods={"GET", "POST"})
+     * @param $wedstrijdRondeId
+     *
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function organisatieShowWedstrijdRonde(Request $request, $page, $wedstrijdRondeId)
+    {
+        /** @var Turnster[] $results */
+        $wedstrijdRonde = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde')
+            ->find($wedstrijdRondeId);
+
+        if ($request->getMethod() === 'POST') {
+            /** @var Team $team */
+            foreach ($wedstrijdRonde->getTeams() as $team) {
+                if ($request->request->get('begin_toestel_team_' . $team->getId())) {
+                    foreach ($team->getTurnsters() as $turnster) {
+                        $scores = $turnster->getScores();
+                        if ($scores->getBegintoestel() !== $request->request->get(
+                                'begin_toestel_team_' . $team->getId()
+                            )) {
+                            $scores->setBegintoestel($request->request->get('begin_toestel_team_' . $team->getId()));
+                            $this->addToDB($scores);
+                        }
+                    }
+                }
+
+                if ($request->request->get('change_wedstrijd_ronde_team_' . $team->getId())) {
+                    if ($team->getWedstrijdRonde()->getId() !== (int) $request->request->get('change_wedstrijd_ronde_team_' . $team->getId())) {
+                        $newWedstrijdRonde = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde')
+                            ->find($request->request->get('change_wedstrijd_ronde_team_' . $team->getId()));
+                        $team->setWedstrijdRonde($newWedstrijdRonde);
+                        $this->addToDB($team);
+                        foreach ($team->getTurnsters() as $turnster) {
+                            $scores = $turnster->getScores();
+                            if (
+                                $scores->getWedstrijdronde() !== $newWedstrijdRonde->getRonde() ||
+                                $scores->getWedstrijddag() !== $newWedstrijdRonde->getDag()
+                            ) {
+                                $scores->setWedstrijdronde($newWedstrijdRonde->getRonde());
+                                $scores->setWedstrijddag($newWedstrijdRonde->getDag());
+                                $wedstrijdRonde->removeTeam($team);
+                                $this->addToDB($scores);
+                            }
+                        }
+                    }
+                }
+
+                if ($request->request->get('baan_team_' . $team->getId())) {
+                    foreach ($team->getTurnsters() as $turnster) {
+                        $scores = $turnster->getScores();
+                        if ($scores->getBaan() !== $request->request->get('baan_team_' . $team->getId())) {
+                            $scores->setBaan($request->request->get('baan_team_' . $team->getId()));
+                            $this->addToDB($scores);
+                        }
+                    }
+                }
+
+                if ($request->request->get('wachtlijst_team_' . $team->getId()) !== null) {
+                    $wachtlijst = (bool) $request->request->get('wachtlijst_team_' . $team->getId());
+                    if ($team->getWachtlijst() !== $wachtlijst) {
+                        $team->setWachtlijst($wachtlijst);
+                        $this->addToDB($team);
+                    }
+                    foreach ($team->getTurnsters() as $turnster) {
+                        if ($turnster->getWachtlijst() !== $wachtlijst) {
+                            $turnster->setWachtlijst($wachtlijst);
+                            $this->addToDB($turnster);
+                        }
+                    }
+                }
+
+                if ($request->request->get('remove_team_' . $team->getId())) {
+                    $removeTeam = (bool) $request->request->get('remove_team_' . $team->getId());
+                    if ($removeTeam) {
+                        foreach ($team->getTurnsters() as $turnster) {
+                            $this->removeFromDB($turnster);
+                        }
+                        $this->removeFromDB($team);
+                    }
+                }
+            }
+
+            return $this->redirectToRoute(
+                'organisatieShowWedstrijdRonde',
+                ['page' => $page, 'wedstrijdRondeId' => $wedstrijdRondeId]
+            );
+        }
+
+        $this->setBasicPageData('Organisatie');
+        return $this->render(
+            'organisatie/organisatieShowWedstrijdRonde.html.twig',
+            array(
+                'menuItems'                       => $this->menuItems,
+                'totaalAantalVerenigingen'        => $this->aantalVerenigingen,
+                'totaalAantalTurnsters'           => $this->aantalTurnsters,
+                'totaalAantalTurnstersWachtlijst' => $this->aantalWachtlijst,
+                'totaalAantalJuryleden'           => $this->aantalJury,
+                'wedstrijdRonde'                  => $wedstrijdRonde,
             )
         );
     }

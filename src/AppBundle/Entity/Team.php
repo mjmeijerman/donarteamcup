@@ -31,6 +31,7 @@ class Team
 
     /**
      * @ORM\OneToMany(targetEntity="Turnster", mappedBy="team", cascade={"persist"})
+     * @var Turnster[]
      */
     private $turnsters;
 
@@ -62,6 +63,50 @@ class Team
     {
         $this->turnsters = new ArrayCollection();
         $this->afgemeld  = false;
+    }
+
+    public function isIngedeeldOpToestel()
+    {
+        foreach ($this->turnsters as $turnster){
+            if (!$turnster->getScores()->getBegintoestel()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function isIngedeeldOpBaan()
+    {
+        foreach ($this->turnsters as $turnster){
+            if (!$turnster->getScores()->getBaan()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function getBeginToestel()
+    {
+        foreach ($this->turnsters as $turnster){
+            if ($turnster->getScores()->getBegintoestel()) {
+                return $turnster->getScores()->getBegintoestel();
+            }
+        }
+
+        return null;
+    }
+
+    public function getBaan()
+    {
+        foreach ($this->turnsters as $turnster){
+            if ($turnster->getScores()->getBaan()) {
+                return $turnster->getScores()->getBaan();
+            }
+        }
+
+        return null;
     }
 
     /**

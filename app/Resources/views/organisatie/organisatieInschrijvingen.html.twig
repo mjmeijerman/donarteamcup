@@ -14,6 +14,56 @@
 	</div>
 	<h1>Inschrijvingen</h1>
 
+
+	<p>
+	<div class="titel">
+		<h2>Indeling overzicht</h2>
+	</div>
+	<div class="bericht">
+        <table class="facturen">
+            <tr>
+                <th>Dag en tijd</th>
+				<th>Soort teams</th>
+                <th>Plekken</th>
+                <th>Opmerking</th>
+                <th></th>
+            </tr>
+            {% for wedstrijdRonde in wedstrijdRondes %}
+                <tr id="wedstrijd_ronde_row_{{ wedstrijdRonde.id }}"
+					{% if not wedstrijdRonde.alleTeamsIngedeeldOpBeginToestel %}
+						class="niet_voldaan"
+                    {% endif %}
+				>
+                    <td>
+						<a href="{{ path('organisatieShowWedstrijdRonde', { 'page': app.request.get
+                            ('page'), 'wedstrijdRondeId': wedstrijdRonde.id })  }}">
+						{{ wedstrijdRonde.dag }} {{ wedstrijdRonde.startTijd | date('d-m-Y') }},
+                        {{ wedstrijdRonde.startTijd | date('H:i') }}
+                        - {{ wedstrijdRonde.eindTijd | date('H:i') }}</td>
+					</a>
+                    <td>
+                        {% for soortTeam in wedstrijdRonde.teamSoorten %}
+                            {{ soortTeam.categorie }} {{ soortTeam.niveau }},
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% if wedstrijdRonde.maxTeams - wedstrijdRonde.teams.count < 0 %}
+                            Vol. {{ wedstrijdRonde.teams.count - wedstrijdRonde.maxTeams }} teams staan op de wachtlijst
+                        {% else %}
+                            {{ wedstrijdRonde.maxTeams - wedstrijdRonde.teams.count }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if not wedstrijdRonde.alleTeamsIngedeeldOpBeginToestel %}
+						Niet alle teams ingedeeld op begintoestel
+                        {% endif %}
+					</td>
+                </tr>
+            {% endfor %}
+        </table>
+	</div>
+	</p>
+
 			<p>
 				<div class="titel">
 					<h2>Status (geplaatst/wachtlijst)</h2>

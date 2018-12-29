@@ -47,6 +47,7 @@ class WedstrijdRonde
 
     /**
      * @ORM\OneToMany(targetEntity="Team", mappedBy="wedstrijdRonde", cascade={"persist"})
+     * @var Team[]
      */
     private $teams;
 
@@ -64,6 +65,21 @@ class WedstrijdRonde
     {
         $this->teams       = new ArrayCollection();
         $this->teamSoorten = new ArrayCollection();
+    }
+
+    public function alleTeamsIngedeeldOpBeginToestel()
+    {
+        foreach ($this->teams as $team) {
+            if ($team->getWachtlijst() || $team->isAfgemeld()) {
+                continue;
+            }
+
+            if (!$team->isIngedeeldOpToestel()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -132,7 +148,7 @@ class WedstrijdRonde
     }
 
     /**
-     * @return ArrayCollection
+     * @return Team[]
      */
     public function getTeams()
     {

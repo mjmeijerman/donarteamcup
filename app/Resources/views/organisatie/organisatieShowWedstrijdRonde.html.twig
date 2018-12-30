@@ -306,6 +306,448 @@
         </div>
         </p>
 
+        <h1>Baan 2</h1>
+        <p>
+        <div class="titel">
+            <h2>
+                Sprong
+            </h2>
+        </div>
+        <div class="bericht">
+            <table class="overzicht" id="turnster_table">
+                <tr>
+                    <th>Vereniging</th>
+                    <th>Niveau</th>
+                    <th>Baan</th>
+                    <th>Begintoestel</th>
+                    <th>Naar wachtlijst</th>
+                    <th>Verwijderen</th>
+                </tr>
+                {% for team in wedstrijdRonde.teams %}
+                    {% if team.beginToestel == 'Sprong' and team.baan == '2' and not team.isAfgemeld and not team.wachtlijst %}
+                        <tr>
+                            <td>{{ team.user.vereniging.naam }} {{ team.user.vereniging.plaats }}</td>
+                            <td>{{ team.teamSoort.categorie }} {{ team.teamSoort.niveau }}</td>
+                            <td><select name="baan_team_{{ team.id }}">
+                                    <option value="">Geen baan</option>
+                                    <option value="1">Baan 1</option>
+                                    <option value="2" selected>Baan 2</option>
+                                    <option value="3">Baan 3</option>
+                                </select>
+                            </td>
+                            <td><select name="begin_toestel_team_{{ team.id }}">
+                                    <option value="">Geen begintoestel</option>
+                                    <option selected value="Sprong">Sprong</option>
+                                    <option value="Brug">Brug</option>
+                                    <option value="Balk">Balk</option>
+                                    <option value="Vloer">Vloer</option>
+                                </select></td>
+                            <td>
+                                <select name="wachtlijst_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="remove_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        </p>
+
+        <p>
+        <div class="titel">
+            <h2>
+                Brug
+            </h2>
+        </div>
+        <div class="bericht">
+            <table class="overzicht" id="turnster_table">
+                <tr>
+                    <th>Vereniging</th>
+                    <th>Niveau</th>
+                    <th>Baan</th>
+                    <th>Begintoestel</th>
+                    <th>Naar wachtlijst</th>
+                    <th>Verwijderen</th>
+                </tr>
+                {% for team in wedstrijdRonde.teams %}
+                    {% if team.beginToestel == 'Brug' and team.baan == '2' and not team.isAfgemeld and not team.wachtlijst %}
+                        <tr>
+                            <td>{{ team.user.vereniging.naam }} {{ team.user.vereniging.plaats }}</td>
+                            <td>{{ team.teamSoort.categorie }} {{ team.teamSoort.niveau }}</td>
+                            <td><select name="baan_team_{{ team.id }}">
+                                    <option value="">Geen baan</option>
+                                    <option value="1">Baan 1</option>
+                                    <option value="2" selected>Baan 2</option>
+                                    <option value="3">Baan 3</option>
+                                </select>
+                            </td>
+                            <td><select name="begin_toestel_team_{{ team.id }}">
+                                    <option value="">Geen begintoestel</option>
+                                    <option value="Sprong">Sprong</option>
+                                    <option selected value="Brug">Brug</option>
+                                    <option value="Balk">Balk</option>
+                                    <option value="Vloer">Vloer</option>
+                                </select></td>
+                            <td>
+                                <select name="wachtlijst_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="remove_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        </p>
+
+        <p>
+        <div class="titel">
+            <h2>
+                Balk
+            </h2>
+        </div>
+        <div class="bericht">
+            <table class="overzicht" id="turnster_table">
+                <tr>
+                    <th>Vereniging</th>
+                    <th>Niveau</th>
+                    <th>Baan</th>
+                    <th>Begintoestel</th>
+                    <th>Naar wachtlijst</th>
+                    <th>Verwijderen</th>
+                </tr>
+                {% for team in wedstrijdRonde.teams %}
+                    {% if team.beginToestel == 'Balk' and team.baan == '2' and not team.isAfgemeld and not team.wachtlijst %}
+                        <tr>
+                            <td>{{ team.user.vereniging.naam }} {{ team.user.vereniging.plaats }}</td>
+                            <td>{{ team.teamSoort.categorie }} {{ team.teamSoort.niveau }}</td>
+                            <td><select name="baan_team_{{ team.id }}">
+                                    <option value="">Geen baan</option>
+                                    <option value="1">Baan 1</option>
+                                    <option value="2" selected>Baan 2</option>
+                                    <option value="3">Baan 3</option>
+                                </select>
+                            </td>
+                            <td><select name="begin_toestel_team_{{ team.id }}">
+                                    <option value="">Geen begintoestel</option>
+                                    <option value="Sprong">Sprong</option>
+                                    <option value="Brug">Brug</option>
+                                    <option selected value="Balk">Balk</option>
+                                    <option value="Vloer">Vloer</option>
+                                </select></td>
+                            <td>
+                                <select name="wachtlijst_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="remove_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        </p>
+
+        <p>
+        <div class="titel">
+            <h2>
+                Vloer
+            </h2>
+        </div>
+        <div class="bericht">
+            <table class="overzicht" id="turnster_table">
+                <tr>
+                    <th>Vereniging</th>
+                    <th>Niveau</th>
+                    <th>Baan</th>
+                    <th>Begintoestel</th>
+                    <th>Naar wachtlijst</th>
+                    <th>Verwijderen</th>
+                </tr>
+                {% for team in wedstrijdRonde.teams %}
+                    {% if team.beginToestel == 'Vloer' and team.baan == '2' and not team.isAfgemeld and not team.wachtlijst %}
+                        <tr>
+                            <td>{{ team.user.vereniging.naam }} {{ team.user.vereniging.plaats }}</td>
+                            <td>{{ team.teamSoort.categorie }} {{ team.teamSoort.niveau }}</td>
+                            <td><select name="baan_team_{{ team.id }}">
+                                    <option value="">Geen baan</option>
+                                    <option value="1">Baan 1</option>
+                                    <option value="2" selected>Baan 2</option>
+                                    <option value="3">Baan 3</option>
+                                </select>
+                            </td>
+                            <td><select name="begin_toestel_team_{{ team.id }}">
+                                    <option value="">Geen begintoestel</option>
+                                    <option value="Sprong">Sprong</option>
+                                    <option value="Brug">Brug</option>
+                                    <option value="Balk">Balk</option>
+                                    <option selected value="Vloer">Vloer</option>
+                                </select></td>
+                            <td>
+                                <select name="wachtlijst_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="remove_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        </p>
+
+        <h1>Baan 3</h1>
+        <p>
+        <div class="titel">
+            <h2>
+                Sprong
+            </h2>
+        </div>
+        <div class="bericht">
+            <table class="overzicht" id="turnster_table">
+                <tr>
+                    <th>Vereniging</th>
+                    <th>Niveau</th>
+                    <th>Baan</th>
+                    <th>Begintoestel</th>
+                    <th>Naar wachtlijst</th>
+                    <th>Verwijderen</th>
+                </tr>
+                {% for team in wedstrijdRonde.teams %}
+                    {% if team.beginToestel == 'Sprong' and team.baan == '3' and not team.isAfgemeld and not team.wachtlijst %}
+                        <tr>
+                            <td>{{ team.user.vereniging.naam }} {{ team.user.vereniging.plaats }}</td>
+                            <td>{{ team.teamSoort.categorie }} {{ team.teamSoort.niveau }}</td>
+                            <td><select name="baan_team_{{ team.id }}">
+                                    <option value="">Geen baan</option>
+                                    <option value="1">Baan 1</option>
+                                    <option value="2">Baan 2</option>
+                                    <option value="3" selected>Baan 3</option>
+                                </select>
+                            </td>
+                            <td><select name="begin_toestel_team_{{ team.id }}">
+                                    <option value="">Geen begintoestel</option>
+                                    <option selected value="Sprong">Sprong</option>
+                                    <option value="Brug">Brug</option>
+                                    <option value="Balk">Balk</option>
+                                    <option value="Vloer">Vloer</option>
+                                </select></td>
+                            <td>
+                                <select name="wachtlijst_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="remove_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        </p>
+
+        <p>
+        <div class="titel">
+            <h2>
+                Brug
+            </h2>
+        </div>
+        <div class="bericht">
+            <table class="overzicht" id="turnster_table">
+                <tr>
+                    <th>Vereniging</th>
+                    <th>Niveau</th>
+                    <th>Baan</th>
+                    <th>Begintoestel</th>
+                    <th>Naar wachtlijst</th>
+                    <th>Verwijderen</th>
+                </tr>
+                {% for team in wedstrijdRonde.teams %}
+                    {% if team.beginToestel == 'Brug' and team.baan == '3' and not team.isAfgemeld and not team.wachtlijst %}
+                        <tr>
+                            <td>{{ team.user.vereniging.naam }} {{ team.user.vereniging.plaats }}</td>
+                            <td>{{ team.teamSoort.categorie }} {{ team.teamSoort.niveau }}</td>
+                            <td><select name="baan_team_{{ team.id }}">
+                                    <option value="">Geen baan</option>
+                                    <option value="1">Baan 1</option>
+                                    <option value="2">Baan 2</option>
+                                    <option value="3" selected>Baan 3</option>
+                                </select>
+                            </td>
+                            <td><select name="begin_toestel_team_{{ team.id }}">
+                                    <option value="">Geen begintoestel</option>
+                                    <option value="Sprong">Sprong</option>
+                                    <option selected value="Brug">Brug</option>
+                                    <option value="Balk">Balk</option>
+                                    <option value="Vloer">Vloer</option>
+                                </select></td>
+                            <td>
+                                <select name="wachtlijst_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="remove_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        </p>
+
+        <p>
+        <div class="titel">
+            <h2>
+                Balk
+            </h2>
+        </div>
+        <div class="bericht">
+            <table class="overzicht" id="turnster_table">
+                <tr>
+                    <th>Vereniging</th>
+                    <th>Niveau</th>
+                    <th>Baan</th>
+                    <th>Begintoestel</th>
+                    <th>Naar wachtlijst</th>
+                    <th>Verwijderen</th>
+                </tr>
+                {% for team in wedstrijdRonde.teams %}
+                    {% if team.beginToestel == 'Balk' and team.baan == '3' and not team.isAfgemeld and not team.wachtlijst %}
+                        <tr>
+                            <td>{{ team.user.vereniging.naam }} {{ team.user.vereniging.plaats }}</td>
+                            <td>{{ team.teamSoort.categorie }} {{ team.teamSoort.niveau }}</td>
+                            <td><select name="baan_team_{{ team.id }}">
+                                    <option value="">Geen baan</option>
+                                    <option value="1">Baan 1</option>
+                                    <option value="2">Baan 2</option>
+                                    <option value="3" selected>Baan 3</option>
+                                </select>
+                            </td>
+                            <td><select name="begin_toestel_team_{{ team.id }}">
+                                    <option value="">Geen begintoestel</option>
+                                    <option value="Sprong">Sprong</option>
+                                    <option value="Brug">Brug</option>
+                                    <option selected value="Balk">Balk</option>
+                                    <option value="Vloer">Vloer</option>
+                                </select></td>
+                            <td>
+                                <select name="wachtlijst_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="remove_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        </p>
+
+        <p>
+        <div class="titel">
+            <h2>
+                Vloer
+            </h2>
+        </div>
+        <div class="bericht">
+            <table class="overzicht" id="turnster_table">
+                <tr>
+                    <th>Vereniging</th>
+                    <th>Niveau</th>
+                    <th>Baan</th>
+                    <th>Begintoestel</th>
+                    <th>Naar wachtlijst</th>
+                    <th>Verwijderen</th>
+                </tr>
+                {% for team in wedstrijdRonde.teams %}
+                    {% if team.beginToestel == 'Vloer' and team.baan == '3' and not team.isAfgemeld and not team.wachtlijst %}
+                        <tr>
+                            <td>{{ team.user.vereniging.naam }} {{ team.user.vereniging.plaats }}</td>
+                            <td>{{ team.teamSoort.categorie }} {{ team.teamSoort.niveau }}</td>
+                            <td><select name="baan_team_{{ team.id }}">
+                                    <option value="">Geen baan</option>
+                                    <option value="1">Baan 1</option>
+                                    <option value="2">Baan 2</option>
+                                    <option value="3" selected>Baan 3</option>
+                                </select>
+                            </td>
+                            <td><select name="begin_toestel_team_{{ team.id }}">
+                                    <option value="">Geen begintoestel</option>
+                                    <option value="Sprong">Sprong</option>
+                                    <option value="Brug">Brug</option>
+                                    <option value="Balk">Balk</option>
+                                    <option selected value="Vloer">Vloer</option>
+                                </select></td>
+                            <td>
+                                <select name="wachtlijst_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select name="remove_team_{{ team.id }}">
+                                    <option value="0" selected>Nee</option>
+                                    <option value="1">Ja</option>
+                                </select>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        </p>
+
         <h1>Wachtlijst</h1>
         <p>
         <div class="titel">

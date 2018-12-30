@@ -9,4 +9,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class WedstrijdRondeRepository extends EntityRepository
 {
+    public function getDagen()
+    {
+        return $this->createQueryBuilder('wr')
+            ->select('wr.dag')
+            ->distinct()
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getWedstrijdrondesPerDag(string $dag)
+    {
+        return $this->createQueryBuilder('wr')
+            ->select('wr')
+            ->andWhere('wr.dag = :dag')
+            ->setParameter('dag', $dag)
+            ->orderBy('wr.ronde')
+            ->distinct()
+            ->getQuery()
+            ->getResult();
+    }
 }

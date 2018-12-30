@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Instellingen;
 use AppBundle\Entity\ScoresRepository;
+use AppBundle\Entity\WedstrijdRondeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
@@ -192,74 +193,52 @@ class ContentController extends BaseController
 
     private function getWedstrijdindelingPage()
     {
-        $juryIndeling = $this->getJuryIndeling();
-        $tijdSchema   = $this->getTijdSchema();
-        /** @var ScoresRepository $repo */
-        $repo        = $this->getDoctrine()->getRepository('AppBundle:Scores');
+        $tijdSchema = $this->getTijdSchema();
+        /** @var WedstrijdRondeRepository $repo */
+        $repo = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde');
+        /** @var ScoresRepository $scoreRepo */
+        $scoreRepo   = $this->getDoctrine()->getRepository('AppBundle:Scores');
         $dagen       = $repo->getDagen();
         $sortedDagen = [];
         foreach ($dagen as $dag) {
-            switch ($dag['wedstrijddag']) {
+            switch ($dag['dag']) {
                 case 'Donderdag':
-                    $sortedDagen[0] = $dag;
+                    $sortedDagen[0] = $dag['dag'];
                     break;
                 case 'Vrijdag':
-                    $sortedDagen[1] = $dag;
+                    $sortedDagen[1] = $dag['dag'];
                     break;
                 case 'Zaterdag':
-                    $sortedDagen[2] = $dag;
+                    $sortedDagen[2] = $dag['dag'];
                     break;
                 case 'Zondag':
-                    $sortedDagen[3] = $dag;
+                    $sortedDagen[3] = $dag['dag'];
                     break;
                 case 'Maandag':
-                    $sortedDagen[4] = $dag;
+                    $sortedDagen[4] = $dag['dag'];
                     break;
                 case 'Dinsdag':
-                    $sortedDagen[5] = $dag;
+                    $sortedDagen[5] = $dag['dag'];
                     break;
                 case 'Woensdag':
-                    $sortedDagen[6] = $dag;
+                    $sortedDagen[6] = $dag['dag'];
                     break;
             }
         }
         ksort($sortedDagen);
-//        usort($dagen, function($a, $b) {
-//            if ($a['wedstrijddag'] == $b['wedstrijddag']) {
-//                return 0;
-//            }
-//            return ($a['wedstrijddag'] < $b['wedstrijddag']) ? -1 : 1;
-//        });
-        $banen           = [];
-        $wedstrijdrondes = [];
-        $categorieNiveau = [];
-        foreach ($sortedDagen as $dag) {
-            $banen[$dag['wedstrijddag']]           = $repo->getBanenPerDag($dag['wedstrijddag']);
-            $wedstrijdrondes[$dag['wedstrijddag']] = $repo->getWedstrijdrondesPerDag($dag['wedstrijddag']);
-            foreach ($banen[$dag['wedstrijddag']] as $baan) {
-                foreach ($wedstrijdrondes[$dag['wedstrijddag']] as $wedstrijdronde) {
-                    $categorieNiveau[$dag['wedstrijddag']][$wedstrijdronde['wedstrijdronde']][$baan['baan']]
-                        = $repo->getNiveausPerDagPerRondePerBaan
-                    (
-                        $dag['wedstrijddag'],
-                        $wedstrijdronde['wedstrijdronde'],
-                        $baan['baan']
-                    );
 
-                }
-            }
+        $wedstrijden = [];
+        foreach ($sortedDagen as $dag) {
+            $wedstrijden[$dag] = $repo->getWedstrijdrondesPerDag($dag);
         }
         return $this->render(
             'default/wedstrijdIndeling.html.twig',
             array(
-                'menuItems'       => $this->menuItems,
-                'sponsors'        => $this->sponsors,
-                'dagen'           => $sortedDagen,
-                'banen'           => $banen,
-                'wedstrijdrondes' => $wedstrijdrondes,
-                'categorieNiveau' => $categorieNiveau,
-                'juryIndeling'    => $juryIndeling,
-                'tijdSchema'      => $tijdSchema,
+                'menuItems'   => $this->menuItems,
+                'sponsors'    => $this->sponsors,
+                'dagen'       => $sortedDagen,
+                'wedstrijden' => $wedstrijden,
+                'tijdSchema'  => $tijdSchema,
             )
         );
     }

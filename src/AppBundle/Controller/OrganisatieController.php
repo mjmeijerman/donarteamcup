@@ -404,7 +404,7 @@ class OrganisatieController extends BaseController
                             'wedstrijdDag'    => $result->getScores()->getWedstrijddag(),
                             'wedstrijdRonde'  => $result->getScores()->getWedstrijdronde(),
                             'baan'            => $result->getScores()->getBaan(),
-                            'groep'           => $result->getScores()->getGroep(),
+                            'groep'           => $result->getScores()->getBegintoestel(),
                             'contactPersoon'  => $result->getUser()->getVoornaam() . ' ' . $result->getUser()
                                     ->getAchternaam(),
                             'mail'            => $result->getUser()->getEmail(),
@@ -419,7 +419,7 @@ class OrganisatieController extends BaseController
                             'wedstrijdDag'    => $result->getScores()->getWedstrijddag(),
                             'wedstrijdRonde'  => $result->getScores()->getWedstrijdronde(),
                             'baan'            => $result->getScores()->getBaan(),
-                            'groep'           => $result->getScores()->getGroep(),
+                            'groep'           => $result->getScores()->getBegintoestel(),
                             'locatie'         => $result->getVloermuziek()->getWebPath(),
                         ];
                     }

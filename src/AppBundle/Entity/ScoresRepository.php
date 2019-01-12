@@ -183,8 +183,8 @@ class ScoresRepository extends EntityRepository
     public function getGroepen()
     {
         $results = $this->createQueryBuilder('cc')
-            ->select('cc.groep')
-            ->where('cc.groep IS NOT NULL')
+            ->select('cc.begintoestel')
+            ->where('cc.begintoestel IS NOT NULL')
             ->distinct()
             ->getQuery()
             ->getResult();

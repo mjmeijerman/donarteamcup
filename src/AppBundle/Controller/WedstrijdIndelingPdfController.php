@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\WedstrijdRonde;
+
 class WedstrijdIndelingPdfController extends AlphaPDFController
 {
     protected $wedstrijddag;
@@ -49,7 +51,7 @@ class WedstrijdIndelingPdfController extends AlphaPDFController
         $this->SetAlpha(0.5);
         $this->Rect(0, 0, 297, 35, 'F');
         $this->SetAlpha(1);
-        $this->Image('images/HDCFactuurHeader.png',0,0);
+        $this->Image('images/HDCFactuurHeader.png', 0, 0);
 
         //TITEL
         $this->SetFont('Gotham', '', 20);
@@ -81,7 +83,7 @@ class WedstrijdIndelingPdfController extends AlphaPDFController
     //ROUNDED RECTANGLE
     function RoundedRect($x, $y, $w, $h, $r, $style = '', $angle = '1234')
     {
-        $k = $this->k;
+        $k  = $this->k;
         $hp = $this->h;
         if ($style == 'F')
             $op = 'f';
@@ -143,44 +145,87 @@ class WedstrijdIndelingPdfController extends AlphaPDFController
         );
     }
 
-    function wedstrijdIndelingContent($turnsters, $userId)
+    function wedstrijdIndelingContent(WedstrijdRonde $wedstrijdRonde, $userId)
     {
+        $toestellen = ['Sprong', 'Brug', 'Balk', 'Vloer'];
+
         $i = 1;
-        foreach ($turnsters as $toestel => $turnsterPerGroep) {
-            //Toestel
-            $this->SetFontSize(12);
+
+        foreach ($toestellen as $toestel) {
+
+            $this->SetFontSize(11);
             $this->SetFillColor(51, 51, 51);
             $this->SetTextColor(255);
-            $this->Cell(10, 8, '', 0, 0, '', 'F'); //FILL
-            $this->Cell(160, 8, 'Groep ' . $i, 0, 0, 'L', 'F');
-            $this->Cell(30, 8, $toestel, 0, 0, 'R', 'F');
-            $this->Cell(10, 8, '', 0, 1, '', 'F');
-            foreach ($turnsterPerGroep as $turnster) {
-                $fill = false;
-                if ($turnster['userId'] == $userId) {
-                    $fill = true;
+            $this->Cell(8, 7, '', 0, 0, '', 'F'); //FILL
+            $this->Cell(160, 7, 'Groep ' . $i, 0, 0, 'L', 'F');
+            $this->Cell(30, 7, $toestel, 0, 0, 'R', 'F');
+            $this->Cell(12, 7, '', 0, 1, '', 'F');
+
+            foreach ($wedstrijdRonde->getTeams() as $team) {
+                if ($team->getBeginToestel() !== $toestel) {
+                    continue;
                 }
-                //TURNSTERS
-                $this->SetTextColor(0);
-                $this->SetFontSize(8);
-                $this->SetFillColor(245, 245, 167);
-                //TURNSTER 1
-                $this->Cell(10, 6, '', 0, 0, '', $fill); //FILL
-                $this->Cell(15, 6, $turnster['wedstrijdnummer'], 0, 0, '', $fill); //WEDSTRIJDNUMMER
-                $this->Cell(50, 6, utf8_decode($turnster['naam']), 0, 0, 'L', $fill); //NAAM
-                $this->Cell(70, 6, utf8_decode($turnster['vereniging']), 0, 0, 'L', $fill); //VERENIGING
-                $this->Cell(
-                    30,
-                    6,
-                    $turnster['categorie'] . ' ' . $turnster['niveau'],
-                    0,
-                    0,
-                    'L',
-                    $fill
-                ); //CATEGORIE + NIVEAU
-                $this->Cell(122, 6, '', 0, 1, '', $fill); //fill
+
+                foreach ($team->getTurnsters() as $turnster) {
+                    if ($turnster->getVoornaam() === 'leeg') {
+                        continue;
+                    }
+                    $fill = false;
+                    if ($turnster->getUser()->getId() == $userId) {
+                        $fill = true;
+                    }
+                    //TURNSTERS
+                    $this->SetTextColor(0);
+                    $this->SetFontSize(7);
+                    $this->SetFillColor(245, 245, 167);
+                    //TURNSTER
+                    $this->Cell(8, 5, '', 0, 0, '', $fill); //FILL
+                    $this->Cell(10, 5, $turnster->getScores()->getWedstrijdnummer(), 0, 0, '', $fill); //WEDSTRIJDNUMMER
+                    $this->Cell(
+                        50,
+                        5,
+                        utf8_decode($turnster->getVoornaam() . ' ' . $turnster->getAchternaam()),
+                        0,
+                        0,
+                        'L',
+                        $fill
+                    ); //NAAM
+                    $this->Cell(
+                        65,
+                        5,
+                        utf8_decode(
+                            $turnster->getUser()->getVereniging()->getNaam() . ' ' . $turnster->getUser()
+                                ->getVereniging()
+                                ->getPlaats()
+                        ),
+                        0,
+                        0,
+                        'L',
+                        $fill
+                    ); //VERENIGING
+                    $this->Cell(
+                        30,
+                        5,
+                        $turnster->getCategorie() . ' ' . $turnster->getNiveau(),
+                        0,
+                        0,
+                        'L',
+                        $fill
+                    ); //CATEGORIE + NIVEAU
+                    $this->Cell(
+                        30,
+                        5,
+                        $team->getName() ?: 'Geen teamnaam',
+                        0,
+                        0,
+                        'L',
+                        $fill
+                    ); //CATEGORIE + NIVEAU
+                    $this->Cell(122, 5, '', 0, 1, '', $fill); //fill
+                }
             }
-            $this->Ln(5);
+
+            $this->Ln(3);
             $i++;
         }
     }

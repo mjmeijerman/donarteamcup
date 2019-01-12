@@ -15,8 +15,8 @@
         <table class="wedstrijdindeling">
             {% for wedstrijdronde in wedstrijden[dag] %}
                 <tr>
-                    <td>Wedstrijd {{ wedstrijdronde.ronde }} Baan {{ wedstrijdronde.baan }}: {{ wedstrijdronde.startTijd | date('H:i') }}
-                        - {{ wedstrijdronde.eindTijd | date('H:i') }}
+                    <td><a href="{{ path('wedstrijdindelingPdf', {'wedstrijdRondeId': wedstrijdronde.id}) }}" target="_blank">Wedstrijd {{ wedstrijdronde.ronde }} Baan {{ wedstrijdronde.baan }}: {{ wedstrijdronde.startTijd | date('H:i') }}
+                            - {{ wedstrijdronde.eindTijd | date('H:i') }}</a>
                     </td>
                     <td>
                         {% for teamSoort in wedstrijdronde.teamSoorten %}

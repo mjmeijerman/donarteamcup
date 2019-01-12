@@ -630,10 +630,10 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @return Team[]
+     * @return Team[]|ArrayCollection
      */
-    public function getTeams(): array
+    public function getTeams()
     {
-        return $this->teams->toArray();
+        return $this->teams;
     }
 }

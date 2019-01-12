@@ -116,6 +116,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\OneToMany(targetEntity="Team", mappedBy="user", cascade={"persist", "remove"})
+     * Team[]
      */
     private $teams;
 
@@ -628,8 +629,11 @@ class User implements AdvancedUserInterface, \Serializable
         $this->teams->removeElement($team);
     }
 
-    public function getTeams()
+    /**
+     * @return Team[]
+     */
+    public function getTeams(): array
     {
-        return $this->teams;
+        return $this->teams->toArray();
     }
 }

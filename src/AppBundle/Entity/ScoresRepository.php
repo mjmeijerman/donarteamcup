@@ -11,6 +11,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ScoresRepository extends EntityRepository
 {
+    public function resetWedstrijdNummers()
+    {
+        $this->createQueryBuilder('s')
+            ->update()
+            ->set('s.wedstrijdnummer', ':empty')
+            ->setParameter('empty', null)
+            ->getQuery()
+            ->execute();
+    }
+
     public function getDagen()
     {
         $results = $this->createQueryBuilder('cc')

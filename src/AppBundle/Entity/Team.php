@@ -42,6 +42,7 @@ class Team
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="teams")
+     * @var User
      */
     private $user;
 
@@ -65,9 +66,43 @@ class Team
         $this->afgemeld  = false;
     }
 
+    public function getTeamScore()
+    {
+        $turnsterScores = [];
+        foreach ($this->turnsters as $turnster) {
+            $turnsterScores[] = $turnster->getUitslagenLijst();
+        }
+
+        $toestellen = ['Sprong', 'Brug', 'Balk', 'Vloer'];
+        $teamScores = [];
+        foreach ($toestellen as $toestel) {
+            $teamScores[$toestel] = [];
+            foreach ($turnsterScores as $turnsterScore) {
+                $teamScores[$toestel][] = $turnsterScore['totaal' . $toestel];
+            }
+
+            rsort($teamScores[$toestel]);
+        }
+
+        $teamScore = 0.00;
+
+        foreach ($toestellen as $toestel) {
+            for ($i = 0; $i < 3; $i++) {
+                $teamScore += $teamScores[$toestel][$i];
+            }
+        }
+
+        return [
+            'naam'       => $this->name,
+            'vereniging' => $this->user->getVereniging()->getNaam() . ' ' . $this->user->getVereniging()->getPlaats(),
+            'totaal'     => $teamScore,
+        ];
+    }
+
+
     public function isIngedeeldOpToestel()
     {
-        foreach ($this->turnsters as $turnster){
+        foreach ($this->turnsters as $turnster) {
             if (!$turnster->getScores()->getBegintoestel()) {
                 return false;
             }
@@ -78,7 +113,7 @@ class Team
 
     public function isIngedeeldOpBaan()
     {
-        foreach ($this->turnsters as $turnster){
+        foreach ($this->turnsters as $turnster) {
             if (!$turnster->getScores()->getBaan()) {
                 return false;
             }
@@ -89,7 +124,7 @@ class Team
 
     public function getBeginToestel()
     {
-        foreach ($this->turnsters as $turnster){
+        foreach ($this->turnsters as $turnster) {
             if ($turnster->getScores()->getBegintoestel()) {
                 return $turnster->getScores()->getBegintoestel();
             }
@@ -100,7 +135,7 @@ class Team
 
     public function getBaan()
     {
-        foreach ($this->turnsters as $turnster){
+        foreach ($this->turnsters as $turnster) {
             if ($turnster->getScores()->getBaan()) {
                 return $turnster->getScores()->getBaan();
             }

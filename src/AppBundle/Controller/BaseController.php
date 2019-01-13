@@ -15,6 +15,7 @@ use AppBundle\Entity\Turnster;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Vereniging;
 use AppBundle\Entity\Voorinschrijving;
+use AppBundle\Entity\WedstrijdRondeRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -588,6 +589,52 @@ class BaseController extends Controller
         } else {
             return false;
         }
+    }
+
+    protected function sortDagen($dagen)
+    {
+        $sortedDagen = [];
+        foreach ($dagen as $dag) {
+            switch ($dag['dag']) {
+                case 'Donderdag':
+                    $sortedDagen[0] = $dag['dag'];
+                    break;
+                case 'Vrijdag':
+                    $sortedDagen[1] = $dag['dag'];
+                    break;
+                case 'Zaterdag':
+                    $sortedDagen[2] = $dag['dag'];
+                    break;
+                case 'Zondag':
+                    $sortedDagen[3] = $dag['dag'];
+                    break;
+                case 'Maandag':
+                    $sortedDagen[4] = $dag['dag'];
+                    break;
+                case 'Dinsdag':
+                    $sortedDagen[5] = $dag['dag'];
+                    break;
+                case 'Woensdag':
+                    $sortedDagen[6] = $dag['dag'];
+                    break;
+            }
+        }
+        ksort($sortedDagen);
+
+        return $sortedDagen;
+    }
+
+    protected function getWedstrijdRondesPerDag($sortedDagen)
+    {
+        /** @var WedstrijdRondeRepository $repo */
+        $repo = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde');
+
+        $wedstrijden = [];
+        foreach ($sortedDagen as $dag) {
+            $wedstrijden[$dag] = $repo->getWedstrijdrondesPerDag($dag);
+        }
+
+        return $wedstrijden;
     }
 
     protected function getTijdSchema()
@@ -1257,17 +1304,17 @@ class BaseController extends Controller
                         ->getRepository('AppBundle:User')
                         ->findOneBy(['id' => $userId]);
                 }
-                $factuurNummer        = $this->getFactuurNummer($user);
+                $factuurNummer      = $this->getFactuurNummer($user);
                 $bedragPerTeam
-                                      = self::BEDRAG_PER_TEAM; //todo: bedrag per turnster toevoegen aan instellingen
+                                    = self::BEDRAG_PER_TEAM; //todo: bedrag per turnster toevoegen aan instellingen
                 $juryBoeteBedrag
-                                      = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
-                $datumHBC             = self::DATUM_DTC; // todo: datum toernooi toevoegen aan instellingen
-                $locatieHBC           = self::LOCATIE_DTC; //todo: locatie toernooi toevoegen aan instellingen
-                $rekeningNummer       = self::REKENINGNUMMER; // todo: rekeningnummer toevoegen aan instellingen
-                $rekeningTNV          = self::REKENING_TNV; // todo: TNV toevoegen aan instellingen
-                $aantalTeamsPerJury   = self::AANTAL_TEAMS_PER_JURY; //todo: toevoegen als instelling
-                $juryledenAantal      = $this->getDoctrine()
+                                    = self::JURY_BOETE_BEDRAG; //todo: boete bedrag jury tekort toevoegen aan instellingen
+                $datumHBC           = self::DATUM_DTC; // todo: datum toernooi toevoegen aan instellingen
+                $locatieHBC         = self::LOCATIE_DTC; //todo: locatie toernooi toevoegen aan instellingen
+                $rekeningNummer     = self::REKENINGNUMMER; // todo: rekeningnummer toevoegen aan instellingen
+                $rekeningTNV        = self::REKENING_TNV; // todo: TNV toevoegen aan instellingen
+                $aantalTeamsPerJury = self::AANTAL_TEAMS_PER_JURY; //todo: toevoegen als instelling
+                $juryledenAantal    = $this->getDoctrine()
                     ->getRepository('AppBundle:Jurylid')
                     ->getIngeschrevenJuryleden($user);
 
@@ -1747,6 +1794,36 @@ class BaseController extends Controller
                 return ($a['totaal' . $order] > $b['totaal' . $order]) ? -1 : 1;
             }
         );
+        return $scores;
+    }
+
+    protected function getTeamRanking($scores)
+    {
+        usort(
+            $scores,
+            function ($a, $b) {
+                $epsilon = 0.00001;
+                if (abs($a['totaal'] - $b['totaal']) < $epsilon) {
+                    return 0;
+                }
+
+                return ($a['totaal'] > $b['totaal']) ? -1 : 1;
+            }
+        );
+
+        $epsilon = 0.00001;
+        for ($i = 1; $i <= count($scores); $i++) {
+            if ($i == 1) {
+                $scores[($i - 1)]['rank'] = $i;
+            } elseif (abs(
+                    $scores[($i - 1)]['totaal'] - $scores[($i - 2)]['totaal']
+                ) < $epsilon) {
+                $scores[($i - 1)]['rank'] = $scores[($i - 2)]['rank'];
+            } else {
+                $scores[($i - 1)]['rank'] = $i;
+            }
+        }
+
         return $scores;
     }
 

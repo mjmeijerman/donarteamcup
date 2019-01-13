@@ -11,15 +11,15 @@
             Uitslagen {{ app.request.get('categorie') }} {{ app.request.get('niveau') }} gesorteerd op {{ order }}.
             <br/>
             <hr>
-            <center><a href="{{ path('uitslagen', { 'categorie': app.request.get('categorie'), 'niveau': app.request
-                    .get('niveau'), 'prijswinnaars': 'true' }) }}" target="_blank">
-                    Prijswinnaars
+            <center><a href="{{ path('uitslagen', { 'wedstrijdRondeId': app.request.get('wedstrijdRondeId'), 'teamSoortId': app.request
+                    .get('teamSoortId'), 'teamUitslag': 'true' }) }}" target="_blank">
+                    Teamuitslag
                 </a></center>
             <a href="{{ path('uitslagen') }}">
                 <input type="submit" style="float:left;" value="Terug"/>
             </a>
-            <a href="{{ path('uitslagen', { 'categorie': app.request.get('categorie'), 'niveau': app.request
-                .get('niveau'), 'pdf': 'true' }) }}" target="_blank">
+            <a href="{{ path('uitslagen', { 'wedstrijdRondeId': app.request.get('wedstrijdRondeId'), 'teamSoortId': app.request
+                .get('teamSoortId'), 'pdf': 'true' }) }}" target="_blank">
                 <input type="submit" style="float:right;" value="Opslaan als PDF"/>
             </a>
         </div>

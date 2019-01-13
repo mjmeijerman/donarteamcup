@@ -5,8 +5,11 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Jurylid;
 use AppBundle\Entity\Scores;
 use AppBundle\Entity\ScoresRepository;
-use AppBundle\Entity\Turnster;
+use AppBundle\Entity\Team;
+use AppBundle\Entity\TeamSoort;
 use AppBundle\Entity\TurnsterRepository;
+use AppBundle\Entity\WedstrijdRonde;
+use AppBundle\Entity\WedstrijdRondeRepository;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Httpfoundation\Response;
@@ -15,35 +18,32 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UitslagenController extends BaseController
 {
-    private function formatScoresForPrijswinnaars($turnsters)
+    private function formatScoresForTeamUitslag($teams)
     {
-        $waardes    = [];
-        $toestellen = ['Sprong', 'Brug', 'Balk', 'Vloer', ''];
-        $count      = 0;
-        foreach ($toestellen as $toestel) {
-            usort(
-                $turnsters,
-                function ($a, $b) use ($toestel) {
-                    if ($a['totaal' . $toestel] == $b['totaal' . $toestel]) {
-                        return 0;
-                    }
-                    return ($a['totaal' . $toestel] > $b['totaal' . $toestel]) ? -1 : 1;
+        $waardes = [];
+        $count   = 0;
+        usort(
+            $teams,
+            function ($a, $b) {
+                if ($a['totaal'] == $b['totaal']) {
+                    return 0;
                 }
-            );
-            foreach ($turnsters as $turnster) {
-                if ($turnster['rank' . $toestel] < 4) {
-                    $waardes[$count][] = [
-                        0 => $turnster['naam'],
-                        1 => $turnster['vereniging'],
-                        2 => $turnster['totaal' . $toestel],
-                        3 => $turnster['rank' . $toestel],
-                    ];
-                } else {
-                    break;
-                }
+                return ($a['totaal'] > $b['totaal']) ? -1 : 1;
             }
-            $count++;
+        );
+        foreach ($teams as $team) {
+            if ($team['rank'] < 4) {
+                $waardes[$count][] = [
+                    0 => $team['naam'],
+                    1 => $team['vereniging'],
+                    2 => $team['totaal'],
+                    3 => $team['rank'],
+                ];
+            } else {
+                break;
+            }
         }
+
         return $waardes;
     }
 
@@ -66,21 +66,18 @@ class UitslagenController extends BaseController
         );
     }
 
-    private function prijswinnaarsPdf(Request $request, $turnsters)
+    private function teamUitslagPdf($teams, WedstrijdRonde $wedstrijdRonde, TeamSoort $teamSoort)
     {
-        $waardes = $this->formatScoresForPrijswinnaars($turnsters);
+        $waardes = $this->formatScoresForTeamUitslag($teams);
         $pdf     = new PrijswinnaarsPdfController('L', 'mm', 'A4');
-        $pdf->setCategorie($request->query->get('categorie'));
-        $pdf->setNiveau($request->query->get('niveau'));
+        $pdf->setCategorie($teamSoort->getCategorie());
+        $pdf->setNiveau($teamSoort->getNiveau());
+        $pdf->setWedstrijdInfo($wedstrijdRonde);
         $pdf->SetLeftMargin(7);
         $pdf->AliasNbPages();
         $pdf->AddPage();
         $pdf->Table($waardes);
-        return new BinaryFileResponse(
-            $pdf->Output(), 200, [
-                              'Content-Type' => 'application/pdf'
-                          ]
-        );
+        return new BinaryFileResponse($pdf->Output(), 200, ['Content-Type' => 'application/pdf']);
     }
 
     /**
@@ -91,12 +88,18 @@ class UitslagenController extends BaseController
      */
     public function uitslagen(Request $request)
     {
-        if ($request->query->get('categorie') && $request->query->get('niveau') && $this->checkIfNiveauToegestaan
-            (
-                $request->query->get('categorie'),
-                $request->query->get('niveau')
-            )
-        ) {
+        /** @var WedstrijdRondeRepository $repo */
+        $repo = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde');
+
+        $wedstrijden = $repo->findBy([], ['startTijd' => 'ASC', 'baan' => 'ASC']);
+
+        if ($request->query->get('wedstrijdRondeId') && $request->query->get('teamSoortId')) {
+            $teamSoortRepo = $this->getDoctrine()->getRepository('AppBundle:TeamSoort');
+            /** @var TeamSoort $teamSoort */
+            $teamSoort = $teamSoortRepo->find($request->query->get('teamSoortId'));
+            /** @var WedstrijdRonde $wedstrijdRonde */
+            $wedstrijdRonde = $repo->find($request->query->get('wedstrijdRondeId'));
+
             $userId = 0;
             if ($this->getUser()) {
                 $userId = $this->getUser()->getId();
@@ -105,19 +108,43 @@ class UitslagenController extends BaseController
             if ($request->query->get('order')) {
                 $order = $request->query->get('order');
             }
-            /** @var Turnster[] $results */
-            $results   = $this->getDoctrine()->getRepository("AppBundle:Turnster")
-                ->getIngeschrevenTurnstersCatNiveau($request->query->get('categorie'), $request->query->get('niveau'));
-            $turnsters = [];
-            foreach ($results as $result) {
-                $turnsters[] = $result->getUitslagenLijst();
+
+            /** @var Team[] $teams */
+            $teams = [];
+            foreach ($wedstrijdRonde->getTeams() as $team) {
+                if ($team->getTeamSoort()->getId() !== (int) $request->query->get('teamSoortId')) {
+                    continue;
+                }
+
+                $teams[] = $team;
             }
+
+            $turnsters = [];
+            foreach ($teams as $team) {
+                foreach ($team->getTurnsters() as $turnster) {
+                    if ($turnster->getVoornaam() === 'leeg') {
+                        continue;
+                    }
+
+                    $turnsters[] = $turnster->getUitslagenLijst();
+                }
+            }
+
             $turnsters = $this->getRanking($turnsters, $request->query->get('order'));
-            if ($request->query->get('prijswinnaars')) {
-                return $this->prijswinnaarsPdf($request, $turnsters);
+            if ($request->query->get('teamUitslag')) {
+                $teamScores = [];
+
+                foreach ($teams as $team) {
+                    $teamScores[] = $team->getTeamScore();
+                }
+
+                $sortedTeamScores = $this->getTeamRanking($teamScores);
+
+                return $this->teamUitslagPdf($sortedTeamScores, $wedstrijdRonde, $teamSoort);
             } elseif ($request->query->get('pdf')) {
                 return $this->uitslagenPdf($request, $turnsters, $userId);
             }
+
             return $this->render(
                 'uitslagen/showUitslag.html.twig',
                 [
@@ -127,11 +154,10 @@ class UitslagenController extends BaseController
                 ]
             );
         }
-        $niveaus = $this->getToegestaneNiveaus();
         return $this->render(
             'uitslagen/index.html.twig',
             array(
-                'toegestaneNiveaus' => $niveaus,
+                'wedstrijden' => $wedstrijden,
             )
         );
     }

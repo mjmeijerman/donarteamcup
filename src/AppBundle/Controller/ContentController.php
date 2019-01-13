@@ -196,41 +196,9 @@ class ContentController extends BaseController
         $tijdSchema = $this->getTijdSchema();
         /** @var WedstrijdRondeRepository $repo */
         $repo = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde');
-        /** @var ScoresRepository $scoreRepo */
-        $scoreRepo   = $this->getDoctrine()->getRepository('AppBundle:Scores');
         $dagen       = $repo->getDagen();
-        $sortedDagen = [];
-        foreach ($dagen as $dag) {
-            switch ($dag['dag']) {
-                case 'Donderdag':
-                    $sortedDagen[0] = $dag['dag'];
-                    break;
-                case 'Vrijdag':
-                    $sortedDagen[1] = $dag['dag'];
-                    break;
-                case 'Zaterdag':
-                    $sortedDagen[2] = $dag['dag'];
-                    break;
-                case 'Zondag':
-                    $sortedDagen[3] = $dag['dag'];
-                    break;
-                case 'Maandag':
-                    $sortedDagen[4] = $dag['dag'];
-                    break;
-                case 'Dinsdag':
-                    $sortedDagen[5] = $dag['dag'];
-                    break;
-                case 'Woensdag':
-                    $sortedDagen[6] = $dag['dag'];
-                    break;
-            }
-        }
-        ksort($sortedDagen);
-
-        $wedstrijden = [];
-        foreach ($sortedDagen as $dag) {
-            $wedstrijden[$dag] = $repo->getWedstrijdrondesPerDag($dag);
-        }
+        $sortedDagen = $this->sortDagen($dagen);
+        $wedstrijden = $this->getWedstrijdRondesPerDag($sortedDagen);
         return $this->render(
             'default/wedstrijdIndeling.html.twig',
             array(

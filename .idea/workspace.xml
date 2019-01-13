@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="221375e8-7e4c-4103-9c31-f15aa3c39b7e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/uitslagen/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/uitslagen/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/uitslagen/showUitslag.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/uitslagen/showUitslag.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/ContentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/ContentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Entity/Team.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Team.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -48,8 +43,8 @@
       <file leaf-file-name="PrijswinnaarsPdfController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="58" column="10" selection-start-line="58" selection-start-column="10" selection-end-line="58" selection-end-column="10" />
+            <state relative-caret-position="317">
+              <caret line="80" column="35" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -460,12 +455,12 @@
       <workItem from="1542207744701" duration="6298000" />
       <workItem from="1542394623504" duration="3168000" />
       <workItem from="1546111241986" duration="6268000" />
-      <workItem from="1547294468715" duration="10614000" />
+      <workItem from="1547294468715" duration="10989000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116335000" />
+    <option name="totallyTimeSpent" value="116710000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -918,8 +913,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="58" column="10" selection-start-line="58" selection-start-column="10" selection-end-line="58" selection-end-column="10" />
+        <state relative-caret-position="317">
+          <caret line="80" column="35" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
         </state>
       </provider>
     </entry>

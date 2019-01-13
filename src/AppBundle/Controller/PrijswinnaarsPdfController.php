@@ -57,13 +57,13 @@ class PrijswinnaarsPdfController extends AlphaPDFController
     function Table($waardes)
     {
         $this->SetFont('Helvetica', 'B', 15);
-        $w = array(33, 48, 9, 4);
+        $w = array(60, 48, 13, 13);
         $this->SetFont('Helvetica', 'B', 6.5);
         $header2 = [
             'Naam',
             'Vereniging',
             'Score',
-            'Pl',
+            'Plaats',
         ];
         for ($i = 0; $i < count($header2); $i++) {
             if (($i + 1) % 5 == 0) {
@@ -77,8 +77,8 @@ class PrijswinnaarsPdfController extends AlphaPDFController
         $limit = count($waardes[0]);
         for ($i = 0; $i < $limit; $i++) {
             for ($k = 0; $k < 3; $k++) {
-                $w = array(33, 48, 9, 4, 1);
-                for ($j = 0; $j < 5; $j++) {
+                $w = array(60, 48, 13, 13);
+                for ($j = 0; $j < 4; $j++) {
                     if (($j + 1) % 5 == 0) {
                         $this->Cell($w[$j], 7, '', 0, 0);
                     } elseif ($j == 2) {

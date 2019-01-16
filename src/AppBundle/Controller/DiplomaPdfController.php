@@ -149,7 +149,7 @@ class DiplomaPdfController extends AlphaPDFController
 
         //TEKST
         $this->SetFontSize(20);
-        $this->Cell(70, 0, utf8_decode('»' . $turnster['teamName'] . '«'), 0, 1, 'C');
+        $this->Cell(70, 0, utf8_decode($turnster['teamName']), 0, 1, 'C');
 
         //VERENIGING
         //FILL

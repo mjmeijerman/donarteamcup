@@ -190,7 +190,7 @@ class UitslagenController extends BaseController
                 'naam'            => $result['voornaam'] . ' ' . $result['achternaam'],
                 'vereniging'      => $result['vereniging_naam'] . ' ' . $result['vereniging_plaats'],
                 'wedstrijdnummer' => $result['wedstrijdnummer'],
-                'teamName'        => $result['team_name'],
+                'teamName'        => '»' . $result['team_name'] . '«',
             ];
         }
 //        usort($turnsters, function ($a, $b) {
@@ -233,6 +233,7 @@ class UitslagenController extends BaseController
             'vereniging' => '',
             'categorie'  => '',
             'niveau'     => '',
+            'teamName'   => ''
         ];
 
         $pdf->AddPage();

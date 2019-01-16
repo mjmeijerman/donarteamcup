@@ -342,13 +342,15 @@ SELECT
   t.achternaam,
   v.naam as vereniging_naam,
   v.plaats as vereniging_plaats,
-  s.wedstrijdnummer
+  s.wedstrijdnummer,
+  team_name
 FROM
   turnster t
 JOIN
   scores s ON t.score_id = s.id
 JOIN
   user u ON t.user_id = u.id
+JOIN team ON t.team = team.id
 JOIN
   vereniging v ON u.vereniging_id = v.id
 WHERE

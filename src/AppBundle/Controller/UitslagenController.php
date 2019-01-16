@@ -180,6 +180,9 @@ class UitslagenController extends BaseController
         $results   = $turnsterRepository->getTurnstersOrderedByDayAndVereniging();
         $turnsters = [];
         foreach ($results as $result) {
+            if ($result['voornaam'] == 'leeg') {
+                continue;
+            }
             $turnsters[] = [
                 'id'              => $result['id'],
                 'categorie'       => $result['categorie'],
@@ -187,6 +190,7 @@ class UitslagenController extends BaseController
                 'naam'            => $result['voornaam'] . ' ' . $result['achternaam'],
                 'vereniging'      => $result['vereniging_naam'] . ' ' . $result['vereniging_plaats'],
                 'wedstrijdnummer' => $result['wedstrijdnummer'],
+                'teamName'        => $result['team_name'],
             ];
         }
 //        usort($turnsters, function ($a, $b) {

@@ -115,16 +115,41 @@ class DiplomaPdfController extends AlphaPDFController
         $this->SetFillColor(0);
         $this->Rect(145, 116.5, 25, .25, 'F');
 
+        // TEAM TOTAAL
+
+        //ACHTERGROND
+        $this->SetDrawColor(255, 255, 0);
+        $this->SetFillColor(255, 255, 0);
+        $this->SetAlpha(0.5);
+        $this->RoundedRect(107, 127, 70, 10, 2, 'F');
+        $this->SetAlpha(1);
+
+        //TEKST
+        $this->Text(109.5, 134.5, 'Team');
+
+        //LIJNTJE
+        $this->SetFillColor(0);
+        $this->Rect(145, 134.5, 25, .25, 'F');
+
         //NAAM, VERENIGING, CATEGORIE EN NIVEAU
 
         //NAAM
         //FILL
-        $this->Ln(70.5);
+        $this->Ln(60.5);
         $this->Cell(107, 2, '');
 
         //TEKST
         $this->SetFontSize(20);
         $this->Cell(70, 0, utf8_decode($turnster['naam']), 0, 1, 'C');
+
+        //TEAM NAAM
+        //FILL
+        $this->Ln(10);
+        $this->Cell(107, 2, '');
+
+        //TEKST
+        $this->SetFontSize(20);
+        $this->Cell(70, 0, utf8_decode('»' . $turnster['teamName'] . '«'), 0, 1, 'C');
 
         //VERENIGING
         //FILL

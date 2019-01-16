@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="221375e8-7e4c-4103-9c31-f15aa3c39b7e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieShowWedstrijdRonde.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieShowWedstrijdRonde.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,13 +20,8 @@
       <file leaf-file-name="UitslagenController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
+            <state relative-caret-position="1005">
               <caret line="78" column="17" selection-start-line="78" selection-start-column="17" selection-end-line="78" selection-end-column="17" />
-              <folding>
-                <element signature="e#3244#3265#1#PHP" expanded="true" />
-                <element signature="e#5150#5183#0#PHP" expanded="true" />
-                <element signature="e#5422#5449#0#PHP" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -40,11 +35,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrijswinnaarsPdfController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PrijswinnaarsPdfController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="80" column="35" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
+            <state relative-caret-position="137">
+              <caret line="68" column="36" selection-start-line="68" selection-start-column="36" selection-end-line="68" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/css/main.css">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="organisatieShowWedstrijdRonde.html.twig" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/organisatieShowWedstrijdRonde.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="565" column="33" selection-start-line="565" selection-start-column="33" selection-end-line="565" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -52,7 +61,7 @@
       <file leaf-file-name="ParameterBag.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Component/HttpFoundation/ParameterBag.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
+            <state relative-caret-position="1110">
               <caret line="81" column="20" selection-start-line="81" selection-start-column="20" selection-end-line="81" selection-end-column="20" />
             </state>
           </provider>
@@ -63,11 +72,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
               <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
-              <folding>
-                <element signature="e#12#36#0#Twig" expanded="true" />
-                <element signature="e#811#830#0#HTML" expanded="true" />
-                <element signature="e#1080#1100#0#HTML" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -75,7 +79,7 @@
       <file leaf-file-name="Turnster.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
+            <state relative-caret-position="1740">
               <caret line="116" column="26" selection-start-line="116" selection-start-column="18" selection-end-line="116" selection-end-column="26" />
             </state>
           </provider>
@@ -84,7 +88,7 @@
       <file leaf-file-name="Team.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Team.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="545">
+            <state relative-caret-position="1440">
               <caret line="97" column="39" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
               <folding>
                 <element signature="e#36#84#0#PHP" expanded="true" />
@@ -93,35 +97,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/uitslagen/index.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="37" column="127" selection-start-line="37" selection-start-column="62" selection-end-line="37" selection-end-column="127" />
-              <folding>
-                <element signature="e#12#36#0#Twig" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WedstrijdRonde.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdRonde.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1497">
-              <caret line="150" column="20" selection-start-line="150" selection-start-column="20" selection-end-line="150" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="BaseController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
+            <state relative-caret-position="26820">
               <caret line="1811" column="10" selection-start-line="1811" selection-start-column="10" selection-end-line="1811" selection-end-column="10" />
               <folding>
                 <element signature="e#40#74#0#PHP" expanded="true" />
-                <element signature="e#18979#19001#1#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -215,7 +197,6 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/InschrijvingController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieInschrijvingen.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdRonde.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieShowWedstrijdRonde.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/OrganisatieController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/WedstrijdIndelingPdfController.php" />
@@ -234,6 +215,7 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Team.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/organisatie/organisatieShowWedstrijdRonde.html.twig" />
       </list>
     </option>
   </component>
@@ -317,7 +299,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -357,6 +338,14 @@
               <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Resources" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="organisatie" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="uitslagen" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
@@ -384,10 +373,22 @@
               <item name="AppBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Entity" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
+            <path>
+              <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="web" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="donarteamcup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="donarteamcup" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="web" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="css" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -455,28 +456,28 @@
       <workItem from="1542207744701" duration="6298000" />
       <workItem from="1542394623504" duration="3168000" />
       <workItem from="1546111241986" duration="6268000" />
-      <workItem from="1547294468715" duration="10989000" />
+      <workItem from="1547294468715" duration="11764000" />
+      <workItem from="1547650381086" duration="368000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116710000" />
+    <option name="totallyTimeSpent" value="117853000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2539342" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.32977587" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25035766" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.21400264" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991462" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -485,6 +486,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.21400264" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -519,13 +521,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/contactpersoon/editTeam.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/DiplomaPdfController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -621,9 +616,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-279">
           <caret line="20" column="10" lean-forward="true" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
-          <folding>
-            <element signature="e#12#38#0#Twig" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -700,13 +692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/organisatieShowWedstrijdRonde.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="53" selection-start-line="3" selection-start-column="53" selection-end-line="3" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/UserRepository.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-160">
@@ -728,11 +713,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="370">
           <caret line="37" column="31" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
-          <folding>
-            <element signature="e#37#73#0#PHP" expanded="true" />
-            <element signature="e#857#873#1#PHP" expanded="true" />
-            <element signature="e#1054#1070#1#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -768,11 +748,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
-          <folding>
-            <element signature="e#37#75#0#PHP" expanded="true" />
-            <element signature="e#898#916#1#PHP" expanded="true" />
-            <element signature="e#1152#1178#1#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -801,9 +776,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="236">
           <caret line="200" column="69" selection-start-line="196" selection-start-column="8" selection-end-line="200" selection-end-column="69" />
-          <folding>
-            <element signature="e#40#69#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -830,7 +802,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/WedstrijdRonde.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1497">
+        <state relative-caret-position="2235">
           <caret line="150" column="20" selection-start-line="150" selection-start-column="20" selection-end-line="150" selection-end-column="20" />
         </state>
       </provider>
@@ -839,9 +811,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
           <caret line="37" column="127" selection-start-line="37" selection-start-column="62" selection-end-line="37" selection-end-column="127" />
-          <folding>
-            <element signature="e#12#36#0#Twig" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -849,35 +818,29 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
-          <folding>
-            <element signature="e#12#36#0#Twig" expanded="true" />
-            <element signature="e#811#830#0#HTML" expanded="true" />
-            <element signature="e#1080#1100#0#HTML" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Turnster.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
+        <state relative-caret-position="1740">
           <caret line="116" column="26" selection-start-line="116" selection-start-column="18" selection-end-line="116" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/BaseController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
+        <state relative-caret-position="26820">
           <caret line="1811" column="10" selection-start-line="1811" selection-start-column="10" selection-end-line="1811" selection-end-column="10" />
           <folding>
             <element signature="e#40#74#0#PHP" expanded="true" />
-            <element signature="e#18979#19001#1#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Team.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="545">
+        <state relative-caret-position="1440">
           <caret line="97" column="39" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
           <folding>
             <element signature="e#36#84#0#PHP" expanded="true" />
@@ -887,7 +850,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Component/HttpFoundation/ParameterBag.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
+        <state relative-caret-position="1110">
           <caret line="81" column="20" selection-start-line="81" selection-start-column="20" selection-end-line="81" selection-end-column="20" />
         </state>
       </provider>
@@ -901,20 +864,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UitslagenController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
+        <state relative-caret-position="1005">
           <caret line="78" column="17" selection-start-line="78" selection-start-column="17" selection-end-line="78" selection-end-column="17" />
-          <folding>
-            <element signature="e#3244#3265#1#PHP" expanded="true" />
-            <element signature="e#5150#5183#0#PHP" expanded="true" />
-            <element signature="e#5422#5449#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/PrijswinnaarsPdfController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="80" column="35" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
+        <state relative-caret-position="137">
+          <caret line="68" column="36" selection-start-line="68" selection-start-column="36" selection-end-line="68" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/main.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/organisatie/organisatieShowWedstrijdRonde.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="565" column="33" selection-start-line="565" selection-start-column="33" selection-end-line="565" selection-end-column="33" />
         </state>
       </provider>
     </entry>

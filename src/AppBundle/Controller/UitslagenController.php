@@ -324,6 +324,25 @@ class UitslagenController extends BaseController
     }
 
     /**
+     * @Route("/organisatie/Juryzaken/emptyJuryBadges/", name="emptyJuryBadges", methods={"GET"})
+     */
+    function emptyJuryBadges()
+    {
+        $jurylid = [
+            'naam' => '',
+            'dag'  => '',
+        ];
+        $pdf     = new JurybadgePdfController('L', 'mm', [85.6, 53.98]);
+        $pdf->setDatumHBC(self::DATUM_DTC);
+        $pdf->SetMargins(0, 0);
+        $pdf->AddFont('Gotham', '', 'Gotham-Light.php');
+        $pdf->AddFont('Franklin', '', 'Frabk.php');
+        $pdf->AddPage();
+        $pdf->badgeContent($jurylid);
+        $pdf->Output();
+    }
+
+    /**
      * @Route("/pagina/Wedstrijdindeling/indelingPdf/{wedstrijdRondeId}", name="wedstrijdindelingPdf", methods={"GET"})
      * @param Request $request
      *

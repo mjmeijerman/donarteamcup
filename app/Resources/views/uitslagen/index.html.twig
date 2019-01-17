@@ -11,7 +11,7 @@
                             <div id="categorie">Wedstrijd {{ wedstrijd.ronde }} Baan {{ wedstrijd.baan }}</div>
                         </td>
                         {% for teamSoort in wedstrijd.teamSoorten %}
-                            {% if teamSoort.uitslagGepubliceerd or is_granted('ROLE_ORGANISATIE') %}
+                            {% if wedstrijd.uitslagGepubliceerd or is_granted('ROLE_ORGANISATIE') %}
                             <td>
                                 <a href="{{ path('uitslagen', { 'wedstrijdRondeId': wedstrijd.id, 'teamSoortId': teamSoort.id } ) }}">
                                     {{ teamSoort.categorie }} {{ teamSoort.niveau }}
@@ -33,7 +33,7 @@
                             <div id="categorie">Wedstrijd {{ wedstrijd.ronde }} Baan {{ wedstrijd.baan }}</div>
                         </td>
                         {% for teamSoort in wedstrijd.teamSoorten %}
-                            {% if teamSoort.uitslagGepubliceerd or is_granted('ROLE_ORGANISATIE') %}
+                            {% if wedstrijd.uitslagGepubliceerd or is_granted('ROLE_ORGANISATIE') %}
                             <td>
                                 <a href="{{ path('uitslagen', { 'wedstrijdRondeId': wedstrijd.id, 'teamSoortId': teamSoort.id } ) }}">
                                     {{ teamSoort.categorie }} {{ teamSoort.niveau }}

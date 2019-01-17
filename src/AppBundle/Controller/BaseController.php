@@ -15,13 +15,14 @@ use AppBundle\Entity\Turnster;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Vereniging;
 use AppBundle\Entity\Voorinschrijving;
+use AppBundle\Entity\WedstrijdRonde;
 use AppBundle\Entity\WedstrijdRondeRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Httpfoundation\Response;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
@@ -1652,26 +1653,20 @@ class BaseController extends Controller
     }
 
     /**
-     * @Route("/publiceerUitslag/{categorie}/{niveau}/", name="publiceerUitslag", methods={"GET"})
+     * @Route("/publiceerUitslag/{wedstrijdRondeId}/", name="publiceerUitslag", methods={"GET"})
      * @param Request $request
-     * @param         $categorie
-     * @param         $niveau
+     * @param         $wedstrijdRondeId
      *
      * @return Response
      */
-    public function publiceerUitslag(Request $request, $categorie, $niveau)
+    public function publiceerUitslag(Request $request, $wedstrijdRondeId)
     {
         if ($request->query->get('key') && $request->query->get('key') === $this->getParameter(
                 'update_scores_string'
             )) {
-            /** @var ToegestaneNiveaus $result */
-            $result = $this->getDoctrine()->getRepository('AppBundle:ToegestaneNiveaus')
-                ->findOneBy(
-                    [
-                        'categorie' => $categorie,
-                        'niveau'    => $niveau,
-                    ]
-                );
+            /** @var WedstrijdRonde $result */
+            $result = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde')
+                ->find($wedstrijdRondeId);
             if ($result) {
                 try {
                     $result->setUitslagGepubliceerd(true);
@@ -1681,7 +1676,7 @@ class BaseController extends Controller
                     return new Response($e->getMessage(), 500);
                 }
             } else {
-                return new Response('Combinatie van niveau/categorie niet gevonden!', 500);
+                return new Response('Wedstrijdronde niet gevonden!', 500);
             }
         }
         return new Response('Invalid key!', 403);

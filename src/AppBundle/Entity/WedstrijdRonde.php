@@ -61,6 +61,12 @@ class WedstrijdRonde
      */
     private $maxTeams;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @var int
+     */
+    private $uitslagGepubliceerd = 0;
+
     public function __construct()
     {
         $this->teams       = new ArrayCollection();
@@ -219,5 +225,25 @@ class WedstrijdRonde
     public function setBaan($baan): void
     {
         $this->baan = $baan;
+    }
+
+    /**
+     * Set uitslagGepubliceerd
+     *
+     * @param integer $uitslagGepubliceerd
+     */
+    public function setUitslagGepubliceerd($uitslagGepubliceerd)
+    {
+        $this->uitslagGepubliceerd = $uitslagGepubliceerd;
+    }
+
+    /**
+     * Get uitslagGepubliceerd
+     *
+     * @return integer
+     */
+    public function getUitslagGepubliceerd()
+    {
+        return $this->uitslagGepubliceerd;
     }
 }

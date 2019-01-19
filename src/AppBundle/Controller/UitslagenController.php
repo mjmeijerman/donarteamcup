@@ -171,12 +171,6 @@ class UitslagenController extends BaseController
         /** @var TurnsterRepository $turnsterRepository */
         $turnsterRepository = $this->getDoctrine()->getRepository("AppBundle:Turnster");
 
-//        /** @var Turnster[] $results */
-//        $results = $turnsterRepository
-//            ->findBy([
-//                'wachtlijst' => 0,
-//                'afgemeld' => 0,
-//            ]);
         $results   = $turnsterRepository->getTurnstersOrderedByDayAndVereniging();
         $turnsters = [];
         foreach ($results as $result) {
@@ -193,9 +187,6 @@ class UitslagenController extends BaseController
                 'teamName'        => '» ' . $result['team_name'] . ' «',
             ];
         }
-//        usort($turnsters, function ($a, $b) {
-//            return ($a['wedstrijdnummer'] < $b['wedstrijdnummer']) ? -1 : 1;
-//        });
         $pdf = new DiplomaPdfController('L', 'mm', 'A5');
         $pdf->SetMargins(0, 0);
         $pdf->AddFont('Gotham', '', 'Gotham-Light.php');

@@ -189,6 +189,35 @@ class Team
         return $this->turnsters;
     }
 
+    /**
+     * @return Turnster[]
+     */
+    public function getTurnstersSortedByWedstrijdNumber()
+    {
+        $turnsters = $this->filterEmptyTurnsters($this->turnsters->toArray());
+
+        usort($turnsters, function ($a, $b) {
+            return $a->getScores()->getWedstrijdnummer() > $b->getScores()->getWedstrijdnummer();
+        });
+
+        return $turnsters;
+    }
+
+    private function filterEmptyTurnsters(array $turnsters)
+    {
+        $filteredTurnsters = [];
+        /** @var Turnster $turnster */
+        foreach ($turnsters as $turnster) {
+            if ($turnster->getVoornaam() === 'leeg') {
+                continue;
+            }
+
+            $filteredTurnsters[] = $turnster;
+        }
+
+        return $filteredTurnsters;
+    }
+
     public function addTurnster(Turnster $turnster): void
     {
         $this->turnsters[] = $turnster;

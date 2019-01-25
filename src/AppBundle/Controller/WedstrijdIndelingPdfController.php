@@ -166,7 +166,7 @@ class WedstrijdIndelingPdfController extends AlphaPDFController
                     continue;
                 }
 
-                foreach ($team->getTurnsters() as $turnster) {
+                foreach ($team->getTurnstersSortedByWedstrijdNumber() as $turnster) {
                     if ($turnster->getVoornaam() === 'leeg') {
                         continue;
                     }

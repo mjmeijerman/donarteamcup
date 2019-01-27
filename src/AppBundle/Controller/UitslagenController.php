@@ -32,16 +32,12 @@ class UitslagenController extends BaseController
             }
         );
         foreach ($teams as $team) {
-            if ($team['rank'] < 4) {
-                $waardes[$count][] = [
-                    0 => $team['naam'],
-                    1 => $team['vereniging'],
-                    2 => $team['totaal'],
-                    3 => $team['rank'],
-                ];
-            } else {
-                break;
-            }
+            $waardes[$count][] = [
+                0 => $team['naam'],
+                1 => $team['vereniging'],
+                2 => $team['totaal'],
+                3 => $team['rank'],
+            ];
         }
 
         return $waardes;

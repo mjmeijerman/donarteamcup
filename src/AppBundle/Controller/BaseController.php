@@ -45,9 +45,9 @@ class BaseController extends Controller
     const BEDRAG_PER_TEAM                 = 50;
     const JURY_BOETE_BEDRAG               = 50;
     const AANTAL_TEAMS_PER_JURY           = 2;
-    const DATUM_DTC                       = '26 & 27 januari 2019';
-    const YEAR_DTC                        = 2019;
-    const LOCATIE_DTC                     = 'Turnhal GVP Den Haag';
+    const DATUM_DTC                       = '25 & 26 januari 2020';
+    const YEAR_DTC                        = 2020;
+    const LOCATIE_DTC                     = 'Sporthal Overbosch';
     const REKENINGNUMMER                  = 'NL81 INGB 000 007 81 99';
     const REKENING_TNV                    = 'Gymnastiekver. Donar';
 

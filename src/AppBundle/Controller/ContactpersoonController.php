@@ -817,7 +817,7 @@ class ContactpersoonController extends BaseController
                                     $user->getVereniging()->getPlaats(),
                                 'contactEmail'   => $user->getEmail(),
                             ];
-                            $this->sendEmail($subject, $to, $view, $parameters, 'jury@donarteamcup.nl');
+                            $this->sendEmail($subject, $to, $view, $parameters, 'info@donarteamcup.nl');
 
                             return $this->redirectToRoute('getContactpersoonIndexPage');
                         }

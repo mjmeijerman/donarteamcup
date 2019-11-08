@@ -109,7 +109,7 @@ class InschrijvingController extends BaseController
                                         $user->getVereniging()->getPlaats(),
                                     'contactEmail'   => $user->getEmail(),
                                 ];
-                                $this->sendEmail($subject, $to, $view, $parameters, 'jury@donarteamcup.nl');
+                                $this->sendEmail($subject, $to, $view, $parameters, 'info@donarteamcup.nl');
                             }
                         }
                     }
@@ -525,9 +525,11 @@ class InschrijvingController extends BaseController
                             $to             = $contactpersoon->getEmail();
                             $view           = 'mails/inschrijven_contactpersoon.html.twig';
                             $inschrijvenTot = $this->getOrganisatieInstellingen(self::SLUITING_INSCHRIJVING_TURNSTERS);
+                            $juryledenTot = $this->getOrganisatieInstellingen(self::SLUITING_INSCHRIJVING_JURYLEDEN);
                             $parameters     = [
                                 'voornaam'       => $contactpersoon->getVoornaam(),
                                 'inschrijvenTot' => $inschrijvenTot[self::SLUITING_INSCHRIJVING_TURNSTERS],
+                                'juryledenTot' => $juryledenTot[self::SLUITING_INSCHRIJVING_JURYLEDEN],
                                 'inlognaam'      => $contactpersoon->getUsername(),
                             ];
                             $this->sendEmail($subject, $to, $view, $parameters);

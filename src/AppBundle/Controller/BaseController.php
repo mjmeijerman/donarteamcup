@@ -48,7 +48,7 @@ class BaseController extends Controller
     const DATUM_DTC                       = '25 & 26 januari 2020';
     const YEAR_DTC                        = 2020;
     const LOCATIE_DTC                     = 'Sporthal Overbosch';
-    const REKENINGNUMMER                  = 'NL81 INGB 000 007 81 99';
+    const REKENINGNUMMER                  = 'NL51 INGB 000 650 00 42';
     const REKENING_TNV                    = 'Gymnastiekver. Donar';
 
     protected $sponsors = [];

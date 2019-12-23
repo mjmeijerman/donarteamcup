@@ -19,6 +19,7 @@
             <table class="overzicht" id="turnster_table">
                 <tr>
                     <th>Vereniging</th>
+                    <th># Turnsters</th>
                     <th>Niveau</th>
                     <th>Wedstrijd</th>
                     <th>Baan</th>
@@ -30,6 +31,7 @@
                     {% if (not team.isIngedeeldOpToestel or not team.isIngedeeldOpBaan) and not team.isAfgemeld and not team.wachtlijst %}
                         <tr>
                             <td>{{ team.user.vereniging.naam }} {{ team.user.vereniging.plaats }}</td>
+                            <td>{{ team.countTurnstersInTeam }}</td>
                             <td>{{ team.teamSoort.categorie }} {{ team.teamSoort.niveau }}</td>
 
                             <td><select name="change_wedstrijd_ronde_team_{{ team.id }}">

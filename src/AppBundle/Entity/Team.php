@@ -285,4 +285,9 @@ class Team
     {
         $this->afgemeld = $afgemeld;
     }
+
+    public function countTurnstersInTeam(): int
+    {
+        return count($this->filterEmptyTurnsters($this->turnsters));
+    }
 }

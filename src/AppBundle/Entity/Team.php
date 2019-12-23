@@ -288,6 +288,6 @@ class Team
 
     public function countTurnstersInTeam(): int
     {
-        return count($this->filterEmptyTurnsters($this->turnsters));
+        return count($this->filterEmptyTurnsters($this->turnsters->toArray()));
     }
 }

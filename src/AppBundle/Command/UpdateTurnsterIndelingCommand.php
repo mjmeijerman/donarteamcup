@@ -34,6 +34,7 @@ final class UpdateTurnsterIndelingCommand extends ContainerAwareCommand
                 foreach ($team->getTurnsters() as $turnster) {
                     if (strtolower($turnster->getVoornaam()) !== 'leeg') {
                         $turnster->getScores()->setBaan($wedstrijdRonde->getBaan());
+                        $turnster->getScores()->setGroep($turnster->getScores()->getBegintoestel());
                         $turnster->getScores()->setWedstrijddag($wedstrijdRonde->getDag());
                         $turnster->getScores()->setWedstrijdronde($wedstrijdRonde->getRonde());
 

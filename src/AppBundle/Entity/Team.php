@@ -66,11 +66,23 @@ class Team
         $this->afgemeld  = false;
     }
 
-    public function getTeamScore()
+    public function getTeamScore(ToegestaneNiveausRepository $repository)
     {
         $turnsterScores = [];
         foreach ($this->turnsters as $turnster) {
-            $turnsterScores[] = $turnster->getUitslagenLijst();
+            if ($turnster->getVoornaam() !== 'leeg') {
+                /** @var ToegestaneNiveaus $toegestaneNiveau */
+                $toegestaneNiveau = $repository->findOneBy(
+                    [
+                        'categorie' => $turnster->getCategorie(),
+                        'niveau'    => $turnster->getNiveau(),
+                    ]
+                );
+                $turnsterScores[] = $turnster->getUitslagenLijst(
+                    $toegestaneNiveau->getCalculationMethodSprongMeerkamp(),
+                    $toegestaneNiveau->getCalculationMethodSprongToestelPrijs()
+                );
+            }
         }
 
         $toestellen = ['Sprong', 'Brug', 'Balk', 'Vloer'];

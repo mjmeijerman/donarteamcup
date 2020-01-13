@@ -266,47 +266,70 @@ class Scores
     /**
      * @return float
      */
-    public function getTotaalSprong()
+    public function getTotaalSprongMeerkamp(string $calculationMethod)
     {
-        return (($this->getTotaalSprong1() + $this->getTotaalSprong2()) / 2);
+        switch ($calculationMethod) {
+            case SprongCalculationMethod::GEMIDDELDE:
+                return (($this->getTotaalSprong1() + $this->getTotaalSprong2()) / 2);
+            case SprongCalculationMethod::EERSTE:
+                return $this->getTotaalSprong1();
+        }
+
+        throw new \Exception('Do not know how to calculate sprong totaal');
     }
 
-    public function getScores()
+    /**
+     * @return float
+     */
+    public function getTotaalSprongToestelPrijs(string $calculationMethod)
+    {
+        switch ($calculationMethod) {
+            case SprongCalculationMethod::GEMIDDELDE:
+                return (($this->getTotaalSprong1() + $this->getTotaalSprong2()) / 2);
+            case SprongCalculationMethod::EERSTE:
+                return $this->getTotaalSprong1();
+        }
+
+        throw new \Exception('Do not know how to calculate sprong totaal');
+    }
+
+    public function getScores(string $sprongCalculationMethodMeerkamp, string $sprongCalculationMethodToestelPrijs)
     {
         $totaalBrug    = $this->getTotaalBrug();
         $totaalBalk    = $this->getTotaalBalk();
         $totaalVloer   = $this->getTotaalVloer();
         $totaalSprong1 = $this->getTotaalSprong1();
         $totaalSprong2 = $this->getTotaalSprong2();
-        $totaalSprong  = $this->getTotaalSprong();
+        $totaalSprong  = $this->getTotaalSprongMeerkamp($sprongCalculationMethodMeerkamp);
         $totaal        = $totaalSprong + $totaalBrug + $totaalBalk + $totaalVloer;
         return [
-            'userId'          => $this->getTurnster()->getUser()->getId(),
-            'wedstrijdnummer' => $this->getWedstrijdnummer(),
-            'naam'            => $this->getTurnster()->getVoornaam() . ' ' . $this->getTurnster()->getAchternaam(),
-            'vereniging'      => $this->getTurnster()->getUser()->getVereniging()->getNaam() . ' ' . $this->getTurnster(
-                )
+            'userId'                   => $this->getTurnster()->getUser()->getId(),
+            'wedstrijdnummer'          => $this->getWedstrijdnummer(),
+            'naam'                     => $this->getTurnster()->getVoornaam() . ' ' . $this->getTurnster()
+                    ->getAchternaam(),
+            'vereniging'               => $this->getTurnster()->getUser()->getVereniging()->getNaam(
+                ) . ' ' . $this->getTurnster()
                     ->getUser()->getVereniging()->getPlaats(),
-            'categorie'       => $this->getTurnster()->getCategorie(),
-            'niveau'          => $this->getTurnster()->getNiveau(),
-            'dBrug'           => number_format($this->getDBrug(), 2, ",", "."),
-            'nBrug'           => number_format($this->getNBrug(), 2, ",", "."),
-            'totaalBrug'      => $totaalBrug,
-            'dBalk'           => number_format($this->getDBalk(), 2, ",", "."),
-            'nBalk'           => number_format($this->getNBalk(), 2, ",", "."),
-            'totaalBalk'      => $totaalBalk,
-            'dVloer'          => number_format($this->getDVloer(), 2, ",", "."),
-            'nVloer'          => number_format($this->getNVloer(), 2, ",", "."),
-            'totaalVloer'     => $totaalVloer,
-            'dSprong1'        => number_format($this->getDSprong1(), 2, ",", "."),
-            'nSprong1'        => number_format($this->getNSprong1(), 2, ",", "."),
-            'totaalSprong1'   => $totaalSprong1,
-            'dSprong2'        => number_format($this->getDSprong2(), 2, ",", "."),
-            'nSprong2'        => number_format($this->getNSprong2(), 2, ",", "."),
-            'totaalSprong2'   => $totaalSprong2,
-            'totaalSprong'    => $totaalSprong,
-            3,
-            'totaal'          => $totaal,
+            'categorie'                => $this->getTurnster()->getCategorie(),
+            'niveau'                   => $this->getTurnster()->getNiveau(),
+            'dBrug'                    => number_format($this->getDBrug(), 2, ",", "."),
+            'nBrug'                    => number_format($this->getNBrug(), 2, ",", "."),
+            'totaalBrug'               => $totaalBrug,
+            'dBalk'                    => number_format($this->getDBalk(), 2, ",", "."),
+            'nBalk'                    => number_format($this->getNBalk(), 2, ",", "."),
+            'totaalBalk'               => $totaalBalk,
+            'dVloer'                   => number_format($this->getDVloer(), 2, ",", "."),
+            'nVloer'                   => number_format($this->getNVloer(), 2, ",", "."),
+            'totaalVloer'              => $totaalVloer,
+            'dSprong1'                 => number_format($this->getDSprong1(), 2, ",", "."),
+            'nSprong1'                 => number_format($this->getNSprong1(), 2, ",", "."),
+            'totaalSprong1'            => $totaalSprong1,
+            'dSprong2'                 => number_format($this->getDSprong2(), 2, ",", "."),
+            'nSprong2'                 => number_format($this->getNSprong2(), 2, ",", "."),
+            'totaalSprong2'            => $totaalSprong2,
+            'totaalSprong'             => $totaalSprong,
+            'totaalSprongToestelPrijs' => $this->getTotaalSprongToestelPrijs($sprongCalculationMethodToestelPrijs),
+            'totaal'                   => $totaal,
         ];
     }
 

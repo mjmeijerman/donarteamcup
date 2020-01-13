@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ToegestaneNiveausRepository")
  * @ORM\Table(name="toegestane_niveaus")
  */
 class ToegestaneNiveaus

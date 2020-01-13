@@ -106,14 +106,15 @@ class Turnster
      */
     private $team;
 
-    public function getUitslagenLijst()
+    public function getUitslagenLijst(string $sprongCalculationMethodMeerkamp, string $sprongCalculationMethodToestelPrijs)
     {
         $totaalBrug = (floatval($this->getScores()->getTotaalBrug()));
         $totaalBalk = (floatval($this->getScores()->getTotaalBalk()));
         $totaalVloer = (floatval($this->getScores()->getTotaalVloer()));
         $totaalSprong1 = (floatval($this->getScores()->getTotaalSprong1()));
         $totaalSprong2 = (floatval($this->getScores()->getTotaalSprong2()));
-        $totaalSprong = (floatval($this->getScores()->getTotaalSprong()));
+        $totaalSprong = (floatval($this->getScores()->getTotaalSprongMeerkamp($sprongCalculationMethodMeerkamp)));
+        $totaalSprongToestelPrijs = (floatval($this->getScores()->getTotaalSprongToestelPrijs($sprongCalculationMethodToestelPrijs)));
         $totaal = floatval($totaalSprong + $totaalBrug + $totaalBalk + $totaalVloer);
         return array(
             'id' => $this->getId(),
@@ -140,6 +141,7 @@ class Turnster
             'nSprong2' => number_format($this->getScores()->getNSprong2(), 2, ",", "."),
             'totaalSprong2' => $totaalSprong2,
             'totaalSprong' => $totaalSprong,
+            'totaalSprongToestelPrijs' => $totaalSprongToestelPrijs,
             'totaal' => $totaal,
         );
     }

@@ -39,6 +39,18 @@ class ToegestaneNiveaus
     private $teamSoort;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string|null
+     */
+    private $calculationMethodSprongMeerkamp;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string|null
+     */
+    private $calculationMethodSprongToestelPrijs;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -125,5 +137,25 @@ class ToegestaneNiveaus
     public function setTeamSoort(?TeamSoort $teamSoort)
     {
         $this->teamSoort = $teamSoort;
+    }
+
+    public function getCalculationMethodSprongMeerkamp(): ?string
+    {
+        return $this->calculationMethodSprongMeerkamp;
+    }
+
+    public function setCalculationMethodSprongMeerkamp(string $calculationMethodSprongMeerkamp): void
+    {
+        $this->calculationMethodSprongMeerkamp = $calculationMethodSprongMeerkamp;
+    }
+
+    public function getCalculationMethodSprongToestelPrijs(): ?string
+    {
+        return $this->calculationMethodSprongToestelPrijs;
+    }
+
+    public function setCalculationMethodSprongToestelPrijs(string $calculationMethodSprongToestelPrijs): void
+    {
+        $this->calculationMethodSprongToestelPrijs = $calculationMethodSprongToestelPrijs;
     }
 }

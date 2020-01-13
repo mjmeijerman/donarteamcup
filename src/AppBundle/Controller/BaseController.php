@@ -7,6 +7,7 @@ use AppBundle\Entity\JuryIndeling;
 use AppBundle\Entity\Jurylid;
 use AppBundle\Entity\Scores;
 use AppBundle\Entity\SendMail;
+use AppBundle\Entity\SprongCalculationMethod;
 use AppBundle\Entity\Team;
 use AppBundle\Entity\TeamSoort;
 use AppBundle\Entity\TijdSchema;
@@ -252,9 +253,16 @@ class BaseController extends Controller
         }
         foreach ($results as $result) {
             /** @var ToegestaneNiveaus[] $results */
+            if (!$result->getCalculationMethodSprongMeerkamp()) {
+                $result->setCalculationMethodSprongMeerkamp(SprongCalculationMethod::GEMIDDELDE);
+                $result->setCalculationMethodSprongToestelPrijs(SprongCalculationMethod::GEMIDDELDE);
+                $this->addToDB($result);
+            }
             $toegestaneNiveaus[$result->getCategorie()][$result->getId()] = [
-                'niveau'              => $result->getNiveau(),
-                'uitslagGepubliceerd' => $result->getUitslagGepubliceerd(),
+                'niveau'                       => $result->getNiveau(),
+                'uitslagGepubliceerd'          => $result->getUitslagGepubliceerd(),
+                'sprongMeerkampBerekening'     => $result->getCalculationMethodSprongMeerkamp(),
+                'sprongToestelPrijsBerekening' => $result->getCalculationMethodSprongToestelPrijs(),
             ];
         }
 

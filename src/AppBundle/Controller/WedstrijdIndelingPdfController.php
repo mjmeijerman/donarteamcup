@@ -206,12 +206,12 @@ class WedstrijdIndelingPdfController extends AlphaPDFController
                     $this->Cell(
                         30,
                         5,
-                        $turnster->getCategorie() . ' ' . $turnster->getNiveau(),
+                        $turnster->getCategorie() . ' ' . $turnster->getNiveau() . ' ' . $turnster->getExtraNiveauInfo(),
                         0,
                         0,
                         'L',
                         $fill
-                    ); //CATEGORIE + NIVEAU
+                    ); //TEAM NAAM
                     $this->Cell(
                         30,
                         5,

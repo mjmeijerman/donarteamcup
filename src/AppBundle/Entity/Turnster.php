@@ -252,6 +252,46 @@ class Turnster
         return $this->niveau;
     }
 
+    public function getExtraNiveauInfo()
+    {
+        if ($this->categorie === 'Jeugd 2') {
+            switch ($this->niveau) {
+                case 'Div. 3':
+                    return '(Sup E)';
+                case 'Div. 4':
+                    return '(Sup F)';
+                case 'Div. 5':
+                    return '(Sup G)';
+                default:
+                    return '';
+            }
+        } elseif ($this->categorie === 'Junior') {
+            switch ($this->niveau) {
+                case 'Div. 3':
+                    return '(Sup D)';
+                case 'Div. 4':
+                    return '(Sup E)';
+                case 'Div. 5':
+                    return '(Sup F)';
+                default:
+                    return '';
+            }
+        } elseif ($this->categorie === 'Senior') {
+            switch ($this->niveau) {
+                case 'Div. 3':
+                    return '(Sup C)';
+                case 'Div. 4':
+                    return '(Sup D)';
+                case 'Div. 5':
+                    return '(Sup E)';
+                default:
+                    return '';
+            }
+        }
+
+        return '';
+    }
+
     /**
      * Set wachtlijst
      *

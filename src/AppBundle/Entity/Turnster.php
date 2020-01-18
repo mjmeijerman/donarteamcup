@@ -106,14 +106,15 @@ class Turnster
      */
     private $team;
 
-    public function getUitslagenLijst()
+    public function getUitslagenLijst(string $sprongCalculationMethodMeerkamp, string $sprongCalculationMethodToestelPrijs)
     {
         $totaalBrug = (floatval($this->getScores()->getTotaalBrug()));
         $totaalBalk = (floatval($this->getScores()->getTotaalBalk()));
         $totaalVloer = (floatval($this->getScores()->getTotaalVloer()));
         $totaalSprong1 = (floatval($this->getScores()->getTotaalSprong1()));
         $totaalSprong2 = (floatval($this->getScores()->getTotaalSprong2()));
-        $totaalSprong = (floatval($this->getScores()->getTotaalSprong()));
+        $totaalSprong = (floatval($this->getScores()->getTotaalSprongMeerkamp($sprongCalculationMethodMeerkamp)));
+        $totaalSprongToestelPrijs = (floatval($this->getScores()->getTotaalSprongToestelPrijs($sprongCalculationMethodToestelPrijs)));
         $totaal = floatval($totaalSprong + $totaalBrug + $totaalBalk + $totaalVloer);
         return array(
             'id' => $this->getId(),
@@ -140,6 +141,7 @@ class Turnster
             'nSprong2' => number_format($this->getScores()->getNSprong2(), 2, ",", "."),
             'totaalSprong2' => $totaalSprong2,
             'totaalSprong' => $totaalSprong,
+            'totaalSprongToestelPrijs' => $totaalSprongToestelPrijs,
             'totaal' => $totaal,
         );
     }
@@ -248,6 +250,46 @@ class Turnster
     public function getNiveau()
     {
         return $this->niveau;
+    }
+
+    public function getExtraNiveauInfo()
+    {
+        if ($this->categorie === 'Jeugd 2') {
+            switch ($this->niveau) {
+                case 'Div. 3':
+                    return '(Sup E)';
+                case 'Div. 4':
+                    return '(Sup F)';
+                case 'Div. 5':
+                    return '(Sup G)';
+                default:
+                    return '';
+            }
+        } elseif ($this->categorie === 'Junior') {
+            switch ($this->niveau) {
+                case 'Div. 3':
+                    return '(Sup D)';
+                case 'Div. 4':
+                    return '(Sup E)';
+                case 'Div. 5':
+                    return '(Sup F)';
+                default:
+                    return '';
+            }
+        } elseif ($this->categorie === 'Senior') {
+            switch ($this->niveau) {
+                case 'Div. 3':
+                    return '(Sup C)';
+                case 'Div. 4':
+                    return '(Sup D)';
+                case 'Div. 5':
+                    return '(Sup E)';
+                default:
+                    return '';
+            }
+        }
+
+        return '';
     }
 
     /**

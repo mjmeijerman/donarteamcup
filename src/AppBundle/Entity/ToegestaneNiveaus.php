@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ToegestaneNiveausRepository")
  * @ORM\Table(name="toegestane_niveaus")
  */
 class ToegestaneNiveaus
@@ -37,6 +37,18 @@ class ToegestaneNiveaus
      * @ORM\JoinColumn(name="team_soort", referencedColumnName="id", nullable=true)
      */
     private $teamSoort;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string|null
+     */
+    private $calculationMethodSprongMeerkamp;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string|null
+     */
+    private $calculationMethodSprongToestelPrijs;
 
     /**
      * Get id
@@ -125,5 +137,25 @@ class ToegestaneNiveaus
     public function setTeamSoort(?TeamSoort $teamSoort)
     {
         $this->teamSoort = $teamSoort;
+    }
+
+    public function getCalculationMethodSprongMeerkamp(): ?string
+    {
+        return $this->calculationMethodSprongMeerkamp;
+    }
+
+    public function setCalculationMethodSprongMeerkamp(string $calculationMethodSprongMeerkamp): void
+    {
+        $this->calculationMethodSprongMeerkamp = $calculationMethodSprongMeerkamp;
+    }
+
+    public function getCalculationMethodSprongToestelPrijs(): ?string
+    {
+        return $this->calculationMethodSprongToestelPrijs;
+    }
+
+    public function setCalculationMethodSprongToestelPrijs(string $calculationMethodSprongToestelPrijs): void
+    {
+        $this->calculationMethodSprongToestelPrijs = $calculationMethodSprongToestelPrijs;
     }
 }

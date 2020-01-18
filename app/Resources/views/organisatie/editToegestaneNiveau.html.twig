@@ -1,0 +1,40 @@
+{% extends 'organisatie/base.html.twig' %}
+
+{% block body %}
+    <h1>Wachtwoord wijzigen</h1>
+    <a href="{{ path('organisatieGetContent', { 'page': app.request.get('page') }) }}">Annuleer wijzigingen</a>
+    <form method="post" action="">
+        <table>
+            <tr>
+                <td>Categorie</td>
+                <td>{{ toegestaneNiveau.categorie }}</td>
+            </tr>
+            <tr>
+                <td>Niveau</td>
+                <td>{{ toegestaneNiveau.niveau }}</td>
+            </tr>
+            <tr>
+                <td>Bereken methode sprong meerkamp</td>
+                <td>
+                    <select name="sprong_meerkamp">
+                        {% for methode in berekenMethodes %}
+                            <option value="{{ methode }}"{% if methode == toegestaneNiveau.calculationMethodSprongMeerkamp %} selected{% endif %}>{{ methode }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Bereken methode sprong toestelprijs</td>
+                <td>
+                    <select name="sprong_toestelprijs">
+                        {% for methode in berekenMethodes %}
+                            <option value="{{ methode }}"{% if methode == toegestaneNiveau.calculationMethodSprongToestelPrijs %} selected{% endif %}>{{ methode }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+        </table>
+
+        <input type="submit" value="Verstuur"/>
+    </form>
+{% endblock %}

@@ -190,9 +190,20 @@ class ContactpersoonController extends BaseController
                 /** @var Turnster[] $results */
                 $results   = $this->getDoctrine()->getRepository("AppBundle:Turnster")
                     ->getIngeschrevenTurnstersCatNiveau($catNiv['categorie'], $catNiv['niveau']);
+                /** @var ToegestaneNiveaus $toegestaneNiveau */
+                $toegestaneNiveau      = $this->getDoctrine()->getRepository(ToegestaneNiveaus::class)
+                    ->findOneBy(
+                        [
+                            'categorie' => $catNiv['categorie'],
+                            'niveau'    => $catNiv['niveau'],
+                        ]
+                    );
                 $turnsters = [];
                 foreach ($results as $result) {
-                    $turnsters[] = $result->getUitslagenLijst();
+                    $turnsters[] = $result->getUitslagenLijst(
+                        $toegestaneNiveau->getCalculationMethodSprongMeerkamp(),
+                        $toegestaneNiveau->getCalculationMethodSprongToestelPrijs()
+                    );
                 }
                 $turnsters = $this->getRanking($turnsters);
                 $pdf->setCategorie($catNiv['categorie']);

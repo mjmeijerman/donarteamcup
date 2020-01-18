@@ -39,7 +39,10 @@
             <tr>
                 <th width="15%">Categorie</th>
                 <th width="5%">Niveau</th>
+                <th width="15%">Sprong meerkamp</th>
+                <th width="15%">Sprong toestelprijs</th>
                 <th width="10%"></th>
+                <th width="5%"></th>
                 <th width="5%"></th>
             </tr>
             {% for categorie, niveaus in toegestaneNiveaus %}
@@ -47,6 +50,8 @@
                     <tr id="niveau_row_{{ id }}">
                         <td>{{ categorie }}</td>
                         <td>{{ data.niveau }}</td>
+                        <td>{{ data.sprongMeerkampBerekening }}</td>
+                        <td>{{ data.sprongToestelPrijsBerekening }}</td>
                         <td>
                             {% if data.uitslagGepubliceerd %}
                                 <span class="gepubliceerd" id="uitslag_{{ id }}" onclick="uitslag_publiceren
@@ -57,6 +62,11 @@
                                  id }}')"
                                 style="cursor: pointer;">Uitslag publiceren</span>
                             {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('editToegestaneNiveau', { 'page': app.request.get('page'), 'id': id }) }}">
+                                <img src="{{ asset('images/edit.png') }}" width="20" style="cursor: pointer;">
+                            </a>
                         </td>
                         <td>
                             <div onclick="remove_niveau('{{ id }}',

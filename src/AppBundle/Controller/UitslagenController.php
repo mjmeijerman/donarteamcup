@@ -7,6 +7,7 @@ use AppBundle\Entity\Scores;
 use AppBundle\Entity\ScoresRepository;
 use AppBundle\Entity\Team;
 use AppBundle\Entity\TeamSoort;
+use AppBundle\Entity\ToegestaneNiveaus;
 use AppBundle\Entity\TurnsterRepository;
 use AppBundle\Entity\WedstrijdRonde;
 use AppBundle\Entity\WedstrijdRondeRepository;
@@ -122,7 +123,19 @@ class UitslagenController extends BaseController
                         continue;
                     }
 
-                    $turnsters[] = $turnster->getUitslagenLijst();
+                    /** @var ToegestaneNiveaus $toegestaneNiveau */
+                    $toegestaneNiveau = $this->getDoctrine()->getRepository(ToegestaneNiveaus::class)
+                        ->findOneBy(
+                            [
+                                'categorie' => $turnster->getCategorie(),
+                                'niveau'    => $turnster->getNiveau(),
+                            ]
+                        );
+
+                    $turnsters[] = $turnster->getUitslagenLijst(
+                        $toegestaneNiveau->getCalculationMethodSprongMeerkamp(),
+                        $toegestaneNiveau->getCalculationMethodSprongToestelPrijs()
+                    );
                 }
             }
 
@@ -131,7 +144,7 @@ class UitslagenController extends BaseController
                 $teamScores = [];
 
                 foreach ($teams as $team) {
-                    $teamScores[] = $team->getTeamScore();
+                    $teamScores[] = $team->getTeamScore($this->getDoctrine()->getRepository(ToegestaneNiveaus::class));
                 }
 
                 $sortedTeamScores = $this->getTeamRanking($teamScores);
@@ -259,7 +272,18 @@ class UitslagenController extends BaseController
                     /** @var Scores[] $results */
                     $results = $repo->getLiveScoresPerBaanPerToestel($activeBaan, $toestel);
                     foreach ($results as $result) {
-                        $turnsters[$toestel][] = $result->getScores();
+                        /** @var ToegestaneNiveaus $toegestaneNiveau */
+                        $toegestaneNiveau      = $this->getDoctrine()->getRepository(ToegestaneNiveaus::class)
+                            ->findOneBy(
+                                [
+                                    'categorie' => $result->getTurnster()->getCategorie(),
+                                    'niveau'    => $result->getTurnster()->getNiveau()
+                                ]
+                            );
+                        $turnsters[$toestel][] = $result->getScores(
+                            $toegestaneNiveau->getCalculationMethodSprongMeerkamp(),
+                            $toegestaneNiveau->getCalculationMethodSprongToestelPrijs()
+                        );
                     }
                 }
                 break;

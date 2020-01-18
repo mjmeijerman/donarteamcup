@@ -7,6 +7,7 @@ use AppBundle\Entity\Instellingen;
 use AppBundle\Entity\JuryIndeling;
 use AppBundle\Entity\Jurylid;
 use AppBundle\Entity\Reglementen;
+use AppBundle\Entity\SprongCalculationMethod;
 use AppBundle\Entity\Team;
 use AppBundle\Entity\TeamSoort;
 use AppBundle\Entity\TijdSchema;
@@ -1575,7 +1576,9 @@ class OrganisatieController extends BaseController
                 }
 
                 if ($request->request->get('change_wedstrijd_ronde_team_' . $team->getId())) {
-                    if ($team->getWedstrijdRonde()->getId() !== (int) $request->request->get('change_wedstrijd_ronde_team_' . $team->getId())) {
+                    if ($team->getWedstrijdRonde()->getId() !== (int) $request->request->get(
+                            'change_wedstrijd_ronde_team_' . $team->getId()
+                        )) {
                         $newWedstrijdRonde = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde')
                             ->find($request->request->get('change_wedstrijd_ronde_team_' . $team->getId()));
                         $team->setWedstrijdRonde($newWedstrijdRonde);
@@ -1824,6 +1827,60 @@ class OrganisatieController extends BaseController
                     'totaalAantalTurnsters'           => $this->aantalTurnsters,
                     'totaalAantalTurnstersWachtlijst' => $this->aantalWachtlijst,
                     'totaalAantalJuryleden'           => $this->aantalJury,
+                )
+            );
+        }
+
+        throw new \Exception('This is crazy');
+    }
+
+    /**
+     * @Route("/organisatie/{page}/editToegestaneNiveau/{id}", name="editToegestaneNiveau", methods={"GET", "POST"})
+     * @param Request $request
+     * @param         $page
+     * @param         $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
+     */
+    public function editToegestaneNiveau(Request $request, $page, $id)
+    {
+        if ($page == 'Instellingen') {
+            /** @var ToegestaneNiveaus $toegestaneNiveau */
+            $toegestaneNiveau = $this->getDoctrine()->getRepository(ToegestaneNiveaus::class)->find($id);
+            if ($request->getMethod() == 'POST') {
+                if (!in_array($request->request->get('sprong_meerkamp'), SprongCalculationMethod::allAsString())) {
+                    throw new \Exception('Er is iets heel erg mis gegaan!!!');
+                }
+
+                if (!in_array($request->request->get('sprong_toestelprijs'), SprongCalculationMethod::allAsString())) {
+                    throw new \Exception('Er is iets heel erg mis gegaan!!!');
+                }
+
+                $toegestaneNiveau->setCalculationMethodSprongMeerkamp($request->request->get('sprong_meerkamp'));
+                $toegestaneNiveau->setCalculationMethodSprongToestelPrijs($request->request->get('sprong_toestelprijs'));
+                $this->addToDB($toegestaneNiveau);
+
+                return $this->redirectToRoute(
+                    'organisatieGetContent',
+                    array(
+                        'page' => $page,
+                    )
+                );
+            }
+
+            $this->setBasicPageData('Organisatie');
+
+            return $this->render(
+                'organisatie/editToegestaneNiveau.html.twig',
+                array(
+                    'menuItems'                       => $this->menuItems,
+                    'totaalAantalVerenigingen'        => $this->aantalVerenigingen,
+                    'totaalAantalTurnsters'           => $this->aantalTurnsters,
+                    'totaalAantalTurnstersWachtlijst' => $this->aantalWachtlijst,
+                    'totaalAantalJuryleden'           => $this->aantalJury,
+                    'toegestaneNiveau'                => $toegestaneNiveau,
+                    'berekenMethodes'                 => SprongCalculationMethod::allAsString(),
                 )
             );
         }

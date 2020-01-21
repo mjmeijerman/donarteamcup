@@ -221,11 +221,11 @@ class WedstrijdIndelingPdfController extends AlphaPDFController
                         'L',
                         $fill
                     ); //CATEGORIE + NIVEAU
-                    $this->Cell(122, 5, '', 0, 1, '', $fill); //fill
+                    $this->Cell(122, 4, '', 0, 1, '', $fill); //fill
                 }
             }
 
-            $this->Ln(3);
+            $this->Ln(1);
             $i++;
         }
     }

@@ -9,6 +9,7 @@ use AppBundle\Entity\Team;
 use AppBundle\Entity\TeamSoort;
 use AppBundle\Entity\ToegestaneNiveaus;
 use AppBundle\Entity\TurnsterRepository;
+use AppBundle\Entity\User;
 use AppBundle\Entity\WedstrijdRonde;
 use AppBundle\Entity\WedstrijdRondeRepository;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -372,16 +373,12 @@ class UitslagenController extends BaseController
 
         $pdf = new WedstrijdIndelingPdfController();
         $pdf->setDatumHBC(self::DATUM_DTC);
-        $pdf->setBaan($wedstrijdRonde->getBaan());
-        $pdf->setWedstrijddag($wedstrijdRonde->getDag());
-        $pdf->setWedstrijdronde($wedstrijdRonde->getRonde());
         $pdf->SetMargins(0, 0);
         $pdf->AddFont('Gotham', '', 'Gotham-Light.php');
         $pdf->AddFont('Franklin', '', 'Frabk.php');
-        $pdf->AddPage();
-        $pdf->SetFont('Gotham', '', 14);
-        $pdf->SetY(60);
-        $pdf->wedstrijdIndelingContent($wedstrijdRonde, $userId);
+
+        $this->fillWedstrijdIndelingPage($pdf, $wedstrijdRonde, $userId);
+
         return new BinaryFileResponse(
             $pdf->Output(
                 'wedstrijdindeling DTC ' . self::DATUM_DTC . " " . $wedstrijdRonde->getDag() . " wedstrijdronde " .
@@ -391,5 +388,59 @@ class UitslagenController extends BaseController
                 'Content-Type' => 'application/pdf'
             ]
         );
+    }
+
+    /**
+     * @Route("/getHighlightedIndelingenForWedstrijd/", name="getHighlightedIndelingenForWedstrijd", methods={"GET"})
+     */
+    public function getHighlightedIndelingenForWedstrijd()
+    {
+        $pdf = new WedstrijdIndelingPdfController();
+
+        $pdf->setDatumHBC(self::DATUM_DTC);
+        $pdf->SetMargins(0, 0);
+        $pdf->AddFont('Gotham', '', 'Gotham-Light.php');
+        $pdf->AddFont('Franklin', '', 'Frabk.php');
+
+        /** @var WedstrijdRondeRepository $wedstrijdRondeRepository */
+        $wedstrijdRondeRepository = $this->getDoctrine()->getRepository(WedstrijdRonde::class);
+        $dagen = $wedstrijdRondeRepository->getDagen();
+
+        $userRepository = $this->getDoctrine()->getRepository(User::class);
+        /** @var User[] $users */
+        $users = $userRepository->findBy(['role' => 'ROLE_CONTACT']);
+        $createdCombinations = [];
+        foreach ($dagen as $dag) {
+            foreach ($users as $user) {
+                foreach ($user->getTeams() as $team) {
+                    if ($team->getWedstrijdRonde()->getDag() === $dag['dag']) {
+                        if (!in_array($team->getWedstrijdRonde()->getId().$user->getId(), $createdCombinations)) {
+                            $this->fillWedstrijdIndelingPage($pdf, $team->getWedstrijdRonde(), $user->getId());
+                            $createdCombinations[] = $team->getWedstrijdRonde()->getId().$user->getId();
+                        }
+                    }
+                }
+            }
+        }
+
+        return new BinaryFileResponse(
+            $pdf->Output(
+                'wedstrijdindeling DTC ' . self::DATUM_DTC . ".pdf",
+                "I"
+            ), 200, [
+                'Content-Type' => 'application/pdf'
+            ]
+        );
+    }
+
+    private function fillWedstrijdIndelingPage(WedstrijdIndelingPdfController $pdf, WedstrijdRonde $wedstrijdRonde, int $userId)
+    {
+        $pdf->setBaan($wedstrijdRonde->getBaan());
+        $pdf->setWedstrijddag($wedstrijdRonde->getDag());
+        $pdf->setWedstrijdronde($wedstrijdRonde->getRonde());
+        $pdf->AddPage();
+        $pdf->SetFont('Gotham', '', 14);
+        $pdf->SetY(60);
+        $pdf->wedstrijdIndelingContent($wedstrijdRonde, $userId);
     }
 }

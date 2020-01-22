@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Instellingen;
-use AppBundle\Entity\ScoresRepository;
 use AppBundle\Entity\WedstrijdRondeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -193,6 +192,7 @@ class ContentController extends BaseController
 
     private function getWedstrijdindelingPage()
     {
+        $juryIndeling = $this->getJuryIndeling();
         $tijdSchema = $this->getTijdSchema();
         /** @var WedstrijdRondeRepository $repo */
         $repo = $this->getDoctrine()->getRepository('AppBundle:WedstrijdRonde');
@@ -202,11 +202,12 @@ class ContentController extends BaseController
         return $this->render(
             'default/wedstrijdIndeling.html.twig',
             array(
-                'menuItems'   => $this->menuItems,
-                'sponsors'    => $this->sponsors,
-                'dagen'       => $sortedDagen,
-                'wedstrijden' => $wedstrijden,
-                'tijdSchema'  => $tijdSchema,
+                'menuItems'    => $this->menuItems,
+                'sponsors'     => $this->sponsors,
+                'dagen'        => $sortedDagen,
+                'wedstrijden'  => $wedstrijden,
+                'tijdSchema'   => $tijdSchema,
+                'juryIndeling' => $juryIndeling,
             )
         );
     }

@@ -2,7 +2,7 @@
 
 {% block body %}
     {% if app.user and is_granted('ROLE_ORGANISATIE') %}
-        <h1>Jury indeling uploaden</h1>
+        <h1>Tijdschema uploaden</h1>
         <a href="{{ path('organisatieGetContent', { 'page': app.request.get('page') }) }}">Annuleer wijzigingen</a>
         <p>Let op: het bestand mag maximaal 5 Mb zijn!</p>
         {{ form_start(form) }}

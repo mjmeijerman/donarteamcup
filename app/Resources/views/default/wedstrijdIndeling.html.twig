@@ -30,4 +30,12 @@
             {% endfor %}
         </table>
     {% endfor %}
+    {% if juryIndeling %}
+        <h4 id="contact">» Jury indeling</h4>
+        <p>
+            De jury indeling kan
+            <a href="/uploads/juryIndeling/{{ juryIndeling.locatie }}" target="_blank">
+                hier</a> worden ingezien.
+        </p>
+    {% endif %}
     {% endblock %}

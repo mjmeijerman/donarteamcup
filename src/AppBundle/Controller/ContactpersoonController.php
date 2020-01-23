@@ -1176,9 +1176,6 @@ class ContactpersoonController extends BaseController
             if ($form->isSubmitted() && $form->isValid()) {
                 $extensions = array('mp3', 'wma');
                 if (in_array(strtolower($vloermuziek->getFile()->getClientOriginalExtension()), $extensions)) {
-                    if ($oud = $result->getVloermuziek()) {
-                        $this->removeFromDB($oud);
-                    }
                     $vloermuziek->setTurnster($result);
                     $result->setVloermuziek($vloermuziek);
                     $this->addToDB($result);

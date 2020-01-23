@@ -35,7 +35,7 @@ class Vloermuziek
     private $file;
 
     /**
-     * @ORM\OneToOne(targetEntity="Turnster", mappedBy="vloermuziek", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Turnster", mappedBy="vloermuziek", cascade={"persist"})
      * @var Turnster
      */
     private $turnster;

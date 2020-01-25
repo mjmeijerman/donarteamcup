@@ -1763,7 +1763,7 @@ class BaseController extends Controller
 
     protected function getRanking($scores, $order = '')
     {
-        $toestellen = ['SprongToestelPrijs', 'Brug', 'Balk', 'Vloer', ''];
+        $toestellen = ['Sprong', 'Brug', 'Balk', 'Vloer', ''];
         foreach ($toestellen as $toestel) {
             usort(
                 $scores,

@@ -69,7 +69,6 @@ function check_vereniging() {
             document.getElementById('inschrijven_reserveren').style.display = 'none';
             document.getElementById('inschrijven_vereniging_header').className = '';
             document.getElementById('inschrijven_contactpersoon_header').className = '';
-            document.getElementById('verenigingnaam').className = 'select';
         }
     } else {
         if (check3 !== "") {
@@ -78,14 +77,12 @@ function check_vereniging() {
             document.getElementById('verenigingstaaternietbijikbenzozielig').checked = false;
             document.getElementById('inschrijven_nieuwe_vereniging').style.display = 'none';
             document.getElementById('inschrijven_vereniging_header').className = 'success';
-            document.getElementById('verenigingnaam').className = 'selectIngevuld';
         }
         else {
             document.getElementById('inschrijven_contactpersoon').style.display = 'none';
             document.getElementById('inschrijven_reserveren').style.display = 'none';
             document.getElementById('inschrijven_vereniging_header').className = '';
             document.getElementById('inschrijven_contactpersoon_header').className = '';
-            document.getElementById('verenigingnaam').className = 'select';
         }
     }
 }
@@ -600,3 +597,7 @@ function afsluiten()
     document.getElementById('remove_session').value = true;
     document.forms["teams"].submit();
 }
+
+$(document).ready(function() {
+    $('#verenigingnaam').select2();
+});

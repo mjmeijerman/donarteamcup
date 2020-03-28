@@ -52,7 +52,7 @@ function askTag {
 askEnvironment
 askTag
 
-limit="webserver-$environment"
+limit="webserver_$environment"
 
 echo -e "Limit: $limit"
 

@@ -1,7 +1,6 @@
 {% extends 'default/base.html.twig' %}
 
 {% block body %}
-    <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script src="{{ asset('js/inschrijf_check.js') }}"></script>
@@ -16,9 +15,10 @@
 
         <div class="row">
             <form name="vereniging">
-                <select name="vereniging" class="{{ classNames.verenigingnaam }}" onchange="aantal_plekken();
-                        check_vereniging();
-                update_vereningsnaam()"
+                <select name="vereniging" class="{{ classNames.verenigingnaam }}"
+                        onchange="
+                    check_vereniging();
+                    update_vereningsnaam()"
                         id="verenigingnaam">
 
                     <option class="option" value="" selected>

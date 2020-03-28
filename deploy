@@ -2,7 +2,7 @@
 # Deploy script
 
 # get latest tag
-latestTag="$(git describe --abbrev=0)";
+latestTag="$(git describe --abbrev=0 --tags)";
 
 # functions
 

@@ -19,6 +19,7 @@ use AppBundle\Entity\Voorinschrijving;
 use AppBundle\Entity\WedstrijdRonde;
 use AppBundle\Entity\WedstrijdRondeRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -946,8 +947,8 @@ class BaseController extends Controller
 
     protected function sendEmail($subject, $to, $view, array $parameters = array(), $from = 'info@donarteamcup.nl')
     {
-        $message = new Swift_Message()
-            ->setSubject($subject)
+        $message = new Swift_Message();
+            $message->setSubject($subject)
             ->setFrom($from)
             ->setTo($to)
             ->setBody(

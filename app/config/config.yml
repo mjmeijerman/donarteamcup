@@ -59,11 +59,11 @@ doctrine:
         auto_mapping: true
 
 doctrine_migrations:
-    dir_name: "%kernel.root_dir%/DoctrineMigrations"
-    namespace: Application\Migrations
-    table_name: migration_versions
-    name: Application Migrations
-    organize_migrations: false
+    migrations_paths:
+        'Application\Migrations': "%kernel.root_dir%/DoctrineMigrations"
+    storage:
+        table_storage:
+            table_name: migration_versions
 
 # Swiftmailer Configuration
 swiftmailer:

@@ -39,6 +39,6 @@ project_environment:
   SYMFONY_ENV: "prod"
 
 project_post_build_commands:
-  - "bin/console doctrine:migrations:migrate --no-interaction"
+  - "bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration"
   - "bin/console cache:clear"
   - "bin/console assets:install"
